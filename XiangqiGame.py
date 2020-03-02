@@ -21,7 +21,7 @@ class XiangqiGame:
         Locations on the board will be specified using "algebraic notation",
         with columns labeled a-i and rows labeled 1-10, with row 1 being the Red side and row 10 the Black side
         """
-        # _the_board
+        # creates empty board
         self._the_board = [["", "", "", "", "", "", "", "", ""],
                            ["", "", "", "", "", "", "", "", ""],
                            ["", "", "", "", "", "", "", "", ""],
@@ -33,6 +33,7 @@ class XiangqiGame:
                            ["", "", "", "", "", "", "", "", ""],
                            ["", "", "", "", "", "", "", "", ""]]
 
+        # initializes board with red and black game pieces
         self._the_board[0][0] = "red_chariot_1"
         self._the_board[0][1] = "red_horse_1"
         self._the_board[0][2] = "red_elephant_1"
@@ -67,10 +68,11 @@ class XiangqiGame:
         self._the_board[9][7] = "black_horse_2"
         self._the_board[9][8] = "black_chariot_2"
 
+        # initializes game state
         self._game_state = "UNFINISHED"
 
     def get_the_board(self):
-        """Returns the board."""
+        """Returns the board with labeled files and ranks."""
         printed_board = self._the_board
         printed_board.insert(0, ["", "a", "b", "c", "d", "e", "f", "g", "h", "i"])
         printed_board[1].insert(0, "1")
@@ -89,13 +91,21 @@ class XiangqiGame:
         """Returns the game state, either 'UNFINISHED', 'RED_WON' or 'BLACK_WON'."""
         return self._game_state
 
+
     def is_in_check(self, player):
         """
         Takes as a parameter either 'red' or 'black' and
         returns True if that player is in check, but returns False otherwise
         """
+        if player == "red" and red_general_1 file equals file of a black piece with empty ranks in between:
+            self._game_state = "BLACK_WON"
+            return True
+        elif player == "black" and black_general_1 file equals file of a red piece with empty ranks in between:
+            self._game_state = "RED_WON"
+            return True
+        return False
 
-    def make_move(self):
+    def make_move(self, from_square, to_square):
         """
         Takes two parameters - strings that represent the square moved from and
         the square moved to. For example, make_move('b3', 'b10').
@@ -109,107 +119,119 @@ class XiangqiGame:
         Unlike in chess, in which stalemate is a draw, in xiangqi, it is a loss for the stalemated player.
         """
 
+class RedGamePiece:
+    """
+    Represents a GamePiece with data member.
+    """
 
-# class GamePiece:
-#     """
-#     Represents a GamePiece with data member.
-#     """
-#
-#     def __init__(self):
-#
-#
-# class General:
-#     """
-#     Represents a General with data member.
-#     The general starts the game at the midpoint of the back edge, within the palace.
-#     The general may move and capture one point orthogonally and may not leave the palace, with the following exception.
-#     The two generals may not face each other along the same file with no intervening pieces.
-#     If that happens, the "flying general" move may be executed, in which the general to
-#     move may cross the board to capture the enemy general.
-#     In practice, this rule means that creating this situation in the first place means
-#     moving into check, and is therefore not allowed
-#     """
-#
-#     def __init__(self):
-#
-#
-# class Advisor:
-#     """
-#     Represents an Advisor with data member.
-#     The advisors start on either side of the general. They move and capture one point diagonally and
-#     may not leave the palace, which confines them to five points on the board.
-#     The advisor is like the queen in Western chess.
-#     """
-#
-#     def __init__(self):
-#
-#
-# class Elephant:
-#     """
-#     Represents an Elephant with data member.
-#     These pieces move and capture exactly two points diagonally and may not jump over intervening pieces;
-#     If an elephant cannot move due to a diagonally adjacent piece, it is known as
-#     "blocking the elephant's eye"
-#     Elephants may not cross the river, and serve as defensive pieces. Because an elephant's movement is
-#     restricted to just seven board positions, it can be easily trapped or threatened.
-#     The two elephants are often used to defend each other.
-#     """
-#
-#     def __init__(self):
-#
-#
-# class Horse:
-#     """
-#     Represents a Horse with data member.
-#     Horses begin the game next to the elephants, on their outside flanks.
-#     A horse moves and captures one point orthogonally and then one point diagonally away from
-#     its former position. The horse does not jump as the knight does in Western chess, and
-#     can be blocked by a piece located one point horizontally or vertically adjacent to it.
-#     Blocking a horse is called "hobbling the horse's leg".
-#     Since horses can be blocked, it is sometimes possible to trap the opponent's horse.
-#     It is possible for one player's horse to have an asymmetric attack advantage if an opponent's horse is blocked.
-#     """
-#
-#     def __init__(self):
-#
-#
-# class Chariot:
-#     """
-#     Represents a Chariot with data member.
-#     The chariot moves and captures any distance orthogonally, but may not jump over intervening pieces.
-#     The chariots begin the game on the points at the corners of the board. The chariot is often
-#     considered to be the strongest piece in the game due to its freedom of movement and lack of restrictions.
-#     The chariot is sometimes known as the rook by English-speaking players, since it is like the rook in Western chess.
-#     """
-#
-#     def __init__(self):
-#
-#
-# class Cannon:
-#     """
-#     Represents a Cannon with data member.
-#     Each player has two cannons, which start on the row behind the soldiers, two points in front of the horses.
-#     Cannons move like chariots, any distance orthogonally without jumping,
-#     but can only capture by jumping a single piece, friend or foe, along the path of attack.
-#     The piece over which the cannon jumps is called the "cannon platform" or "screen".
-#     Any number of unoccupied spaces, including none, may exist between the cannon, screen, and
-#     the piece to be captured. Cannons can be exchanged for horses immediately from their starting positions.
-#     """
-#
-#     def __init__(self):
-#
-#
-# class Soldier:
-#
-#     """
-#     Represents a Soldier with data member.
-#     Each side starts with five soldiers. Soldiers begin the game located on every other point one row back
-#     from the edge of the river. They move and capture by advancing one point. Once they have crossed the river,
-#     they may also move and capture one point horizontally. Soldiers cannot move backward, and
-#     therefore cannot retreat; after advancing to the last rank of the board, however,
-#     a soldier may still move sideways at the enemy's edge.
-#     The soldier is sometimes called the "pawn" by English-speaking players, due to the pieces' similarities.
-#     Soldiers are able to move sideways after crossing the river
-#     """
-#
-#     def __init__(self):
+
+class BlackGamePiece:
+    """
+    Represents a GamePiece with data member.
+    """
+
+
+class General:
+    """
+    Represents a General.
+    The general starts the game at the midpoint of the back edge, within the palace.
+    The general may move and capture one point orthogonally and may not leave the palace, with the following exception.
+    The two generals may not face each other along the same file with no intervening pieces.
+    If that happens, the "flying general" move may be executed, in which the general to
+    move may cross the board to capture the enemy general.
+    In practice, this rule means that creating this situation in the first place means
+    moving into check, and is therefore not allowed
+    """
+        # red general legal spaces if not occupied by red piece
+        # [0][3], [0][4], [0][5], [1][3], [1][4], [1][5], [2][3], [2][4], [2][5]
+
+        # red general illegal spaces
+        # if red general square_to file is black general square_to file and ranks between them are empty
+
+        # black general legal spaces if not occupied by black piece
+        # [9][3], [9][4], [9][5], [8][3], [8][4], [8][5], [7][3], [7][4], [7][5]
+
+        # black general illegal spaces
+        # if black general square_to file is red general square_to file and ranks between them are empty
+
+
+class Advisor:
+    """
+    Represents an Advisor.
+    The advisors start on either side of the general. They move and capture one point diagonally and
+    may not leave the palace, which confines them to five points on the board.
+    The advisor is like the queen in Western chess.
+    """
+
+    def __init__(self):
+
+
+class Elephant:
+    """
+    Represents an Elephant with data member.
+    These pieces move and capture exactly two points diagonally and may not jump over intervening pieces;
+    If an elephant cannot move due to a diagonally adjacent piece, it is known as
+    "blocking the elephant's eye"
+    Elephants may not cross the river, and serve as defensive pieces. Because an elephant's movement is
+    restricted to just seven board positions, it can be easily trapped or threatened.
+    The two elephants are often used to defend each other.
+    """
+
+    def __init__(self):
+
+
+class Horse:
+    """
+    Represents a Horse with data member.
+    Horses begin the game next to the elephants, on their outside flanks.
+    A horse moves and captures one point orthogonally and then one point diagonally away from
+    its former position. The horse does not jump as the knight does in Western chess, and
+    can be blocked by a piece located one point horizontally or vertically adjacent to it.
+    Blocking a horse is called "hobbling the horse's leg".
+    Since horses can be blocked, it is sometimes possible to trap the opponent's horse.
+    It is possible for one player's horse to have an asymmetric attack advantage if an opponent's horse is blocked.
+    """
+
+    def __init__(self):
+
+
+class Chariot:
+    """
+    Represents a Chariot with data member.
+    The chariot moves and captures any distance orthogonally, but may not jump over intervening pieces.
+    The chariots begin the game on the points at the corners of the board. The chariot is often
+    considered to be the strongest piece in the game due to its freedom of movement and lack of restrictions.
+    The chariot is sometimes known as the rook by English-speaking players, since it is like the rook in Western chess.
+    """
+
+    def __init__(self):
+
+
+class Cannon:
+    """
+    Represents a Cannon with data member.
+    Each player has two cannons, which start on the row behind the soldiers, two points in front of the horses.
+    Cannons move like chariots, any distance orthogonally without jumping,
+    but can only capture by jumping a single piece, friend or foe, along the path of attack.
+    The piece over which the cannon jumps is called the "cannon platform" or "screen".
+    Any number of unoccupied spaces, including none, may exist between the cannon, screen, and
+    the piece to be captured. Cannons can be exchanged for horses immediately from their starting positions.
+    """
+
+    def __init__(self):
+
+
+class Soldier:
+
+    """
+    Represents a Soldier with data member.
+    Each side starts with five soldiers. Soldiers begin the game located on every other point one row back
+    from the edge of the river. They move and capture by advancing one point. Once they have crossed the river,
+    they may also move and capture one point horizontally. Soldiers cannot move backward, and
+    therefore cannot retreat; after advancing to the last rank of the board, however,
+    a soldier may still move sideways at the enemy's edge.
+    The soldier is sometimes called the "pawn" by English-speaking players, due to the pieces' similarities.
+    Soldiers are able to move sideways after crossing the river
+    """
+
+    def __init__(self):
