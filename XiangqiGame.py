@@ -198,9 +198,10 @@ class XiangqiGame:
                 self._game_state != "UNFINISHED":
             return False
 
-        board_spaces[to_square] = board_spaces[from_square]
+        self._the_board[letters.index(to_square[0])][to_square[1:]] =\
+            self._the_board[letters.index(from_square[0])][from_square[1:]]
 
-        board_spaces[from_square] = ""
+        self._the_board[letters.index(from_square[0])][from_square[1:]] = ""
 
         if self.is_in_check("red") and "red_general" has no legal moves:
             self._game_state = "BLACK_WON"
@@ -215,18 +216,6 @@ class XiangqiGame:
             self._player_turn = "red"
 
         return True
-
-
-class RedGamePiece:
-    """
-    Represents a GamePiece with data member.
-    """
-
-
-class BlackGamePiece:
-    """
-    Represents a GamePiece with data member.
-    """
 
 
 class General:
