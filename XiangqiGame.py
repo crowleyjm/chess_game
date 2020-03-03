@@ -71,6 +71,10 @@ class XiangqiGame:
         # initializes game state
         self._game_state = "UNFINISHED"
 
+        # initializes player's turn
+        self._player_turn = "red"
+
+
     def get_the_board(self):
         """Returns the board with labeled files and ranks."""
         printed_board = self._the_board
@@ -98,10 +102,8 @@ class XiangqiGame:
         returns True if that player is in check, but returns False otherwise
         """
         if player == "red" and red_general_1 file equals file of a black piece with empty ranks in between:
-            self._game_state = "BLACK_WON"
             return True
         elif player == "black" and black_general_1 file equals file of a red piece with empty ranks in between:
-            self._game_state = "RED_WON"
             return True
         return False
 
@@ -210,6 +212,28 @@ class XiangqiGame:
             "i9": self._the_board[8][8],
             "i10": self._the_board[9][8]
         }
+
+        if self._player_turn not in board_spaces[from_square] or legal_move == "no" or\
+                self._game_state == "RED_WON" or self._game_state == "BLACK_WON":
+            return False
+
+        board_spaces[to_square] = board_spaces[from_square]
+
+        board_spaces[from_square] = ""
+
+        if self.is_in_check("red") and "red_general" has no legal moves:
+            self._game_state = "BLACK_WON"
+
+        if self.is_in_check("black") and "black_general" has no legal moves:
+            self._game_state = "RED_WON"
+
+        if self._player_turn == "red":
+            self._player_turn = "black"
+
+        if self._player_turn == "black":
+            self._player_turn = "red"
+
+        return True
 
 
 class RedGamePiece:
