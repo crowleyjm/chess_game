@@ -177,12 +177,21 @@ class General:
     def set_file(self, value):
         self._file = value
 
-    def get_legal_move(self, square_from, square_to):
+    def get_legal_move(self, from_square, to_square):
         """
         Returns True if legal move and False if illegal move
         """
         # red general legal spaces if not occupied by red piece
         # [0][3], [0][4], [0][5], [1][3], [1][4], [1][5], [2][3], [2][4], [2][5]
+        letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
+        if letters.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
+                letters.index(to_square[0])-letters.index(from_square[0])
+
+    def get_in_check(self):
+        """
+        Returns if General is in check
+        """
         # if self._red_general_column == self._black_general_column:
         #     row = self._red_general_row + 1
         #     while row < self._black_general_row:
@@ -200,11 +209,6 @@ class General:
         #             self._any_legal_moves = "yes"
         #         row -= 1
         #     self._any_legal_moves = "no"
-
-    def get_in_check(self):
-        """
-        Returns if General is in check
-        """
 
 
 class Advisor:
@@ -236,7 +240,7 @@ class Advisor:
     def set_file(self, value):
         self._file = value
 
-    def get_legal_move(self, square_from, square_to):
+    def get_legal_move(self, from_square, to_square):
         # red advisor legal spaces if not occupied by red piece
         # [0][3], [0][5], [1][4], [2][3], [2][5]
 
@@ -277,7 +281,7 @@ class Elephant:
     def set_file(self, value):
         self._file = value
 
-    def is_legal_move(self, square_from, square_to):
+    def is_legal_move(self, from_square, to_square):
         # red elephant legal spaces if not occupied by red piece
         # [0][2], [0][6], [2][0], [2][4], [2][9], [4][2], [4][7]
 
@@ -319,7 +323,7 @@ class Horse:
     def set_file(self, value):
         self._file = value
 
-    def get_legal_move(self, square_from, square_to):
+    def get_legal_move(self, from_square, to_square):
         # red elephant legal spaces if not occupied by red piece
         # one space orthogonal and one space diagonal, cannot move off board
 
@@ -358,7 +362,7 @@ class Chariot:
     def set_file(self, value):
         self._file = value
 
-    def get_legal_move(self):
+    def get_legal_move(self, from_square, to_square):
         # red chariot legal moves
         # any distance orthogonal if no pieces in between, cannot move off board
         # if there is a red piece in between it stops one space short
@@ -403,7 +407,7 @@ class Cannon:
     def set_file(self, value):
         self._file = value
 
-    def get_legal_move(self):
+    def get_legal_move(self, from_square, to_square):
         # red cannon legal moves
         # any distance orthogonal if no pieces in between, cannot move off board
         # if there is any piece in its path, followed by a black piece, with any number of
@@ -448,7 +452,7 @@ class Soldier:
     def set_file(self, value):
         self._file = value
 
-    def get_red_legal_move(self):
+    def get_legal_move(self, from_square, to_square):
         # red soldier legal moves
         # cannot move off board, cannot move to space if occupied by another red piece
         # rank cannot decrease, so rank + 1
