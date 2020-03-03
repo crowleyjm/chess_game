@@ -68,6 +68,106 @@ class XiangqiGame:
         self._the_board[9][7] = "black_horse_2"
         self._the_board[9][8] = "black_chariot_2"
 
+        # Initialize row and column for each piece
+        self._red_chariot_1_row = 0
+        self._red_chariot_1_column = 0
+        self._red_horse_1_row = 0
+        self._red_horse_1_column = 1
+        self._red_elephant_1_row = 0
+        self._red_elephant_1_column = 2
+        self._red_advisor_1_row = 0
+        self._red_advisor_1_column = 3
+        self._red_general_row = 0
+        self._red_general_column = 4
+        self._red_advisor_2_row = 0
+        self._red_advisor_2_column = 5
+        self._red_elephant_2_row = 0
+        self._red_elephant_2_column = 6
+        self._red_horse_2_row = 0
+        self._red_horse_2_column = 7
+        self._red_chariot_2_row = 0
+        self._red_chariot_2_column = 8
+        self._red_cannon_1_row = 2
+        self._red_cannon_1_column = 1
+        self._red_cannon_2_row = 2
+        self._red_cannon_2_column = 7
+        self._red_solider_1_row = 3
+        self._red_solider_1_column = 0
+        self._red_solider_2_row = 3
+        self._red_solider_2_column = 2
+        self._red_solider_3_row = 3
+        self._red_solider_3_column = 4
+        self._red_solider_4_row = 3
+        self._red_solider_4_column = 6
+        self._red_solider_5_row = 3
+        self._red_solider_5_column = 8
+
+        self._black_chariot_1_row = 0
+        self._black_chariot_1_column = 0
+        self._black_horse_1_row = 0
+        self._black_horse_1_column = 1
+        self._black_elephant_1_row = 0
+        self._black_elephant_1_column = 2
+        self._black_advisor_1_row = 0
+        self._black_advisor_1_column = 3
+        self._black_general_row = 0
+        self._black_general_column = 4
+        self._black_advisor_2_row = 0
+        self._black_advisor_2_column = 5
+        self._black_elephant_2_row = 0
+        self._black_elephant_2_column = 6
+        self._black_horse_2_row = 0
+        self._black_horse_2_column = 7
+        self._black_chariot_2_row = 0
+        self._black_chariot_2_column = 8
+        self._black_cannon_1_row = 2
+        self._black_cannon_1_column = 1
+        self._black_cannon_2_row = 2
+        self._black_cannon_2_column = 7
+        self._black_solider_1_row = 3
+        self._black_solider_1_column = 0
+        self._black_solider_2_row = 3
+        self._black_solider_2_column = 2
+        self._black_solider_3_row = 3
+        self._black_solider_3_column = 4
+        self._black_solider_4_row = 3
+        self._black_solider_4_column = 6
+        self._black_solider_5_row = 3
+        self._black_solider_5_column = 8
+
+        self._the_board[6][0] = "black_soldier_1"
+
+        self._the_board[6][2] = "black_soldier_2"
+
+        self._the_board[6][4] = "black_soldier_3"
+
+        self._the_board[6][6] = "black_soldier_4"
+
+        self._the_board[6][8] = "black_soldier_5"
+
+        self._the_board[7][1] = "black_cannon_1"
+
+        self._the_board[7][7] = "black_cannon_2"
+
+        self._the_board[9][0] = "black_chariot_1"
+
+        self._the_board[9][1] = "black_horse_1"
+
+        self._the_board[9][2] = "black_elephant_1"
+
+        self._the_board[9][3] = "black_advisor_1"
+
+        self._the_board[9][4] = "black_general"
+
+        self._the_board[9][5] = "black_advisor_2"
+
+        self._the_board[9][6] = "black_elephant_2"
+
+        self._the_board[9][7] = "black_horse_2"
+
+        self._the_board[9][8] = "black_chariot_2"
+
+
         # initializes game state
         self._game_state = "UNFINISHED"
 
@@ -315,8 +415,10 @@ class Horse:
     It is possible for one player's horse to have an asymmetric attack advantage if an opponent's horse is blocked.
     """
     # red elephant legal spaces if not occupied by red piece
+    # one space orthogonal and one space diagonal, cannot move off board
 
     # black elephant legal spaces if not occupied by black piece
+    # one space orthogonal and one space diagonal, cannot move off board
 
 
 class Chariot:
@@ -327,8 +429,11 @@ class Chariot:
     considered to be the strongest piece in the game due to its freedom of movement and lack of restrictions.
     The chariot is sometimes known as the rook by English-speaking players, since it is like the rook in Western chess.
     """
+    # red chariot legal moves
+    # any distance orthogonal if no pieces in between, cannot move off board
+    # if there is a red piece in between it stops one space short
+    # if there is a black piece in between it moves to the space and captures piece
 
-    def __init__(self):
 
 
 class Cannon:
@@ -342,7 +447,6 @@ class Cannon:
     the piece to be captured. Cannons can be exchanged for horses immediately from their starting positions.
     """
 
-    def __init__(self):
 
 
 class Soldier:
