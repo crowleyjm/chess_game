@@ -279,8 +279,11 @@ class Advisor:
     may not leave the palace, which confines them to five points on the board.
     The advisor is like the queen in Western chess.
     """
+    # red advisor legal spaces if not occupied by red piece
+    # [0][3], [0][5], [1][4], [2][3], [2][5]
 
-    def __init__(self):
+    # black general legal spaces if not occupied by black piece
+    # [9][3], [9][5], [8][4], [7][3], [7][5]
 
 
 class Elephant:
@@ -293,8 +296,11 @@ class Elephant:
     restricted to just seven board positions, it can be easily trapped or threatened.
     The two elephants are often used to defend each other.
     """
+    # red elephant legal spaces if not occupied by red piece
+    # [0][2], [0][6], [2][0], [2][4], [2][9], [4][2], [4][7]
 
-    def __init__(self):
+    # black elephant legal spaces if not occupied by black piece
+    # [9][2], [9][6], [7][0], [7][4], [7][9], [5][2], [5][7]
 
 
 class Horse:
@@ -308,8 +314,9 @@ class Horse:
     Since horses can be blocked, it is sometimes possible to trap the opponent's horse.
     It is possible for one player's horse to have an asymmetric attack advantage if an opponent's horse is blocked.
     """
+    # red elephant legal spaces if not occupied by red piece
 
-    def __init__(self):
+    # black elephant legal spaces if not occupied by black piece
 
 
 class Chariot:
