@@ -171,10 +171,20 @@ class XiangqiGame:
         Takes as a parameter either 'red' or 'black' and
         returns True if that player is in check, but returns False otherwise
         """
-        if player == "red" and red_general_1 file equals file of a black piece with empty ranks in between:
-            return True
-        elif player == "black" and black_general_1 file equals file of a red piece with empty ranks in between:
-            return True
+        if player == "red" and self._red_general_column == self._black_general_column:
+                row = self._red_general_row + 1
+                while row < self._black_general_row:
+                    if self._the_board[row][self._red_general_column] != "":
+                        return False
+                    row += 1
+                return True
+        elif player == "black" and self._black_general_column == self._red_general_column:
+                row = self._black_general_row - 1
+                while row > self._red_general_row:
+                    if self._the_board[row][self._black_general_column] != "":
+                        return False
+                    row -= 1
+                return True
         return False
 
     def make_move(self, from_square, to_square):
@@ -229,11 +239,14 @@ class General:
     In practice, this rule means that creating this situation in the first place means
     moving into check, and is therefore not allowed
     """
+        def __init__(self):
+            self._any_legal_moves = "yes"
         # red general legal spaces if not occupied by red piece
         # [0][3], [0][4], [0][5], [1][3], [1][4], [1][5], [2][3], [2][4], [2][5]
 
         # red general illegal spaces
         # if red general square_to file is black general square_to file and ranks between them are empty
+            self._any_legal_moves = "no"
 
         # black general legal spaces if not occupied by black piece
         # [9][3], [9][4], [9][5], [8][3], [8][4], [8][5], [7][3], [7][4], [7][5]
