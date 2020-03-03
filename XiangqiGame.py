@@ -21,54 +21,20 @@ class XiangqiGame:
         Locations on the board will be specified using "algebraic notation",
         with columns labeled a-i and rows labeled 1-10, with row 1 being the Red side and row 10 the Black side
         """
-        # creates empty board
-        self._the_board = [["", "", "", "", "", "", "", "", ""],
-                           ["", "", "", "", "", "", "", "", ""],
-                           ["", "", "", "", "", "", "", "", ""],
-                           ["", "", "", "", "", "", "", "", ""],
-                           ["", "", "", "", "", "", "", "", ""],
-                           ["", "", "", "", "", "", "", "", ""],
-                           ["", "", "", "", "", "", "", "", ""],
-                           ["", "", "", "", "", "", "", "", ""],
-                           ["", "", "", "", "", "", "", "", ""],
-                           ["", "", "", "", "", "", "", "", ""]]
-
-        self._red_chariot_1 = Chariot()
-
         # initializes board with red and black game pieces
-        self._the_board[0][0] = self._red_chariot_1
-        self._the_board[0][1] = "red_horse_1"
-        self._the_board[0][2] = "red_elephant_1"
-        self._the_board[0][3] = "red_advisor_1"
-        self._the_board[0][4] = "red_general"
-        self._the_board[0][5] = "red_advisor_2"
-        self._the_board[0][6] = "red_elephant_2"
-        self._the_board[0][7] = "red_horse_2"
-        self._the_board[0][8] = "red_chariot_2"
-        self._the_board[2][1] = "red_cannon_1"
-        self._the_board[2][7] = "red_cannon_2"
-        self._the_board[3][0] = "red_soldier_1"
-        self._the_board[3][2] = "red_soldier_2"
-        self._the_board[3][4] = "red_soldier_3"
-        self._the_board[3][6] = "red_soldier_4"
-        self._the_board[3][8] = "red_soldier_5"
-
-        self._the_board[9][0] = "black_chariot_1"
-        self._the_board[9][1] = "black_horse_1"
-        self._the_board[9][2] = "black_elephant_1"
-        self._the_board[9][3] = "black_advisor_1"
-        self._the_board[9][4] = "black_general"
-        self._the_board[9][5] = "black_advisor_2"
-        self._the_board[9][6] = "black_elephant_2"
-        self._the_board[9][7] = "black_horse_2"
-        self._the_board[9][8] = "black_chariot_2"
-        self._the_board[7][1] = "black_cannon_1"
-        self._the_board[7][7] = "black_cannon_2"
-        self._the_board[6][0] = "black_soldier_1"
-        self._the_board[6][2] = "black_soldier_2"
-        self._the_board[6][4] = "black_soldier_3"
-        self._the_board[6][6] = "black_soldier_4"
-        self._the_board[6][8] = "black_soldier_5"
+        self._the_board = \
+            [[Chariot("red"), Horse("red"), Elephant("red"), Advisor("red"), General("red"),
+              Advisor("red"), Elephant("red"), Horse("red"), Chariot("red")],
+            ["", "", "", "", "", "", "", "", ""],
+            ["", Cannon("red"), "", "", "", "", "", Cannon("red"), ""],
+            [Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red")],
+            ["", "", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", "", ""],
+            [Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red")],
+            ["", Cannon("black"), "", "", "", "", "", Cannon("black"), ""],
+            ["", "", "", "", "", "", "", "", ""],
+            [Chariot("black"), Horse("black"), Elephant("black"), Advisor("black"), General("black"),
+              Advisor("black"), Elephant("black"), Horse("black"), Chariot("black")]]
 
 
         # Initialize row and column for each piece
@@ -146,7 +112,9 @@ class XiangqiGame:
 
 
     def get_the_board(self):
-        """Returns the board with labeled files and ranks."""
+        """
+        Returns the board with labeled files and ranks.
+        """
         printed_board = self._the_board
         printed_board.insert(0, ["", "a", "b", "c", "d", "e", "f", "g", "h", "i"])
         printed_board[1].insert(0, "1")
@@ -162,7 +130,9 @@ class XiangqiGame:
         return print("\n".join(str(rank) for rank in printed_board))
 
     def get_game_state(self):
-        """Returns the game state, either 'UNFINISHED', 'RED_WON' or 'BLACK_WON'."""
+        """
+        Returns the game state, either 'UNFINISHED', 'RED_WON' or 'BLACK_WON'.
+        """
         return self._game_state
 
 
@@ -178,6 +148,7 @@ class XiangqiGame:
                         return False
                     row += 1
                 return True
+
         elif player == "black" and self._black_general_column == self._red_general_column:
                 row = self._black_general_row - 1
                 while row > self._red_general_row:
@@ -204,7 +175,10 @@ class XiangqiGame:
         letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._player_turn not in self._the_board[letters.index(from_square[0])][from_square[1:]] or\
-                legal_move == "no" or\
+                (self._the_board[letters.index(from_square[0])][from_square[1:]].get_color() == "red" and
+                 self._the_board[letters.index(from_square[0])][from_square[1:]].get_red_legal_move() == "no") or \
+                (self._the_board[letters.index(from_square[0])][from_square[1:]].get_color() == "black" and
+                 self._the_board[letters.index(from_square[0])][from_square[1:]].get_red_legal_move() == "no") or\
                 self._game_state != "UNFINISHED":
             return False
 
@@ -213,10 +187,11 @@ class XiangqiGame:
 
         self._the_board[letters.index(from_square[0])][from_square[1:]] = ""
 
-        if self.is_in_check("red") and "red_general" has no legal moves:
+        if self.is_in_check("red") and\
+                self._the_board[self._red_general_row][self._red_general_column].get_red_any_legal_moves() == "no":
             self._game_state = "BLACK_WON"
 
-        if self.is_in_check("black") and "black_general" has no legal moves:
+        if self.is_in_check("black") and self._black_general.get_black_any_legal_moves() == "no":
             self._game_state = "RED_WON"
 
         if self._player_turn == "red":
@@ -239,8 +214,12 @@ class General:
     In practice, this rule means that creating this situation in the first place means
     moving into check, and is therefore not allowed
     """
-        def __init__(self):
-            self._any_legal_moves = "yes"
+        def __init__(self, color):
+            self._red_any_legal_moves = "yes"
+            self._black_any_legal_moves = "yes"
+            self._red_legal_move = "yes"
+            self._black_legal_move = "yes"
+            self._color = color
         # red general legal spaces if not occupied by red piece
         # [0][3], [0][4], [0][5], [1][3], [1][4], [1][5], [2][3], [2][4], [2][5]
 
@@ -254,6 +233,21 @@ class General:
         # black general illegal spaces
         # if black general square_to file is red general square_to file and ranks between them are empty
 
+        def get_red_any_legal_moves(self):
+            return self._red_any_legal_moves
+
+        def get_black_any_legal_moves(self):
+            return self._black_any_legal_moves
+
+        def get_red_legal_move(self):
+            return self._red_legal_move
+
+        def get_black_legal_move(self):
+            return self._black_legal_move
+
+        def get_color(self):
+            return self._color
+
 
 class Advisor:
     """
@@ -262,11 +256,24 @@ class Advisor:
     may not leave the palace, which confines them to five points on the board.
     The advisor is like the queen in Western chess.
     """
+    def __init__(self, color):
+        self._red_legal_move = "yes"
+        self._black_legal_move = "yes"
+        self._color = color
     # red advisor legal spaces if not occupied by red piece
     # [0][3], [0][5], [1][4], [2][3], [2][5]
 
     # black general legal spaces if not occupied by black piece
     # [9][3], [9][5], [8][4], [7][3], [7][5]
+
+    def get_color(self):
+        return self._color
+
+    def get_red_legal_move(self):
+        return self._red_legal_move
+
+    def get_black_legal_move(self):
+        return self._black_legal_move
 
 
 class Elephant:
@@ -279,11 +286,24 @@ class Elephant:
     restricted to just seven board positions, it can be easily trapped or threatened.
     The two elephants are often used to defend each other.
     """
+    def __init__(self, color):
+        self._red_legal_move = "yes"
+        self._black_legal_move = "yes"
+        self._color = color
     # red elephant legal spaces if not occupied by red piece
     # [0][2], [0][6], [2][0], [2][4], [2][9], [4][2], [4][7]
 
     # black elephant legal spaces if not occupied by black piece
     # [9][2], [9][6], [7][0], [7][4], [7][9], [5][2], [5][7]
+
+    def get_color(self):
+        return self._color
+
+    def get_red_legal_move(self):
+        return self._red_legal_move
+
+    def get_black_legal_move(self):
+        return self._black_legal_move
 
 
 class Horse:
@@ -297,11 +317,24 @@ class Horse:
     Since horses can be blocked, it is sometimes possible to trap the opponent's horse.
     It is possible for one player's horse to have an asymmetric attack advantage if an opponent's horse is blocked.
     """
+    def __init__(self, color):
+        self._red_legal_move = "yes"
+        self._black_legal_move = "yes"
+        self._color = color
     # red elephant legal spaces if not occupied by red piece
     # one space orthogonal and one space diagonal, cannot move off board
 
     # black elephant legal spaces if not occupied by black piece
     # one space orthogonal and one space diagonal, cannot move off board
+
+    def get_color(self):
+        return self._color
+
+    def get_red_legal_move(self):
+        return self._red_legal_move
+
+    def get_black_legal_move(self):
+        return self._black_legal_move
 
 
 class Chariot:
@@ -312,6 +345,11 @@ class Chariot:
     considered to be the strongest piece in the game due to its freedom of movement and lack of restrictions.
     The chariot is sometimes known as the rook by English-speaking players, since it is like the rook in Western chess.
     """
+    def __init__(self, color):
+        self._red_legal_move = "yes"
+        self._black_legal_move = "yes"
+        self._color = color
+
     # red chariot legal moves
     # any distance orthogonal if no pieces in between, cannot move off board
     # if there is a red piece in between it stops one space short
@@ -321,6 +359,15 @@ class Chariot:
     # any distance orthogonal if no pieces in between, cannot move off board
     # if there is a black piece in between it stops one space short
     # if there is a red piece in between it moves to the space and captures piece
+
+    def get_color(self):
+        return self._color
+
+    def get_red_legal_move(self):
+        return self._red_legal_move
+
+    def get_black_legal_move(self):
+        return self._black_legal_move
 
 
 class Cannon:
@@ -333,6 +380,11 @@ class Cannon:
     Any number of unoccupied spaces, including none, may exist between the cannon, screen, and
     the piece to be captured. Cannons can be exchanged for horses immediately from their starting positions.
     """
+    def __init__(self, color):
+        self._red_legal_move = "yes"
+        self._black_legal_move = "yes"
+        self._color = color
+
     # red cannon legal moves
     # any distance orthogonal if no pieces in between, cannot move off board
     # if there is any piece in its path, followed by a black piece, with any number of
@@ -342,6 +394,15 @@ class Cannon:
     # any distance orthogonal if no pieces in between, cannot move off board
     # if there is any piece in its path, followed by a red piece, with any number of
     # empty spaces before or after the middle piece, it may jump that piece to capture the red piece.
+
+    def get_color(self):
+        return self._color
+
+    def get_red_legal_move(self):
+        return self._red_legal_move
+
+    def get_black_legal_move(self):
+        return self._black_legal_move
 
 
 class Soldier:
@@ -355,6 +416,11 @@ class Soldier:
     a soldier may still move sideways at the enemy's edge.
     The soldier is sometimes called the "pawn" by English-speaking players, due to the pieces' similarities.
     """
+    def __init__(self, color):
+        self._red_legal_move = "yes"
+        self._black_legal_move = "yes"
+        self._color = color
+
     # red soldier legal moves
     # cannot move off board, cannot move to space if occupied by another red piece
     # rank cannot decrease, so rank + 1
@@ -364,3 +430,12 @@ class Soldier:
     # cannot move off board, cannot move to space if occupied by another black piece
     # rank cannot decrease, so rank + 1
     # once rank > 5, rank + 1 or file + 1 or file - 1
+
+    def get_color(self):
+        return self._color
+
+    def get_red_legal_move(self):
+        return self._red_legal_move
+
+    def get_black_legal_move(self):
+        return self._black_legal_move
