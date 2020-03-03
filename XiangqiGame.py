@@ -33,6 +33,8 @@ class XiangqiGame:
                            ["", "", "", "", "", "", "", "", ""],
                            ["", "", "", "", "", "", "", "", ""]]
 
+        red_chariot_1 = Chariot()
+
         # initializes board with red and black game pieces
         self._the_board[0][0] = "red_chariot_1"
         self._the_board[0][1] = "red_horse_1"
@@ -439,6 +441,13 @@ class Soldier:
     therefore cannot retreat; after advancing to the last rank of the board, however,
     a soldier may still move sideways at the enemy's edge.
     The soldier is sometimes called the "pawn" by English-speaking players, due to the pieces' similarities.
-    Soldiers are able to move sideways after crossing the river
     """
+    # red soldier legal moves
+    # cannot move off board, cannot move to space if occupied by another red piece
+    # rank cannot decrease, so rank + 1
+    # once rank > 5, rank + 1 or file + 1 or file - 1
 
+    # black soldier legal moves
+    # cannot move off board, cannot move to space if occupied by another black piece
+    # rank cannot decrease, so rank + 1
+    # once rank > 5, rank + 1 or file + 1 or file - 1
