@@ -1,5 +1,5 @@
 # Author: Jillian Crowley
-# Date: 03/02/2020
+# Date: 03/03/2020
 # Description: From Wikipedia:
 # The Xiangqi game (Chinese chess) represents a battle between two 16-piece armies, with
 # the object of the game being to capture the enemy's general (king).
@@ -23,18 +23,22 @@ class XiangqiGame:
         """
         # initializes board with red and black game pieces
         self._the_board = \
-            [[Chariot("red"), Horse("red"), Elephant("red"), Advisor("red"), General("red"),
-              Advisor("red"), Elephant("red"), Horse("red"), Chariot("red")],
+            [[Chariot("red", 0, 0), Horse("red", 0, 1), Elephant("red", 0, 2),
+              Advisor("red", 0, 3), General("red", 0, 4), Advisor("red", 0, 5),
+              Elephant("red", 0, 6), Horse("red", 0, 7), Chariot("red", 0, 8)],
              ["", "", "", "", "", "", "", "", ""],
-             ["", Cannon("red"), "", "", "", "", "", Cannon("red"), ""],
-             [Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red")],
+             ["", Cannon("red", 2, 1), "", "", "", "", "", Cannon("red", 2, 7), ""],
+             [Soldier("red", 3, 0), "", Soldier("red", 3, 2), "", Soldier("red", 3, 4),
+              "", Soldier("red", 3, 6), "", Soldier("red", 3, 8)],
              ["", "", "", "", "", "", "", "", ""],
              ["", "", "", "", "", "", "", "", ""],
-             [Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red")],
-             ["", Cannon("black"), "", "", "", "", "", Cannon("black"), ""],
+             [Soldier("red", 6, 0), "", Soldier("red", 6, 2), "", Soldier("red", 6, 4),
+              "", Soldier("red", 6, 6), "", Soldier("red", 6, 8)],
+             ["", Cannon("black", 7, 1), "", "", "", "", "", Cannon("black", 7, 7), ""],
              ["", "", "", "", "", "", "", "", ""],
-             [Chariot("black"), Horse("black"), Elephant("black"), Advisor("black"), General("black"),
-              Advisor("black"), Elephant("black"), Horse("black"), Chariot("black")]]
+             [Chariot("black", 9, 0), Horse("black", 9, 1), Elephant("black", 9, 2),
+              Advisor("black", 9, 3), General("black", 9, 4), Advisor("black", 9, 5),
+              Elephant("black", 9, 6), Horse("black", 9, 7), Chariot("black", 9, 8)]]
 
         # initializes game state
         self._game_state = "UNFINISHED"
@@ -53,18 +57,8 @@ class XiangqiGame:
         Returns the board with labeled files and ranks.
         """
         printed_board = self._the_board
-        printed_board.insert(0, ["", "a", "b", "c", "d", "e", "f", "g", "h", "i"])
-        # printed_board[1].insert(0, "1")
-        # printed_board[2].insert(0, "2")
-        # printed_board[3].insert(0, "3")
-        # printed_board[4].insert(0, "4")
-        # printed_board[5].insert(0, "5")
-        # printed_board[6].insert(0, "6")
-        # printed_board[7].insert(0, "7")
-        # printed_board[8].insert(0, "8")
-        # printed_board[9].insert(0, "9")
-        # printed_board[10].insert(0, "10")
-        return print("\n".join(str(rank) for rank in printed_board))
+        printed_board.insert(0, ["a", "b", "c", "d", "e", "f", "g", "h", "i"])
+        return print("\n".join(str(printed_board.index(rank)) + str(rank) for rank in printed_board))
 
     def get_game_state(self):
         """
@@ -160,24 +154,32 @@ class General:
     moving into check, and is therefore not allowed
     """
 
-    def __init__(self, color):
+    def __init__(self, color, rank, file):
 
         self._color = color
+        self._rank = rank
+        self._file = file
+        self._legal_move = True
+        self._in_check = True
 
-        self._red_general_row = 0
-        self._red_general_column = 4
-        self._black_general_row = 9
-        self._black_general_column = 4
+    def get_color(self):
+        return self._color
 
-        self._red_any_legal_moves = "yes"
-        self._black_any_legal_moves = "yes"
-        self._red_legal_move = "yes"
-        self._black_legal_move = "yes"
-        self._any_legal_moves = "yes"
+    def get_rank(self):
+        return self._rank
 
-    def legal_move(self):
+    def get_file(self):
+        return self._file
+
+    def set_rank(self, value):
+        self._rank = value
+
+    def set_file(self, value):
+        self._file = value
+
+    def get_legal_move(self, square_from, square_to):
         """
-        Returns if legal move
+        Returns True if legal move and False if illegal move
         """
         # red general legal spaces if not occupied by red piece
         # [0][3], [0][4], [0][5], [1][3], [1][4], [1][5], [2][3], [2][4], [2][5]
@@ -199,32 +201,10 @@ class General:
         #         row -= 1
         #     self._any_legal_moves = "no"
 
-    def get_color(self):
-        return self._color
-
-    def get_red_general_row(self):
-        return self._red_general_row
-
-    def get_red_general_column(self):
-        return self._red_general_column
-
-    def get_black_general_row(self):
-        return self._red_general_row
-
-    def get_black_general_column(self):
-        return self._red_general_column
-
-    def get_red_any_legal_moves(self):
-        return self._red_any_legal_moves
-
-    def get_black_any_legal_moves(self):
-        return self._black_any_legal_moves
-
-    def get_red_legal_move(self):
-        return self._red_legal_move
-
-    def get_black_legal_move(self):
-        return self._black_legal_move
+    def get_in_check(self):
+        """
+        Returns if General is in check
+        """
 
 
 class Advisor:
@@ -235,35 +215,34 @@ class Advisor:
     The advisor is like the queen in Western chess.
     """
 
-    def __init__(self, color):
-        self._red_advisor_1_row = 0
-        self._red_advisor_1_column = 3
-        self._black_advisor_1_row = 9
-        self._black_advisor_1_column = 3
-
-        self._red_advisor_2_row = 0
-        self._red_advisor_2_column = 5
-        self._black_advisor_2_row = 9
-        self._black_advisor_2_column = 5
-
-        self._red_legal_move = "yes"
-        self._black_legal_move = "yes"
+    def __init__(self, color, rank, file):
         self._color = color
-
-    # red advisor legal spaces if not occupied by red piece
-    # [0][3], [0][5], [1][4], [2][3], [2][5]
-
-    # black general legal spaces if not occupied by black piece
-    # [9][3], [9][5], [8][4], [7][3], [7][5]
+        self._rank = rank
+        self._file = file
+        self._legal_move = True
 
     def get_color(self):
         return self._color
 
-    def get_red_legal_move(self):
-        return self._red_legal_move
+    def get_rank(self):
+        return self._rank
 
-    def get_black_legal_move(self):
-        return self._black_legal_move
+    def get_file(self):
+        return self._file
+
+    def set_rank(self, value):
+        self._rank = value
+
+    def set_file(self, value):
+        self._file = value
+
+    def get_legal_move(self, square_from, square_to):
+        # red advisor legal spaces if not occupied by red piece
+        # [0][3], [0][5], [1][4], [2][3], [2][5]
+
+        # black general legal spaces if not occupied by black piece
+        # [9][3], [9][5], [8][4], [7][3], [7][5]
+        return self._legal_move
 
 
 class Elephant:
@@ -277,35 +256,34 @@ class Elephant:
     The two elephants are often used to defend each other.
     """
 
-    def __init__(self, color):
-        self._red_elephant_1_row = 0
-        self._red_elephant_1_column = 2
-        self._black_elephant_1_row = 9
-        self._black_elephant_1_column = 2
-
-        self._red_elephant_2_row = 0
-        self._red_elephant_2_column = 6
-        self._black_elephant_2_row = 9
-        self._black_elephant_2_column = 6
-
-        self._red_legal_move = "yes"
-        self._black_legal_move = "yes"
+    def __init__(self, color, rank, file):
         self._color = color
-
-    # red elephant legal spaces if not occupied by red piece
-    # [0][2], [0][6], [2][0], [2][4], [2][9], [4][2], [4][7]
-
-    # black elephant legal spaces if not occupied by black piece
-    # [9][2], [9][6], [7][0], [7][4], [7][9], [5][2], [5][7]
+        self._rank = rank
+        self._file = file
+        self._legal_move = True
 
     def get_color(self):
         return self._color
 
-    def get_red_legal_move(self):
-        return self._red_legal_move
+    def get_rank(self):
+        return self._rank
 
-    def get_black_legal_move(self):
-        return self._black_legal_move
+    def get_file(self):
+        return self._file
+
+    def set_rank(self, value):
+        self._rank = value
+
+    def set_file(self, value):
+        self._file = value
+
+    def is_legal_move(self, square_from, square_to):
+        # red elephant legal spaces if not occupied by red piece
+        # [0][2], [0][6], [2][0], [2][4], [2][9], [4][2], [4][7]
+
+        # black elephant legal spaces if not occupied by black piece
+        # [9][2], [9][6], [7][0], [7][4], [7][9], [5][2], [5][7]
+        return self._legal_move
 
 
 class Horse:
@@ -320,34 +298,34 @@ class Horse:
     It is possible for one player's horse to have an asymmetric attack advantage if an opponent's horse is blocked.
     """
 
-    def __init__(self, color):
-        self._red_horse_1_row = 0
-        self._red_horse_1_column = 1
-        self._black_horse_1_row = 9
-        self._black_horse_1_column = 1
-        self._red_horse_2_row = 0
-        self._red_horse_2_column = 7
-        self._black_horse_2_row = 9
-        self._black_horse_2_column = 7
-
-        self._red_legal_move = "yes"
-        self._black_legal_move = "yes"
+    def __init__(self, color, rank, file):
         self._color = color
-
-    # red elephant legal spaces if not occupied by red piece
-    # one space orthogonal and one space diagonal, cannot move off board
-
-    # black elephant legal spaces if not occupied by black piece
-    # one space orthogonal and one space diagonal, cannot move off board
+        self._rank = rank
+        self._file = file
+        self._legal_move = True
 
     def get_color(self):
         return self._color
 
-    def get_red_legal_move(self):
-        return self._red_legal_move
+    def get_rank(self):
+        return self._rank
 
-    def get_black_legal_move(self):
-        return self._black_legal_move
+    def get_file(self):
+        return self._file
+
+    def set_rank(self, value):
+        self._rank = value
+
+    def set_file(self, value):
+        self._file = value
+
+    def get_legal_move(self, square_from, square_to):
+        # red elephant legal spaces if not occupied by red piece
+        # one space orthogonal and one space diagonal, cannot move off board
+
+        # black elephant legal spaces if not occupied by black piece
+        # one space orthogonal and one space diagonal, cannot move off board
+        return self._legal_move
 
 
 class Chariot:
@@ -359,38 +337,38 @@ class Chariot:
     The chariot is sometimes known as the rook by English-speaking players, since it is like the rook in Western chess.
     """
 
-    def __init__(self, color):
-        self._red_chariot_1_row = 0
-        self._red_chariot_1_column = 0
-        self._black_chariot_1_row = 9
-        self._black_chariot_1_column = 0
-        self._red_chariot_2_row = 0
-        self._red_chariot_2_column = 8
-        self._black_chariot_2_row = 9
-        self._black_chariot_2_column = 8
-
-        self._red_legal_move = "yes"
-        self._black_legal_move = "yes"
+    def __init__(self, color, rank, file):
         self._color = color
-
-    # red chariot legal moves
-    # any distance orthogonal if no pieces in between, cannot move off board
-    # if there is a red piece in between it stops one space short
-    # if there is a black piece in between it moves to the space and captures piece
-
-    # black chariot legal moves
-    # any distance orthogonal if no pieces in between, cannot move off board
-    # if there is a black piece in between it stops one space short
-    # if there is a red piece in between it moves to the space and captures piece
+        self._rank = rank
+        self._file = file
+        self._legal_move = True
 
     def get_color(self):
         return self._color
 
-    def get_red_legal_move(self):
-        return self._red_legal_move
+    def get_rank(self):
+        return self._rank
 
-    def get_black_legal_move(self):
-        return self._black_legal_move
+    def get_file(self):
+        return self._file
+
+    def set_rank(self, value):
+        self._rank = value
+
+    def set_file(self, value):
+        self._file = value
+
+    def get_legal_move(self):
+        # red chariot legal moves
+        # any distance orthogonal if no pieces in between, cannot move off board
+        # if there is a red piece in between it stops one space short
+        # if there is a black piece in between it moves to the space and captures piece
+
+        # black chariot legal moves
+        # any distance orthogonal if no pieces in between, cannot move off board
+        # if there is a black piece in between it stops one space short
+        # if there is a red piece in between it moves to the space and captures piece
+        return self._legal_move
 
 
 class Cannon:
@@ -404,38 +382,38 @@ class Cannon:
     the piece to be captured. Cannons can be exchanged for horses immediately from their starting positions.
     """
 
-    def __init__(self, color):
-        self._red_cannon_1_row = 2
-        self._red_cannon_1_column = 1
-        self._black_cannon_1_row = 7
-        self._black_cannon_1_column = 1
-        self._red_cannon_2_row = 2
-        self._red_cannon_2_column = 7
-        self._black_cannon_2_row = 7
-        self._black_cannon_2_column = 7
-
-        self._red_legal_move = "yes"
-        self._black_legal_move = "yes"
+    def __init__(self, color, rank, file):
         self._color = color
-
-    # red cannon legal moves
-    # any distance orthogonal if no pieces in between, cannot move off board
-    # if there is any piece in its path, followed by a black piece, with any number of
-    # empty spaces before or after the middle piece, it may jump that piece to capture the black piece.
-
-    # black cannon legal moves
-    # any distance orthogonal if no pieces in between, cannot move off board
-    # if there is any piece in its path, followed by a red piece, with any number of
-    # empty spaces before or after the middle piece, it may jump that piece to capture the red piece.
+        self._rank = rank
+        self._file = file
+        self._legal_move = True
 
     def get_color(self):
         return self._color
 
-    def get_red_legal_move(self):
-        return self._red_legal_move
+    def get_rank(self):
+        return self._rank
 
-    def get_black_legal_move(self):
-        return self._black_legal_move
+    def get_file(self):
+        return self._file
+
+    def set_rank(self, value):
+        self._rank = value
+
+    def set_file(self, value):
+        self._file = value
+
+    def get_legal_move(self):
+        # red cannon legal moves
+        # any distance orthogonal if no pieces in between, cannot move off board
+        # if there is any piece in its path, followed by a black piece, with any number of
+        # empty spaces before or after the middle piece, it may jump that piece to capture the black piece.
+
+        # black cannon legal moves
+        # any distance orthogonal if no pieces in between, cannot move off board
+        # if there is any piece in its path, followed by a red piece, with any number of
+        # empty spaces before or after the middle piece, it may jump that piece to capture the red piece.
+        return self._legal_move
 
 
 class Soldier:
@@ -449,51 +427,35 @@ class Soldier:
     The soldier is sometimes called the "pawn" by English-speaking players, due to the pieces' similarities.
     """
 
-    def __init__(self, color):
-        self._red_solider_1_row = 3
-        self._red_solider_1_column = 0
-        self._black_solider_1_row = 6
-        self._black_solider_1_column = 0
-
-        self._red_solider_2_row = 3
-        self._red_solider_2_column = 2
-        self._black_solider_2_row = 6
-        self._black_solider_2_column = 2
-
-        self._red_solider_3_row = 3
-        self._red_solider_3_column = 4
-        self._black_solider_3_row = 6
-        self._black_solider_3_column = 4
-
-        self._red_solider_4_row = 3
-        self._red_solider_4_column = 6
-        self._black_solider_4_row = 6
-        self._black_solider_4_column = 6
-
-        self._red_solider_5_row = 3
-        self._red_solider_5_column = 8
-        self._black_solider_5_row = 6
-        self._black_solider_5_column = 8
-
-        self._red_legal_move = "yes"
-        self._black_legal_move = "yes"
+    def __init__(self, color, rank, file):
         self._color = color
-
-    # red soldier legal moves
-    # cannot move off board, cannot move to space if occupied by another red piece
-    # rank cannot decrease, so rank + 1
-    # once rank > 5, rank + 1 or file + 1 or file - 1
-
-    # black soldier legal moves
-    # cannot move off board, cannot move to space if occupied by another black piece
-    # rank cannot decrease, so rank + 1
-    # once rank > 5, rank + 1 or file + 1 or file - 1
+        self._rank = rank
+        self._file = file
+        self._legal_move = True
 
     def get_color(self):
         return self._color
 
-    def get_red_legal_move(self):
-        return self._red_legal_move
+    def get_rank(self):
+        return self._rank
 
-    def get_black_legal_move(self):
-        return self._black_legal_move
+    def get_file(self):
+        return self._file
+
+    def set_rank(self, value):
+        self._rank = value
+
+    def set_file(self, value):
+        self._file = value
+
+    def get_red_legal_move(self):
+        # red soldier legal moves
+        # cannot move off board, cannot move to space if occupied by another red piece
+        # rank cannot decrease, so rank + 1
+        # once rank > 5, rank + 1 or file + 1 or file - 1
+
+        # black soldier legal moves
+        # cannot move off board, cannot move to space if occupied by another black piece
+        # rank cannot decrease, so rank + 1
+        # once rank > 5, rank + 1 or file + 1 or file - 1
+        return self._legal_move
