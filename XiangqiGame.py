@@ -25,84 +25,16 @@ class XiangqiGame:
         self._the_board = \
             [[Chariot("red"), Horse("red"), Elephant("red"), Advisor("red"), General("red"),
               Advisor("red"), Elephant("red"), Horse("red"), Chariot("red")],
-            ["", "", "", "", "", "", "", "", ""],
-            ["", Cannon("red"), "", "", "", "", "", Cannon("red"), ""],
-            [Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red")],
-            ["", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", ""],
-            [Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red")],
-            ["", Cannon("black"), "", "", "", "", "", Cannon("black"), ""],
-            ["", "", "", "", "", "", "", "", ""],
-            [Chariot("black"), Horse("black"), Elephant("black"), Advisor("black"), General("black"),
+             ["", "", "", "", "", "", "", "", ""],
+             ["", Cannon("red"), "", "", "", "", "", Cannon("red"), ""],
+             [Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red")],
+             ["", "", "", "", "", "", "", "", ""],
+             ["", "", "", "", "", "", "", "", ""],
+             [Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red"), "", Soldier("red")],
+             ["", Cannon("black"), "", "", "", "", "", Cannon("black"), ""],
+             ["", "", "", "", "", "", "", "", ""],
+             [Chariot("black"), Horse("black"), Elephant("black"), Advisor("black"), General("black"),
               Advisor("black"), Elephant("black"), Horse("black"), Chariot("black")]]
-
-
-        # Initialize row and column for each piece
-        self._red_chariot_1_row = 0
-        self._red_chariot_1_column = 0
-        self._red_horse_1_row = 0
-        self._red_horse_1_column = 1
-        self._red_elephant_1_row = 0
-        self._red_elephant_1_column = 2
-        self._red_advisor_1_row = 0
-        self._red_advisor_1_column = 3
-        self._red_general_row = 0
-        self._red_general_column = 4
-        self._red_advisor_2_row = 0
-        self._red_advisor_2_column = 5
-        self._red_elephant_2_row = 0
-        self._red_elephant_2_column = 6
-        self._red_horse_2_row = 0
-        self._red_horse_2_column = 7
-        self._red_chariot_2_row = 0
-        self._red_chariot_2_column = 8
-        self._red_cannon_1_row = 2
-        self._red_cannon_1_column = 1
-        self._red_cannon_2_row = 2
-        self._red_cannon_2_column = 7
-        self._red_solider_1_row = 3
-        self._red_solider_1_column = 0
-        self._red_solider_2_row = 3
-        self._red_solider_2_column = 2
-        self._red_solider_3_row = 3
-        self._red_solider_3_column = 4
-        self._red_solider_4_row = 3
-        self._red_solider_4_column = 6
-        self._red_solider_5_row = 3
-        self._red_solider_5_column = 8
-
-        self._black_chariot_1_row = 9
-        self._black_chariot_1_column = 0
-        self._black_horse_1_row = 9
-        self._black_horse_1_column = 1
-        self._black_elephant_1_row = 9
-        self._black_elephant_1_column = 2
-        self._black_advisor_1_row = 9
-        self._black_advisor_1_column = 3
-        self._black_general_row = 9
-        self._black_general_column = 4
-        self._black_advisor_2_row = 9
-        self._black_advisor_2_column = 5
-        self._black_elephant_2_row = 9
-        self._black_elephant_2_column = 6
-        self._black_horse_2_row = 9
-        self._black_horse_2_column = 7
-        self._black_chariot_2_row = 9
-        self._black_chariot_2_column = 8
-        self._black_cannon_1_row = 7
-        self._black_cannon_1_column = 1
-        self._black_cannon_2_row = 7
-        self._black_cannon_2_column = 7
-        self._black_solider_1_row = 6
-        self._black_solider_1_column = 0
-        self._black_solider_2_row = 6
-        self._black_solider_2_column = 2
-        self._black_solider_3_row = 6
-        self._black_solider_3_column = 4
-        self._black_solider_4_row = 6
-        self._black_solider_4_column = 6
-        self._black_solider_5_row = 6
-        self._black_solider_5_column = 8
 
         # initializes game state
         self._game_state = "UNFINISHED"
@@ -110,23 +42,28 @@ class XiangqiGame:
         # initializes player's turn
         self._player_turn = "red"
 
-
     def get_the_board(self):
+        """
+        Returns the board.
+        """
+        return self._the_board
+
+    def print_the_board(self):
         """
         Returns the board with labeled files and ranks.
         """
         printed_board = self._the_board
         printed_board.insert(0, ["", "a", "b", "c", "d", "e", "f", "g", "h", "i"])
-        printed_board[1].insert(0, "1")
-        printed_board[2].insert(0, "2")
-        printed_board[3].insert(0, "3")
-        printed_board[4].insert(0, "4")
-        printed_board[5].insert(0, "5")
-        printed_board[6].insert(0, "6")
-        printed_board[7].insert(0, "7")
-        printed_board[8].insert(0, "8")
-        printed_board[9].insert(0, "9")
-        printed_board[10].insert(0, "10")
+        # printed_board[1].insert(0, "1")
+        # printed_board[2].insert(0, "2")
+        # printed_board[3].insert(0, "3")
+        # printed_board[4].insert(0, "4")
+        # printed_board[5].insert(0, "5")
+        # printed_board[6].insert(0, "6")
+        # printed_board[7].insert(0, "7")
+        # printed_board[8].insert(0, "8")
+        # printed_board[9].insert(0, "9")
+        # printed_board[10].insert(0, "10")
         return print("\n".join(str(rank) for rank in printed_board))
 
     def get_game_state(self):
@@ -135,28 +72,33 @@ class XiangqiGame:
         """
         return self._game_state
 
+    def get_player_turn(self):
+        """
+        Returns the player's turn.
+        """
+        return self._player_turn
 
     def is_in_check(self, player):
         """
         Takes as a parameter either 'red' or 'black' and
         returns True if that player is in check, but returns False otherwise
         """
-        if player == "red" and self._red_general_column == self._black_general_column:
-                row = self._red_general_row + 1
-                while row < self._black_general_row:
-                    if self._the_board[row][self._red_general_column] != "":
-                        return False
-                    row += 1
-                return True
-
-        elif player == "black" and self._black_general_column == self._red_general_column:
-                row = self._black_general_row - 1
-                while row > self._red_general_row:
-                    if self._the_board[row][self._black_general_column] != "":
-                        return False
-                    row -= 1
-                return True
-        return False
+        # if player == "red" and self._red_general_column == self._black_general_column:
+        #     row = self._red_general_row + 1
+        #     while row < self._black_general_row:
+        #         if self._the_board[row][self._red_general_column] != "":
+        #             return False
+        #         row += 1
+        #     return True
+        #
+        # elif player == "black" and self._black_general_column == self._red_general_column:
+        #     row = self._black_general_row - 1
+        #     while row > self._red_general_row:
+        #         if self._the_board[row][self._black_general_column] != "":
+        #             return False
+        #         row -= 1
+        #     return True
+        # return False
 
     def make_move(self, from_square, to_square):
         """
@@ -174,25 +116,28 @@ class XiangqiGame:
 
         letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if self._player_turn not in self._the_board[letters.index(from_square[0])][from_square[1:]] or\
+        if self._player_turn not in self._the_board[letters.index(from_square[0])][from_square[1:]] or \
                 (self._the_board[letters.index(from_square[0])][from_square[1:]].get_color() == "red" and
                  self._the_board[letters.index(from_square[0])][from_square[1:]].get_red_legal_move() == "no") or \
                 (self._the_board[letters.index(from_square[0])][from_square[1:]].get_color() == "black" and
-                 self._the_board[letters.index(from_square[0])][from_square[1:]].get_red_legal_move() == "no") or\
+                 self._the_board[letters.index(from_square[0])][from_square[1:]].get_red_legal_move() == "no") or \
                 self._game_state != "UNFINISHED":
             return False
 
-        self._the_board[letters.index(to_square[0])][to_square[1:]] =\
+        self._the_board[letters.index(to_square[0])][to_square[1:]] = \
             self._the_board[letters.index(from_square[0])][from_square[1:]]
 
         self._the_board[letters.index(from_square[0])][from_square[1:]] = ""
 
-        if self.is_in_check("red") and\
-                self._the_board[self._red_general_row][self._red_general_column].get_red_any_legal_moves() == "no":
-            self._game_state = "BLACK_WON"
-
-        if self.is_in_check("black") and self._black_general.get_black_any_legal_moves() == "no":
-            self._game_state = "RED_WON"
+        # if self.is_in_check("red") and \
+        #         self._the_board[get_red_general_row()][self._red_general_column]. \
+        #                 get_red_any_legal_moves() == "no":
+        #     self._game_state = "BLACK_WON"
+        #
+        # if self.is_in_check("black") and \
+        #         self._the_board[self._black_general_row][self._black_general_column]. \
+        #                 get_black_any_legal_moves() == "no":
+        #     self._game_state = "RED_WON"
 
         if self._player_turn == "red":
             self._player_turn = "black"
@@ -214,39 +159,72 @@ class General:
     In practice, this rule means that creating this situation in the first place means
     moving into check, and is therefore not allowed
     """
-        def __init__(self, color):
-            self._red_any_legal_moves = "yes"
-            self._black_any_legal_moves = "yes"
-            self._red_legal_move = "yes"
-            self._black_legal_move = "yes"
-            self._color = color
+
+    def __init__(self, color):
+
+        self._color = color
+
+        self._red_general_row = 0
+        self._red_general_column = 4
+        self._black_general_row = 9
+        self._black_general_column = 4
+
+        self._red_any_legal_moves = "yes"
+        self._black_any_legal_moves = "yes"
+        self._red_legal_move = "yes"
+        self._black_legal_move = "yes"
+        self._any_legal_moves = "yes"
+
+    def legal_move(self):
+        """
+        Returns if legal move
+        """
         # red general legal spaces if not occupied by red piece
         # [0][3], [0][4], [0][5], [1][3], [1][4], [1][5], [2][3], [2][4], [2][5]
+        # if self._red_general_column == self._black_general_column:
+        #     row = self._red_general_row + 1
+        #     while row < self._black_general_row:
+        #         if get_the_board()[row][self._red_general_column] != "":
+        #             self._any_legal_moves = "yes"
+        #         row += 1
+        #     self._any_legal_moves = "no"
+        #
+        # # black general legal spaces if not occupied by black piece
+        # # [9][3], [9][4], [9][5], [8][3], [8][4], [8][5], [7][3], [7][4], [7][5]
+        # elif self._black_general_column == self._red_general_column:
+        #     row = self._black_general_row - 1
+        #     while row > self._red_general_row:
+        #         if self._the_board(self)[row][self._black_general_column] != "":
+        #             self._any_legal_moves = "yes"
+        #         row -= 1
+        #     self._any_legal_moves = "no"
 
-        # red general illegal spaces
-        # if red general square_to file is black general square_to file and ranks between them are empty
-            self._any_legal_moves = "no"
+    def get_color(self):
+        return self._color
 
-        # black general legal spaces if not occupied by black piece
-        # [9][3], [9][4], [9][5], [8][3], [8][4], [8][5], [7][3], [7][4], [7][5]
+    def get_red_general_row(self):
+        return self._red_general_row
 
-        # black general illegal spaces
-        # if black general square_to file is red general square_to file and ranks between them are empty
+    def get_red_general_column(self):
+        return self._red_general_column
 
-        def get_red_any_legal_moves(self):
-            return self._red_any_legal_moves
+    def get_black_general_row(self):
+        return self._red_general_row
 
-        def get_black_any_legal_moves(self):
-            return self._black_any_legal_moves
+    def get_black_general_column(self):
+        return self._red_general_column
 
-        def get_red_legal_move(self):
-            return self._red_legal_move
+    def get_red_any_legal_moves(self):
+        return self._red_any_legal_moves
 
-        def get_black_legal_move(self):
-            return self._black_legal_move
+    def get_black_any_legal_moves(self):
+        return self._black_any_legal_moves
 
-        def get_color(self):
-            return self._color
+    def get_red_legal_move(self):
+        return self._red_legal_move
+
+    def get_black_legal_move(self):
+        return self._black_legal_move
 
 
 class Advisor:
@@ -256,10 +234,22 @@ class Advisor:
     may not leave the palace, which confines them to five points on the board.
     The advisor is like the queen in Western chess.
     """
+
     def __init__(self, color):
+        self._red_advisor_1_row = 0
+        self._red_advisor_1_column = 3
+        self._black_advisor_1_row = 9
+        self._black_advisor_1_column = 3
+
+        self._red_advisor_2_row = 0
+        self._red_advisor_2_column = 5
+        self._black_advisor_2_row = 9
+        self._black_advisor_2_column = 5
+
         self._red_legal_move = "yes"
         self._black_legal_move = "yes"
         self._color = color
+
     # red advisor legal spaces if not occupied by red piece
     # [0][3], [0][5], [1][4], [2][3], [2][5]
 
@@ -286,10 +276,22 @@ class Elephant:
     restricted to just seven board positions, it can be easily trapped or threatened.
     The two elephants are often used to defend each other.
     """
+
     def __init__(self, color):
+        self._red_elephant_1_row = 0
+        self._red_elephant_1_column = 2
+        self._black_elephant_1_row = 9
+        self._black_elephant_1_column = 2
+
+        self._red_elephant_2_row = 0
+        self._red_elephant_2_column = 6
+        self._black_elephant_2_row = 9
+        self._black_elephant_2_column = 6
+
         self._red_legal_move = "yes"
         self._black_legal_move = "yes"
         self._color = color
+
     # red elephant legal spaces if not occupied by red piece
     # [0][2], [0][6], [2][0], [2][4], [2][9], [4][2], [4][7]
 
@@ -317,10 +319,21 @@ class Horse:
     Since horses can be blocked, it is sometimes possible to trap the opponent's horse.
     It is possible for one player's horse to have an asymmetric attack advantage if an opponent's horse is blocked.
     """
+
     def __init__(self, color):
+        self._red_horse_1_row = 0
+        self._red_horse_1_column = 1
+        self._black_horse_1_row = 9
+        self._black_horse_1_column = 1
+        self._red_horse_2_row = 0
+        self._red_horse_2_column = 7
+        self._black_horse_2_row = 9
+        self._black_horse_2_column = 7
+
         self._red_legal_move = "yes"
         self._black_legal_move = "yes"
         self._color = color
+
     # red elephant legal spaces if not occupied by red piece
     # one space orthogonal and one space diagonal, cannot move off board
 
@@ -345,7 +358,17 @@ class Chariot:
     considered to be the strongest piece in the game due to its freedom of movement and lack of restrictions.
     The chariot is sometimes known as the rook by English-speaking players, since it is like the rook in Western chess.
     """
+
     def __init__(self, color):
+        self._red_chariot_1_row = 0
+        self._red_chariot_1_column = 0
+        self._black_chariot_1_row = 9
+        self._black_chariot_1_column = 0
+        self._red_chariot_2_row = 0
+        self._red_chariot_2_column = 8
+        self._black_chariot_2_row = 9
+        self._black_chariot_2_column = 8
+
         self._red_legal_move = "yes"
         self._black_legal_move = "yes"
         self._color = color
@@ -380,7 +403,17 @@ class Cannon:
     Any number of unoccupied spaces, including none, may exist between the cannon, screen, and
     the piece to be captured. Cannons can be exchanged for horses immediately from their starting positions.
     """
+
     def __init__(self, color):
+        self._red_cannon_1_row = 2
+        self._red_cannon_1_column = 1
+        self._black_cannon_1_row = 7
+        self._black_cannon_1_column = 1
+        self._red_cannon_2_row = 2
+        self._red_cannon_2_column = 7
+        self._black_cannon_2_row = 7
+        self._black_cannon_2_column = 7
+
         self._red_legal_move = "yes"
         self._black_legal_move = "yes"
         self._color = color
@@ -406,7 +439,6 @@ class Cannon:
 
 
 class Soldier:
-
     """
     Represents a Soldier with data member.
     Each side starts with five soldiers. Soldiers begin the game located on every other point one row back
@@ -416,7 +448,33 @@ class Soldier:
     a soldier may still move sideways at the enemy's edge.
     The soldier is sometimes called the "pawn" by English-speaking players, due to the pieces' similarities.
     """
+
     def __init__(self, color):
+        self._red_solider_1_row = 3
+        self._red_solider_1_column = 0
+        self._black_solider_1_row = 6
+        self._black_solider_1_column = 0
+
+        self._red_solider_2_row = 3
+        self._red_solider_2_column = 2
+        self._black_solider_2_row = 6
+        self._black_solider_2_column = 2
+
+        self._red_solider_3_row = 3
+        self._red_solider_3_column = 4
+        self._black_solider_3_row = 6
+        self._black_solider_3_column = 4
+
+        self._red_solider_4_row = 3
+        self._red_solider_4_column = 6
+        self._black_solider_4_row = 6
+        self._black_solider_4_column = 6
+
+        self._red_solider_5_row = 3
+        self._red_solider_5_column = 8
+        self._black_solider_5_row = 6
+        self._black_solider_5_column = 8
+
         self._red_legal_move = "yes"
         self._black_legal_move = "yes"
         self._color = color
