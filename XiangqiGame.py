@@ -1,5 +1,5 @@
 # Author: Jillian Crowley
-# Date: 03/03/2020
+# Date: 03/04/2020
 # Description: From Wikipedia:
 # The Xiangqi game (Chinese chess) represents a battle between two 16-piece armies, with
 # the object of the game being to capture the enemy's general (king).
@@ -76,31 +76,38 @@ class XiangqiGame:
         Takes as a parameter either 'red' or 'black' and
         returns True if that player is in check, but returns False otherwise
         """
-        if isinstance(self._the_board[0][3], General) and isinstance(self._the_board[9][3], General):
-        if isinstance(self._the_board[0][4], General) and isinstance(self._the_board[9][4], General):
-        if isinstance(self._the_board[0][5], General) and isinstance(self._the_board[9][5], General):
-        if isinstance(self._the_board[1][3], General) and isinstance(self._the_board[8][3], General):
-        if isinstance(self._the_board[1][4], General) and isinstance(self._the_board[8][4], General):
-        if isinstance(self._the_board[1][5], General) and isinstance(self._the_board[8][5], General):
-        if isinstance(self._the_board[2][3], General) and isinstance(self._the_board[7][3], General):
-        if isinstance(self._the_board[2][4], General) and isinstance(self._the_board[7][4], General):
-        if isinstance(self._the_board[2][5], General) and isinstance(self._the_board[7][5], General):
+        # pseudocode written here until code is written for ways the Generals can
+        # be threatened by pieces of the opposite color
 
-
-            if player == "red" and self._in_check == self._black_general_column:
-            return True
-
-        elif player == "black" and self._black_general_column == self._red_general_column:
-            return True
-        return False
+        # if player == "red" and \
+        #         ((isinstance(self._the_board[0][3], General) and General is threatened by a black piece) or
+        #         (isinstance(self._the_board[0][4], General) and General is threatened by a black piece) or
+        #         (isinstance(self._the_board[0][5], General) and General is threatened by a black piece) or
+        #         (isinstance(self._the_board[1][3], General) and General is threatened by a black piece) or
+        #         (isinstance(self._the_board[1][4], General) and General is threatened by a black piece) or
+        #         (isinstance(self._the_board[1][5], General) and General is threatened by a black piece) or
+        #         (isinstance(self._the_board[2][3], General) and General is threatened by a black piece) or
+        #         (isinstance(self._the_board[2][4], General) and General is threatened by a black piece) or
+        #         (isinstance(self._the_board[2][5], General) and General is threatened by a black piece)):
+        #     return True
+        #
+        # elif player == "black" and \
+        #         ((isinstance(self._the_board[0][3], General) and General is threatened by a red piece) or
+        #         (isinstance(self._the_board[0][4], General) and General is threatened by a red piece) or
+        #         (isinstance(self._the_board[0][5], General) and General is threatened by a red piece) or
+        #         (isinstance(self._the_board[1][3], General) and General is threatened by a red piece) or
+        #         (isinstance(self._the_board[1][4], General) and General is threatened by a red piece) or
+        #         (isinstance(self._the_board[1][5], General) and General is threatened by a red piece) or
+        #         (isinstance(self._the_board[2][3], General) and General is threatened by a red piece) or
+        #         (isinstance(self._the_board[2][4], General) and General is threatened by a red piece) or
+        #         (isinstance(self._the_board[2][5], General) and General is threatened by a red piece)):
+        #     return True
+        # return False
 
     def make_move(self, from_square, to_square):
         """
         Takes two parameters - strings that represent the square moved from and
         the square moved to. For example, make_move('b3', 'b10').
-        If the square being moved from does not contain a piece belonging to
-        the player whose turn it is, or if the indicated move is not legal, or
-        if the game has already been won, then it should just return False.
         Otherwise it should make the indicated move, remove any captured piece,
         update the game state if necessary, update whose turn it is, and return True
 
@@ -110,15 +117,33 @@ class XiangqiGame:
 
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        # return False where move cannot be made if:
-        # not player's turn
-        # move is not legally available for piece
-        # game state is finished; either RED_WON or BLACK_WON
-        if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() != self._player_turn or \
-                self._the_board[file.index(from_square[0])][from_square[1:]].\
-                    get_legal_move(from_square, to_square) == "no" or self._game_state != "UNFINISHED":
+        # return False where move cannot be made if no piece exists at from_square:
+        if self._the_board[file.index(from_square[0])][from_square[1:]] == ""
             return False
 
+        # return False where move cannot be made if:
+        # not player's turn
+        # move is not legally available for piece based on class definition
+        # game state is finished; either RED_WON or BLACK_WON
+        if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() != self._player_turn or \
+                self._the_board[file.index(from_square[0])][from_square[1:]]. \
+                        get_legal_move(from_square, to_square) or self._game_state != "UNFINISHED":
+            return False
+
+        # check for illegal moves in relation to other pieces and return False
+        # pseudocode is written below for Advisor, Elephant, Horse, Chariot, Cannon, and Soldier and
+        # checkmate conditions for each player until I write code for their illegal moves
+
+        # return False when red piece tries to move to a space occupied by a red piece
+        if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "red" and \
+                self._the_board[file.index(to_square[0])][to_square[1:]].get_color() == "red":
+            return False
+        # return False when black piece tries to move to a space occupied by a black piece
+        if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "black" and \
+                self._the_board[file.index(to_square[0])][to_square[1:]].get_color() == "black":
+            return False
+
+        # return False if illegal move by General
         # return False when Generals cannot face each other along the same file with no intervening pieces
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], General):
             if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "red":
@@ -128,14 +153,14 @@ class XiangqiGame:
                         self._the_board[4][to_square[1:]] == "" and self._the_board[3][to_square[1:]] == "" and
                         self._the_board[2][to_square[1:]] == "" and self._the_board[1][to_square[1:]] == "" or
                         (isinstance(self._the_board[8][to_square[1:]], General) and
-                        self._the_board[7][to_square[1:]] == "" and self._the_board[6][to_square[1:]] == "" and
-                        self._the_board[5][to_square[1:]] == "" and self._the_board[4][to_square[1:]] == "" and
-                        self._the_board[3][to_square[1:]] == "" and self._the_board[2][to_square[1:]] == "" and
-                        self._the_board[1][to_square[1:]] == "") or
+                         self._the_board[7][to_square[1:]] == "" and self._the_board[6][to_square[1:]] == "" and
+                         self._the_board[5][to_square[1:]] == "" and self._the_board[4][to_square[1:]] == "" and
+                         self._the_board[3][to_square[1:]] == "" and self._the_board[2][to_square[1:]] == "" and
+                         self._the_board[1][to_square[1:]] == "") or
                         (isinstance(self._the_board[7][to_square[1:]], General) and
-                        self._the_board[6][to_square[1:]] == "" and self._the_board[5][to_square[1:]] == "" and
-                        self._the_board[4][to_square[1:]] == "" and self._the_board[3][to_square[1:]] == "" and
-                        self._the_board[2][to_square[1:]] == "" and self._the_board[1][to_square[1:]] == "")):
+                         self._the_board[6][to_square[1:]] == "" and self._the_board[5][to_square[1:]] == "" and
+                         self._the_board[4][to_square[1:]] == "" and self._the_board[3][to_square[1:]] == "" and
+                         self._the_board[2][to_square[1:]] == "" and self._the_board[1][to_square[1:]] == "")):
                     return False
 
             if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "black":
@@ -145,44 +170,60 @@ class XiangqiGame:
                         self._the_board[5][to_square[1:]] == "" and self._the_board[6][to_square[1:]] == "" and
                         self._the_board[7][to_square[1:]] == "" and self._the_board[8][to_square[1:]] == "" or
                         (isinstance(self._the_board[8][to_square[1:]], General) and
-                        self._the_board[2][to_square[1:]] == "" and self._the_board[3][to_square[1:]] == "" and
-                        self._the_board[4][to_square[1:]] == "" and self._the_board[5][to_square[1:]] == "" and
-                        self._the_board[6][to_square[1:]] == "" and self._the_board[7][to_square[1:]] == "" and
-                        self._the_board[8][to_square[1:]] == "") or
+                         self._the_board[2][to_square[1:]] == "" and self._the_board[3][to_square[1:]] == "" and
+                         self._the_board[4][to_square[1:]] == "" and self._the_board[5][to_square[1:]] == "" and
+                         self._the_board[6][to_square[1:]] == "" and self._the_board[7][to_square[1:]] == "" and
+                         self._the_board[8][to_square[1:]] == "") or
                         (isinstance(self._the_board[7][to_square[1:]], General) and
-                        self._the_board[3][to_square[1:]] == "" and self._the_board[4][to_square[1:]] == "" and
-                        self._the_board[5][to_square[1:]] == "" and self._the_board[6][to_square[1:]] == "" and
-                        self._the_board[7][to_square[1:]] == "" and self._the_board[8][to_square[1:]] == "")):
+                         self._the_board[3][to_square[1:]] == "" and self._the_board[4][to_square[1:]] == "" and
+                         self._the_board[5][to_square[1:]] == "" and self._the_board[6][to_square[1:]] == "" and
+                         self._the_board[7][to_square[1:]] == "" and self._the_board[8][to_square[1:]] == "")):
                     return False
 
-        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Advisor):
+        # # return False if illegal move by Advsior
+        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Advisor):
+        #     #
+        #
+        # # return False if illegal move by Elephant
+        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Elephant):
+        #     # Elephants cannot jump so return False if there is a piece blocking its first diagonal move
+        #
+        # # return False if illegal move by Horse
+        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Horse):
+        #     # Horses cannot jump so return False if there is a piece blocking its first orthogonal move
+        #
+        # # return False if illegal move by Chariot
+        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Chariot):
+        #     # Chariots cannot jump so return False if there is a piece in its orthogonal path
+        #
+        # # return False if illegal move by Cannon
+        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Cannon):
+        #     # Cannons move any distance orthogonally without jumping, so if square_to is empty,
+        #     # return False if there is a piece in its path
+              # if square_to contains a piece of the opposite color, and there is ONLY ONE piece in the path between
+              # square_from and square_to, then the Cannon may jump to capture and return True
+        #
+        # # return False if illegal move by Soldier
+        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Soldier):
+        #     #
 
-        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Elephant):
-
-        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Horse):
-
-        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Chariot):
-
-        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Cannon):
-
-        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Soldier):
-
-
+        # otherwise, make move and capture piece if applicable
         self._the_board[file.index(to_square[0])][to_square[1:]] = \
             self._the_board[file.index(from_square[0])][from_square[1:]]
 
         self._the_board[file.index(from_square[0])][from_square[1:]] = ""
 
+        # if red General is in checkmate, update _game_state to "BLACK WON"
         # if self.is_in_check("red") and \
-        #         self._the_board[get_red_general_row()][self._red_general_column]. \
-        #                 get_red_any_legal_moves() == "no":
+        #         red General has no legal moves:
         #     self._game_state = "BLACK_WON"
         #
+        # if black General is in checkmate, update _game_state to "RED WON"
         # if self.is_in_check("black") and \
-        #         self._the_board[self._black_general_row][self._black_general_column]. \
-        #                 get_black_any_legal_moves() == "no":
+        #         black General has no legal moves:
         #     self._game_state = "RED_WON"
 
+        # update _player_turn
         if self._player_turn == "red":
             self._player_turn = "black"
 
@@ -236,8 +277,8 @@ class General:
         if self._color == "red" and \
                 file.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
                 ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
-                         (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
-                 to_square[1:] - from_square[1:] == 0)) or \
+                  (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
+                  to_square[1:] - from_square[1:] == 0)) or \
                 (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
                  (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
             return True
@@ -245,12 +286,13 @@ class General:
         if self._color == "black" and \
                 file.index(from_square[0]) > 6 and 6 > from_square[1:] > 2 and \
                 ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
-                         (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
-                 to_square[1:] - from_square[1:] == 0)) or \
+                  (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
+                  to_square[1:] - from_square[1:] == 0)) or \
                 (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
                  (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
             return True
         return False
+
 
 class Advisor:
     """
@@ -289,7 +331,7 @@ class Advisor:
                 (file.index(to_square[0]) == file.index(from_square[0]) + 1 and
                  to_square[1:] == from_square[1:] + 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
-                 to_square[1:] == from_square[1:] - 1) :
+                 to_square[1:] == from_square[1:] - 1):
             return True
 
         if self._color == "black" and \
@@ -297,7 +339,7 @@ class Advisor:
                 (file.index(to_square[0]) == file.index(from_square[0]) + 1 and
                  to_square[1:] == from_square[1:] + 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
-                 to_square[1:] == from_square[1:] - 1) :
+                 to_square[1:] == from_square[1:] - 1):
             return True
         return False
 
@@ -337,6 +379,7 @@ class Elephant:
 
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
+        # Elephants cannot cross the river
         if self._color == "red" and \
                 ((file.index(from_square[0]) == 0 and from_square[1:] == 2) or
                  (file.index(from_square[0]) == 0 and from_square[1:] == 6) or
@@ -348,9 +391,9 @@ class Elephant:
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
                  to_square[1:] == from_square[1:] + 2) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
-                 to_square[1:] == from_square[1:] - 2)  or \
+                 to_square[1:] == from_square[1:] - 2) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 to_square[1:] == from_square[1:] - 2)  or \
+                 to_square[1:] == from_square[1:] - 2) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
                  to_square[1:] == from_square[1:] + 2):
             return True
@@ -366,13 +409,14 @@ class Elephant:
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
                  to_square[1:] == from_square[1:] + 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
-                 to_square[1:] == from_square[1:] - 1)  or \
+                 to_square[1:] == from_square[1:] - 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 to_square[1:] == from_square[1:] - 2)  or \
+                 to_square[1:] == from_square[1:] - 2) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
                  to_square[1:] == from_square[1:] + 2):
             return True
         return False
+
 
 class Horse:
     """
@@ -415,27 +459,28 @@ class Horse:
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
-            (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
-            file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-            file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
-            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
-            file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-            file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
-            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
-            file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]):
-                return True
+                (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
+                 file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
+                 file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+                 file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+                 file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
+                 file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
+                 file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
+                 file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]):
+            return True
 
         if self._color == "black" and \
-            (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
-            file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-            file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
-            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
-            file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-            file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
-            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
-            file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]):
+                (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
+                 file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
+                 file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+                 file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+                 file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
+                 file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
+                 file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
+                 file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]):
             return True
         return False
+
 
 class Chariot:
     """
@@ -545,6 +590,7 @@ class Cannon:
             return True
         return False
 
+
 class Soldier:
     """
     Represents a Soldier with data member.
@@ -593,8 +639,8 @@ class Soldier:
         if self._color == "red" and \
                 file.index(from_square[0]) < file.index(to_square[0]) and \
                 ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
-                         (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
-                 to_square[1:] - from_square[1:] == 0)) or \
+                  (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
+                  to_square[1:] - from_square[1:] == 0)) or \
                 (file.index(from_square[0]) > 4 and file.index(to_square[0]) - file.index(from_square[0]) == 0 and
                  (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
             return True
@@ -608,4 +654,3 @@ class Soldier:
                  (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
             return True
         return False
-
