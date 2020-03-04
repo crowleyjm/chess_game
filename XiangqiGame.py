@@ -21,24 +21,25 @@ class XiangqiGame:
         Locations on the board will be specified using "algebraic notation",
         with columns labeled a-i and rows labeled 1-10, with row 1 being the Red side and row 10 the Black side
         """
-        # initializes board with red and black game pieces
+        # initializes board with red and black game pieces and labeled rows/ranks and columns/files
         self._the_board = \
             [[Chariot("red", 0, 0), Horse("red", 0, 1), Elephant("red", 0, 2),
               Advisor("red", 0, 3), General("red", 0, 4), Advisor("red", 0, 5),
-              Elephant("red", 0, 6), Horse("red", 0, 7), Chariot("red", 0, 8)],
-             ["", "", "", "", "", "", "", "", ""],
-             ["", Cannon("red", 2, 1), "", "", "", "", "", Cannon("red", 2, 7), ""],
+              Elephant("red", 0, 6), Horse("red", 0, 7), Chariot("red", 0, 8), "1"],
+             ["", "", "", "", "", "", "", "", "", "2"],
+             ["", Cannon("red", 2, 1), "", "", "", "", "", Cannon("red", 2, 7), "", "3"],
              [Soldier("red", 3, 0), "", Soldier("red", 3, 2), "", Soldier("red", 3, 4),
-              "", Soldier("red", 3, 6), "", Soldier("red", 3, 8)],
-             ["", "", "", "", "", "", "", "", ""],
-             ["", "", "", "", "", "", "", "", ""],
+              "", Soldier("red", 3, 6), "", Soldier("red", 3, 8), "4"],
+             ["", "", "", "", "", "", "", "", "", "5"],
+             ["", "", "", "", "", "", "", "", "", "6"],
              [Soldier("red", 6, 0), "", Soldier("red", 6, 2), "", Soldier("red", 6, 4),
-              "", Soldier("red", 6, 6), "", Soldier("red", 6, 8)],
-             ["", Cannon("black", 7, 1), "", "", "", "", "", Cannon("black", 7, 7), ""],
-             ["", "", "", "", "", "", "", "", ""],
+              "", Soldier("red", 6, 6), "", Soldier("red", 6, 8), "7"],
+             ["", Cannon("black", 7, 1), "", "", "", "", "", Cannon("black", 7, 7), "", "8"],
+             ["", "", "", "", "", "", "", "", "", "9"],
              [Chariot("black", 9, 0), Horse("black", 9, 1), Elephant("black", 9, 2),
               Advisor("black", 9, 3), General("black", 9, 4), Advisor("black", 9, 5),
-              Elephant("black", 9, 6), Horse("black", 9, 7), Chariot("black", 9, 8)]]
+              Elephant("black", 9, 6), Horse("black", 9, 7), Chariot("black", 9, 8), "10"],
+             ["a", "b", "c", "d", "e", "f", "g", "h", "i"]]
 
         # initializes game state
         self._game_state = "UNFINISHED"
@@ -56,9 +57,7 @@ class XiangqiGame:
         """
         Returns the board with labeled files and ranks.
         """
-        printed_board = self._the_board
-        printed_board.insert(0, ["a", "b", "c", "d", "e", "f", "g", "h", "i"])
-        return print("\n".join(str(printed_board.index(rank)) + str(rank) for rank in printed_board))
+        return print("\n".join(str(rank) for rank in self._the_board))
 
     def get_game_state(self):
         """
@@ -77,22 +76,23 @@ class XiangqiGame:
         Takes as a parameter either 'red' or 'black' and
         returns True if that player is in check, but returns False otherwise
         """
-        # if player == "red" and self._red_general_column == self._black_general_column:
-        #     row = self._red_general_row + 1
-        #     while row < self._black_general_row:
-        #         if self._the_board[row][self._red_general_column] != "":
-        #             return False
-        #         row += 1
-        #     return True
-        #
-        # elif player == "black" and self._black_general_column == self._red_general_column:
-        #     row = self._black_general_row - 1
-        #     while row > self._red_general_row:
-        #         if self._the_board[row][self._black_general_column] != "":
-        #             return False
-        #         row -= 1
-        #     return True
-        # return False
+        if isinstance(self._the_board[0][3], General) and isinstance(self._the_board[9][3], General):
+        if isinstance(self._the_board[0][4], General) and isinstance(self._the_board[9][4], General):
+        if isinstance(self._the_board[0][5], General) and isinstance(self._the_board[9][5], General):
+        if isinstance(self._the_board[1][3], General) and isinstance(self._the_board[8][3], General):
+        if isinstance(self._the_board[1][4], General) and isinstance(self._the_board[8][4], General):
+        if isinstance(self._the_board[1][5], General) and isinstance(self._the_board[8][5], General):
+        if isinstance(self._the_board[2][3], General) and isinstance(self._the_board[7][3], General):
+        if isinstance(self._the_board[2][4], General) and isinstance(self._the_board[7][4], General):
+        if isinstance(self._the_board[2][5], General) and isinstance(self._the_board[7][5], General):
+
+
+            if player == "red" and self._in_check == self._black_general_column:
+            return True
+
+        elif player == "black" and self._black_general_column == self._red_general_column:
+            return True
+        return False
 
     def make_move(self, from_square, to_square):
         """
@@ -108,20 +108,59 @@ class XiangqiGame:
         Unlike in chess, in which stalemate is a draw, in xiangqi, it is a loss for the stalemated player.
         """
 
-        letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if self._player_turn not in self._the_board[letters.index(from_square[0])][from_square[1:]] or \
-                (self._the_board[letters.index(from_square[0])][from_square[1:]].get_color() == "red" and
-                 self._the_board[letters.index(from_square[0])][from_square[1:]].get_red_legal_move() == "no") or \
-                (self._the_board[letters.index(from_square[0])][from_square[1:]].get_color() == "black" and
-                 self._the_board[letters.index(from_square[0])][from_square[1:]].get_red_legal_move() == "no") or \
-                self._game_state != "UNFINISHED":
+        # return False where move cannot be made if
+        # not player's turn
+        # move is not legally available for piece
+        # game state is finished (RED_WON or BLACK_WON)
+        if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() != self._player_turn or \
+                self._the_board[file.index(from_square[0])][from_square[1:]].\
+                    get_legal_move(from_square, to_square) == "no" or self._game_state != "UNFINISHED":
             return False
 
-        self._the_board[letters.index(to_square[0])][to_square[1:]] = \
-            self._the_board[letters.index(from_square[0])][from_square[1:]]
+        # return False where Generals cannot face each other along the same file with no intervening pieces
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], General):
+            if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "red":
+                if ((isinstance(self._the_board[9][to_square[1:]], General) and
+                        self._the_board[8][to_square[1:]] == "" and self._the_board[7][to_square[1:]] == "" and
+                        self._the_board[6][to_square[1:]] == "" and self._the_board[5][to_square[1:]] == "" and
+                        self._the_board[4][to_square[1:]] == "" and self._the_board[3][to_square[1:]] == "" and
+                        self._the_board[2][to_square[1:]] == "" and self._the_board[1][to_square[1:]] == "" or
+                        (isinstance(self._the_board[8][to_square[1:]], General) and
+                        self._the_board[7][to_square[1:]] == "" and self._the_board[6][to_square[1:]] == "" and
+                        self._the_board[5][to_square[1:]] == "" and self._the_board[4][to_square[1:]] == "" and
+                        self._the_board[3][to_square[1:]] == "" and self._the_board[2][to_square[1:]] == "" and
+                        self._the_board[1][to_square[1:]] == "") or
+                        (isinstance(self._the_board[7][to_square[1:]], General) and
+                        self._the_board[6][to_square[1:]] == "" and self._the_board[5][to_square[1:]] == "" and
+                        self._the_board[4][to_square[1:]] == "" and self._the_board[3][to_square[1:]] == "" and
+                        self._the_board[2][to_square[1:]] == "" and self._the_board[1][to_square[1:]] == "")):
+                    return False
 
-        self._the_board[letters.index(from_square[0])][from_square[1:]] = ""
+            if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "black":
+                if isinstance(self._the_board[0][to_square[1:]], General) or \
+                        isinstance(self._the_board[1][to_square[1:]], General) or \
+                        isinstance(self._the_board[2][to_square[1:]], General):
+                    return False
+
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Advisor):
+
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Elephant):
+
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Horse):
+
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Chariot):
+
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Cannon):
+
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Soldier):
+
+
+        self._the_board[file.index(to_square[0])][to_square[1:]] = \
+            self._the_board[file.index(from_square[0])][from_square[1:]]
+
+        self._the_board[file.index(from_square[0])][from_square[1:]] = ""
 
         # if self.is_in_check("red") and \
         #         self._the_board[get_red_general_row()][self._red_general_column]. \
@@ -183,33 +222,10 @@ class General:
         """
         # red general legal spaces if not occupied by red piece
         # [0][3], [0][4], [0][5], [1][3], [1][4], [1][5], [2][3], [2][4], [2][5]
-        letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if letters.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
-                letters.index(to_square[0])-letters.index(from_square[0])
-
-    def get_in_check(self):
-        """
-        Returns if General is in check
-        """
-        # if self._red_general_column == self._black_general_column:
-        #     row = self._red_general_row + 1
-        #     while row < self._black_general_row:
-        #         if get_the_board()[row][self._red_general_column] != "":
-        #             self._any_legal_moves = "yes"
-        #         row += 1
-        #     self._any_legal_moves = "no"
-        #
-        # # black general legal spaces if not occupied by black piece
-        # # [9][3], [9][4], [9][5], [8][3], [8][4], [8][5], [7][3], [7][4], [7][5]
-        # elif self._black_general_column == self._red_general_column:
-        #     row = self._black_general_row - 1
-        #     while row > self._red_general_row:
-        #         if self._the_board(self)[row][self._black_general_column] != "":
-        #             self._any_legal_moves = "yes"
-        #         row -= 1
-        #     self._any_legal_moves = "no"
-
+        # if file.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
+        #         file.index(to_square[0])-file.index(from_square[0])
 
 class Advisor:
     """
