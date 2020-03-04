@@ -417,8 +417,8 @@ class Horse:
         if self._color == "red" and \
             (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
             file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
             file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
             file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
             file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
             file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
@@ -428,8 +428,8 @@ class Horse:
         if self._color == "black" and \
             (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
             file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
             file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
             file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
             file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
             file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
