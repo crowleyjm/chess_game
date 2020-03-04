@@ -532,7 +532,18 @@ class Cannon:
         # any distance orthogonal if no pieces in between, cannot move off board
         # if there is any piece in its path, followed by a red piece, with any number of
         # empty spaces before or after the middle piece, it may jump that piece to capture the red piece.
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
+        if self._color == "red" and \
+                file.index(to_square[0]) - file.index(from_square[0] == 0) or \
+                to_square[1:] - from_square[1:] == 0:
+            return True
+
+        if self._color == "black" and \
+                file.index(to_square[0]) - file.index(from_square[0] == 0) or \
+                to_square[1:] - from_square[1:] == 0:
+            return True
+        return False
 
 class Soldier:
     """
@@ -576,4 +587,25 @@ class Soldier:
         # cannot move off board, cannot move to space if occupied by another black piece
         # rank cannot decrease, so rank + 1
         # once rank > 5, rank + 1 or file + 1 or file - 1
+
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
+        if self._color == "red" and \
+                file.index(from_square[0]) < file.index(to_square[0]) and \
+                ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
+                         (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
+                 to_square[1:] - from_square[1:] == 0)) or \
+                (file.index(from_square[0]) > 4 and file.index(to_square[0]) - file.index(from_square[0]) == 0 and
+                 (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
+            return True
+
+        if self._color == "black" and \
+                file.index(from_square[0]) > file.index(to_square[0]) and \
+                ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
+                  (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
+                  to_square[1:] - from_square[1:] == 0)) or \
+                (file.index(from_square[0]) < 5 and file.index(to_square[0]) - file.index(from_square[0]) == 0 and
+                 (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
+            return True
+        return False
 
