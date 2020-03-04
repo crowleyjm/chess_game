@@ -334,15 +334,17 @@ class Elephant:
         self._file = value
 
     def is_legal_move(self, from_square, to_square):
-        # red elephant legal spaces if not occupied by red piece
-        # [0][2], [0][6], [2][0], [2][4], [2][9], [4][2], [4][7]
 
-        # black elephant legal spaces if not occupied by black piece
-        # [9][2], [9][6], [7][0], [7][4], [7][9], [5][2], [5][7]
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
         if self._color == "red" and \
-                file.index(from_square[0]) < 5 and \
-                (from_square[1:] == 0 or from_square[1:] == 2 or from_square[1:] == 4 or
-                        from_square[1:] == 6  or from_square[1:] == 7  or from_square[1:] == 9) and \
+                ((file.index(from_square[0]) == 0 and from_square[1:] == 2) or
+                 (file.index(from_square[0]) == 0 and from_square[1:] == 6) or
+                 (file.index(from_square[0]) == 2 and from_square[1:] == 0) or
+                 (file.index(from_square[0]) == 2 and from_square[1:] == 4) or
+                 (file.index(from_square[0]) == 2 and from_square[1:] == 9) or
+                 (file.index(from_square[0]) == 4 and from_square[1:] == 2) or
+                 (file.index(from_square[0]) == 4 and from_square[1:] == 7)) and \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
                  to_square[1:] == from_square[1:] + 2) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
@@ -354,9 +356,13 @@ class Elephant:
             return True
 
         if self._color == "black" and \
-                file.index(from_square[0]) > 4 and \
-                (from_square[1:] == 0 or from_square[1:] == 2 or from_square[1:] == 4 or
-                        from_square[1:] == 6  or from_square[1:] == 7  or from_square[1:] == 9) and \
+                ((file.index(from_square[0]) == 9 and from_square[1:] == 2) or
+                 (file.index(from_square[0]) == 9 and from_square[1:] == 6) or
+                 (file.index(from_square[0]) == 7 and from_square[1:] == 0) or
+                 (file.index(from_square[0]) == 7 and from_square[1:] == 4) or
+                 (file.index(from_square[0]) == 7 and from_square[1:] == 9) or
+                 (file.index(from_square[0]) == 5 and from_square[1:] == 2) or
+                 (file.index(from_square[0]) == 5 and from_square[1:] == 7)) and \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
                  to_square[1:] == from_square[1:] + 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
