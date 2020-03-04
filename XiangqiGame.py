@@ -110,7 +110,7 @@ class XiangqiGame:
 
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        # return False where move cannot be made if
+        # return False where move cannot be made if:
         # not player's turn
         # move is not legally available for piece
         # game state is finished (RED_WON or BLACK_WON)
@@ -119,10 +119,10 @@ class XiangqiGame:
                     get_legal_move(from_square, to_square) == "no" or self._game_state != "UNFINISHED":
             return False
 
-        # return False where Generals cannot face each other along the same file with no intervening pieces
+        # return False when Generals cannot face each other along the same file with no intervening pieces
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], General):
             if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "red":
-                if ((isinstance(self._the_board[9][to_square[1:]], General) and
+                if (isinstance(self._the_board[9][to_square[1:]], General) and
                         self._the_board[8][to_square[1:]] == "" and self._the_board[7][to_square[1:]] == "" and
                         self._the_board[6][to_square[1:]] == "" and self._the_board[5][to_square[1:]] == "" and
                         self._the_board[4][to_square[1:]] == "" and self._the_board[3][to_square[1:]] == "" and
@@ -139,9 +139,20 @@ class XiangqiGame:
                     return False
 
             if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "black":
-                if isinstance(self._the_board[0][to_square[1:]], General) or \
-                        isinstance(self._the_board[1][to_square[1:]], General) or \
-                        isinstance(self._the_board[2][to_square[1:]], General):
+                if (isinstance(self._the_board[0][to_square[1:]], General) and
+                        self._the_board[1][to_square[1:]] == "" and self._the_board[2][to_square[1:]] == "" and
+                        self._the_board[3][to_square[1:]] == "" and self._the_board[4][to_square[1:]] == "" and
+                        self._the_board[5][to_square[1:]] == "" and self._the_board[6][to_square[1:]] == "" and
+                        self._the_board[7][to_square[1:]] == "" and self._the_board[8][to_square[1:]] == "" or
+                        (isinstance(self._the_board[8][to_square[1:]], General) and
+                        self._the_board[2][to_square[1:]] == "" and self._the_board[3][to_square[1:]] == "" and
+                        self._the_board[4][to_square[1:]] == "" and self._the_board[5][to_square[1:]] == "" and
+                        self._the_board[6][to_square[1:]] == "" and self._the_board[7][to_square[1:]] == "" and
+                        self._the_board[8][to_square[1:]] == "") or
+                        (isinstance(self._the_board[7][to_square[1:]], General) and
+                        self._the_board[3][to_square[1:]] == "" and self._the_board[4][to_square[1:]] == "" and
+                        self._the_board[5][to_square[1:]] == "" and self._the_board[6][to_square[1:]] == "" and
+                        self._the_board[7][to_square[1:]] == "" and self._the_board[8][to_square[1:]] == "")):
                     return False
 
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Advisor):
