@@ -18,7 +18,7 @@ class XiangqiGame:
     def __init__(self):
         """
         Returns a XiangqiGame object with initialized board.
-        Locations on the board will be specified using "algebraic notation",
+        Locations on the board are specified using "algebraic notation",
         with columns labeled a-i and rows labeled 1-10, with row 1 being the Red side and row 10 the Black side
         """
         # initializes board with red and black game pieces and labeled rows/ranks and columns/files
@@ -55,7 +55,7 @@ class XiangqiGame:
 
     def print_the_board(self):
         """
-        Returns the board with labeled files and ranks.
+        Returns the printed board with newline for each rank.
         """
         return print("\n".join(str(rank) for rank in self._the_board))
 
