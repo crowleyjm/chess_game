@@ -235,18 +235,20 @@ class General:
 
         if self._color == "red" and \
                 file.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
-                (file.index(from_square[0] - 1 == file.index(to_square[0] and
-                 to_square[1:] - from_square[1:] == 0) or \
+                ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
+                         (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
+                 to_square[1:] - from_square[1:] == 0)) or \
                 (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
-                -2 < to_square[1:] - from_square[1:] < 2):
+                 (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
             return True
 
         if self._color == "black" and \
                 file.index(from_square[0]) > 6 and 6 > from_square[1:] > 2 and \
-                (-2 < file.index(to_square[0]) - file.index(from_square[0]) < 2 and
-                 to_square[1:] - from_square[1:] == 0) or \
+                ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
+                         (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
+                 to_square[1:] - from_square[1:] == 0)) or \
                 (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
-                -2 < to_square[1:] - from_square[1:] < 2):
+                 (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
             return True
         return False
 
@@ -279,25 +281,25 @@ class Advisor:
         self._file = value
 
     def is_legal_move(self, from_square, to_square):
-        # red advisor legal spaces if not occupied by red piece
-        # [0][3], [0][5], [1][4], [2][3], [2][5]
 
-        # black general legal spaces if not occupied by black piece
-        # [9][3], [9][5], [8][4], [7][3], [7][5]
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
         if self._color == "red" and \
                 file.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
-                (file.index(to_square[0]) == file.index(from_square[0]) + 1 or
-                 file.index(to_square[0]) == file.index(from_square[0]) - 1      :
+                (file.index(to_square[0]) == file.index(from_square[0]) + 1 and
+                 to_square[1:] == from_square[1:] + 1) or \
+                (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
+                 to_square[1:] == from_square[1:] - 1) :
             return True
 
         if self._color == "black" and \
                 file.index(from_square[0]) > 6 and 6 > from_square[1:] > 2 and \
-                (-2 < file.index(to_square[0]) - file.index(from_square[0]) < 2 and
-                 file.index(to_square[1:]) - file.index(from_square[1:]) == 0) or \
-                (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
-                -2 < file.index(to_square[1:]) - file.index(from_square[1:]) < 2):
+                (file.index(to_square[0]) == file.index(from_square[0]) + 1 and
+                 to_square[1:] == from_square[1:] + 1) or \
+                (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
+                 to_square[1:] == from_square[1:] - 1) :
             return True
-        return self._legal_move
+        return False
 
 
 class Elephant:
@@ -315,7 +317,6 @@ class Elephant:
         self._color = color
         self._rank = rank
         self._file = file
-        self._legal_move = True
 
     def get_color(self):
         return self._color
@@ -338,8 +339,34 @@ class Elephant:
 
         # black elephant legal spaces if not occupied by black piece
         # [9][2], [9][6], [7][0], [7][4], [7][9], [5][2], [5][7]
-        return self._legal_move
+        if self._color == "red" and \
+                file.index(from_square[0]) < 5 and \
+                (from_square[1:] == 0 or from_square[1:] == 2 or from_square[1:] == 4 or
+                        from_square[1:] == 6  or from_square[1:] == 7  or from_square[1:] == 9) and \
+                (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
+                 to_square[1:] == from_square[1:] + 2) or \
+                (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
+                 to_square[1:] == from_square[1:] - 2)  or \
+                (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
+                 to_square[1:] == from_square[1:] - 2)  or \
+                (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
+                 to_square[1:] == from_square[1:] + 2):
+            return True
 
+        if self._color == "black" and \
+                file.index(from_square[0]) > 4 and \
+                (from_square[1:] == 0 or from_square[1:] == 2 or from_square[1:] == 4 or
+                        from_square[1:] == 6  or from_square[1:] == 7  or from_square[1:] == 9) and \
+                (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
+                 to_square[1:] == from_square[1:] + 1) or \
+                (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
+                 to_square[1:] == from_square[1:] - 1)  or \
+                (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
+                 to_square[1:] == from_square[1:] - 2)  or \
+                (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
+                 to_square[1:] == from_square[1:] + 2):
+            return True
+        return False
 
 class Horse:
     """
@@ -357,7 +384,6 @@ class Horse:
         self._color = color
         self._rank = rank
         self._file = file
-        self._legal_move = True
 
     def get_color(self):
         return self._color
@@ -380,7 +406,6 @@ class Horse:
 
         # black elephant legal spaces if not occupied by black piece
         # one space orthogonal and one space diagonal, cannot move off board
-        return self._legal_move
 
 
 class Chariot:
@@ -396,7 +421,6 @@ class Chariot:
         self._color = color
         self._rank = rank
         self._file = file
-        self._legal_move = True
 
     def get_color(self):
         return self._color
@@ -423,7 +447,6 @@ class Chariot:
         # any distance orthogonal if no pieces in between, cannot move off board
         # if there is a black piece in between it stops one space short
         # if there is a red piece in between it moves to the space and captures piece
-        return self._legal_move
 
 
 class Cannon:
@@ -468,7 +491,6 @@ class Cannon:
         # any distance orthogonal if no pieces in between, cannot move off board
         # if there is any piece in its path, followed by a red piece, with any number of
         # empty spaces before or after the middle piece, it may jump that piece to capture the red piece.
-        return self._legal_move
 
 
 class Soldier:
@@ -513,4 +535,4 @@ class Soldier:
         # cannot move off board, cannot move to space if occupied by another black piece
         # rank cannot decrease, so rank + 1
         # once rank > 5, rank + 1 or file + 1 or file - 1
-        return self._legal_move
+
