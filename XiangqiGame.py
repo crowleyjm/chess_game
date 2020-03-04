@@ -113,7 +113,7 @@ class XiangqiGame:
         # return False where move cannot be made if:
         # not player's turn
         # move is not legally available for piece
-        # game state is finished (RED_WON or BLACK_WON)
+        # game state is finished; either RED_WON or BLACK_WON
         if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() != self._player_turn or \
                 self._the_board[file.index(from_square[0])][from_square[1:]].\
                     get_legal_move(from_square, to_square) == "no" or self._game_state != "UNFINISHED":
@@ -209,7 +209,6 @@ class General:
         self._color = color
         self._rank = rank
         self._file = file
-        self._legal_move = True
         self._in_check = True
 
     def get_color(self):
@@ -227,16 +226,29 @@ class General:
     def set_file(self, value):
         self._file = value
 
-    def get_legal_move(self, from_square, to_square):
+    def is_legal_move(self, from_square, to_square):
         """
         Returns True if legal move and False if illegal move
+        Only considers space itself and move style (one space orthogonally)
         """
-        # red general legal spaces if not occupied by red piece
-        # [0][3], [0][4], [0][5], [1][3], [1][4], [1][5], [2][3], [2][4], [2][5]
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        # if file.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
-        #         file.index(to_square[0])-file.index(from_square[0])
+        if self._color == "red" and \
+                file.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
+                (file.index(from_square[0] - 1 == file.index(to_square[0] and
+                 to_square[1:] - from_square[1:] == 0) or \
+                (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
+                -2 < to_square[1:] - from_square[1:] < 2):
+            return True
+
+        if self._color == "black" and \
+                file.index(from_square[0]) > 6 and 6 > from_square[1:] > 2 and \
+                (-2 < file.index(to_square[0]) - file.index(from_square[0]) < 2 and
+                 to_square[1:] - from_square[1:] == 0) or \
+                (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
+                -2 < to_square[1:] - from_square[1:] < 2):
+            return True
+        return False
 
 class Advisor:
     """
@@ -250,7 +262,6 @@ class Advisor:
         self._color = color
         self._rank = rank
         self._file = file
-        self._legal_move = True
 
     def get_color(self):
         return self._color
@@ -267,12 +278,25 @@ class Advisor:
     def set_file(self, value):
         self._file = value
 
-    def get_legal_move(self, from_square, to_square):
+    def is_legal_move(self, from_square, to_square):
         # red advisor legal spaces if not occupied by red piece
         # [0][3], [0][5], [1][4], [2][3], [2][5]
 
         # black general legal spaces if not occupied by black piece
         # [9][3], [9][5], [8][4], [7][3], [7][5]
+        if self._color == "red" and \
+                file.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
+                (file.index(to_square[0]) == file.index(from_square[0]) + 1 or
+                 file.index(to_square[0]) == file.index(from_square[0]) - 1      :
+            return True
+
+        if self._color == "black" and \
+                file.index(from_square[0]) > 6 and 6 > from_square[1:] > 2 and \
+                (-2 < file.index(to_square[0]) - file.index(from_square[0]) < 2 and
+                 file.index(to_square[1:]) - file.index(from_square[1:]) == 0) or \
+                (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
+                -2 < file.index(to_square[1:]) - file.index(from_square[1:]) < 2):
+            return True
         return self._legal_move
 
 
