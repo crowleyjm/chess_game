@@ -407,12 +407,35 @@ class Horse:
         self._file = value
 
     def get_legal_move(self, from_square, to_square):
-        # red elephant legal spaces if not occupied by red piece
+        # red horse legal spaces if not occupied by red piece
         # one space orthogonal and one space diagonal, cannot move off board
 
-        # black elephant legal spaces if not occupied by black piece
+        # black horse legal spaces if not occupied by black piece
         # one space orthogonal and one space diagonal, cannot move off board
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
+        if self._color == "red" and \
+            (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
+            file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
+            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+            file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+            file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
+            file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
+            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
+            file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]):
+                return True
+
+        if self._color == "black" and \
+            (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
+            file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
+            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+            file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
+            file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
+            file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
+            file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
+            file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]):
+            return True
+        return False
 
 class Chariot:
     """
@@ -453,6 +476,18 @@ class Chariot:
         # any distance orthogonal if no pieces in between, cannot move off board
         # if there is a black piece in between it stops one space short
         # if there is a red piece in between it moves to the space and captures piece
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
+        if self._color == "red" and \
+                file.index(to_square[0]) - file.index(from_square[0] == 0) or \
+                to_square[1:] - from_square[1:] == 0:
+            return True
+
+        if self._color == "black" and \
+                file.index(to_square[0]) - file.index(from_square[0] == 0) or \
+                to_square[1:] - from_square[1:] == 0:
+            return True
+        return False
 
 
 class Cannon:
