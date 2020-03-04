@@ -323,7 +323,9 @@ class Advisor:
         self._file = value
 
     def is_legal_move(self, from_square, to_square):
+        """
 
+        """
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
