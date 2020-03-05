@@ -23,22 +23,22 @@ class XiangqiGame:
         """
         # initializes board with red and black game pieces and labeled rows/ranks and columns/files
         self._the_board = \
-            [[Chariot("red", 0, 0), Horse("red", 0, 1), Elephant("red", 0, 2),
-              Advisor("red", 0, 3), General("red", 0, 4), Advisor("red", 0, 5),
-              Elephant("red", 0, 6), Horse("red", 0, 7), Chariot("red", 0, 8), "1"],
+            [[Chariot("red"), Horse("red"), Elephant("red"),
+              Advisor("red"), General("red"), Advisor("red"),
+              Elephant("red"), Horse("red"), Chariot("red"), "1"],
              ["", "", "", "", "", "", "", "", "", "2"],
-             ["", Cannon("red", 2, 1), "", "", "", "", "", Cannon("red", 2, 7), "", "3"],
-             [Soldier("red", 3, 0), "", Soldier("red", 3, 2), "", Soldier("red", 3, 4),
-              "", Soldier("red", 3, 6), "", Soldier("red", 3, 8), "4"],
+             ["", Cannon("red"), "", "", "", "", "", Cannon("red"), "", "3"],
+             [Soldier("red"), "", Soldier("red"), "", Soldier("red"),
+              "", Soldier("red"), "", Soldier("red"), "4"],
              ["", "", "", "", "", "", "", "", "", "5"],
              ["", "", "", "", "", "", "", "", "", "6"],
-             [Soldier("red", 6, 0), "", Soldier("red", 6, 2), "", Soldier("red", 6, 4),
-              "", Soldier("red", 6, 6), "", Soldier("red", 6, 8), "7"],
-             ["", Cannon("black", 7, 1), "", "", "", "", "", Cannon("black", 7, 7), "", "8"],
+             [Soldier("red"), "", Soldier("red"), "", Soldier("red"),
+              "", Soldier("red"), "", Soldier("red"), "7"],
+             ["", Cannon("black"), "", "", "", "", "", Cannon("black"), "", "8"],
              ["", "", "", "", "", "", "", "", "", "9"],
-             [Chariot("black", 9, 0), Horse("black", 9, 1), Elephant("black", 9, 2),
-              Advisor("black", 9, 3), General("black", 9, 4), Advisor("black", 9, 5),
-              Elephant("black", 9, 6), Horse("black", 9, 7), Chariot("black", 9, 8), "10"],
+             [Chariot("black"), Horse("black"), Elephant("black"),
+              Advisor("black"), General("black"), Advisor("black"),
+              Elephant("black"), Horse("black"), Chariot("black"), "10"],
              ["a", "b", "c", "d", "e", "f", "g", "h", "i"]]
 
         # initializes game state
@@ -46,6 +46,14 @@ class XiangqiGame:
 
         # initializes player's turn
         self._player_turn = "red"
+
+        # initializes red General's rank and file
+        self._red_general_rank = 0
+        self._red_general_file = 4
+
+        # initializes black General's rank and file
+        self._black_general_rank = 9
+        self._black_general_file = 4
 
     def get_the_board(self):
         """
@@ -189,7 +197,7 @@ class XiangqiGame:
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Elephant):
             # cannot put player's own General in check
             if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "red" and \
- \
+
             if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "black" and \
 
             # Elephants cannot jump so return False if there is a piece blocking its first diagonal move
@@ -212,10 +220,30 @@ class XiangqiGame:
             # cannot put player's own General in check
 
             # Horses cannot jump so return False if there is a piece blocking its first orthogonal move
-            if (self._the_board[file.index(from_square[0]) + 1][from_square[1:]] == "" or
-                     self._the_board[file.index(from_square[0]) - 1][from_square[1:]] == "" or
-                     self._the_board[file.index(from_square[0])][from_square[1:] + 1] == "" or
-                     self._the_board[file.index(from_square[0])][from_square[1:] - 1] == ""):
+            if ((file.index(from_square[0]) - 2 == file.index(to_square[0]) and
+                 from_square[1:] - 1 == to_square[1:] and
+                 self._the_board[file.index(from_square[0]) - 1][from_square[1:]] != "") or
+                (file.index(from_square[0]) - 2 == file.index(to_square[0]) and
+                 from_square[1:] + 1 == to_square[1:] and
+                self._the_board[file.index(from_square[0]) - 1][from_square[1:]] != "") or
+                (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
+                 from_square[1:] + 2 == to_square[1:] and
+                self._the_board[file.index(from_square[0])][from_square[1:] + 1] != "") or
+                (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
+                 from_square[1:] + 2 == to_square[1:] and
+                self._the_board[file.index(from_square[0])][from_square[1:] + 1] != "") or
+                (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
+                 from_square[1:] + 1 == to_square[1:] and
+                self._the_board[file.index(from_square[0]) + 1][from_square[1:]] != "") or
+                (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
+                 from_square[1:] - 1 == to_square[1:] and
+                self._the_board[file.index(from_square[0]) + 1][from_square[1:]] != "") or
+                (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
+                 from_square[1:] - 2 == to_square[1:] and
+                self._the_board[file.index(from_square[0])][from_square[1:] - 1] != "") or
+                (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
+                 from_square[1:] - 2 == to_square[1:]) and
+                self._the_board[file.index(from_square[0])][from_square[1:] - 1] != ""):
                 return False
 
         # return False if illegal move by Chariot
@@ -247,8 +275,12 @@ class XiangqiGame:
         # otherwise, make move and remove any captured piece
         self._the_board[file.index(to_square[0])][to_square[1:]] = \
             self._the_board[file.index(from_square[0])][from_square[1:]]
-
         self._the_board[file.index(from_square[0])][from_square[1:]] = ""
+
+        # if red or black General moved, update rank and file
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], General):
+            self._red_general_rank = to_square[0]
+            self._red_general_file = from_square[1:]
 
         # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
         # if self.is_in_check("red") and (red General has no legal moves or all red pieces have no legal moves):
@@ -280,40 +312,14 @@ class General:
     moving into check, and is therefore not allowed
     """
 
-    def __init__(self, color, rank, file):
+    def __init__(self, color):
         self._color = color
-        self._rank = rank
-        self._file = file
 
     def get_color(self):
         """
         Returns piece color
         """
         return self._color
-
-    def get_rank(self):
-        """
-        Returns piece rank
-        """
-        return self._rank
-
-    def get_file(self):
-        """
-        Returns piece file
-        """
-        return self._file
-
-    def set_rank(self, value):
-        """
-        Set piece rank
-        """
-        self._rank = value
-
-    def set_file(self, value):
-        """
-        Set piece file
-        """
-        self._file = value
 
     def is_legal_move(self, from_square, to_square):
         """
@@ -351,40 +357,14 @@ class Advisor:
     The advisor is like the queen in Western chess.
     """
 
-    def __init__(self, color, rank, file):
+    def __init__(self, color):
         self._color = color
-        self._rank = rank
-        self._file = file
 
     def get_color(self):
         """
         Returns piece color
         """
         return self._color
-
-    def get_rank(self):
-        """
-        Returns piece rank
-        """
-        return self._rank
-
-    def get_file(self):
-        """
-        Returns piece file
-        """
-        return self._file
-
-    def set_rank(self, value):
-        """
-        Set piece rank
-        """
-        self._rank = value
-
-    def set_file(self, value):
-        """
-        Set piece file
-        """
-        self._file = value
 
     def is_legal_move(self, from_square, to_square):
         """
@@ -423,40 +403,14 @@ class Elephant:
     The two elephants are often used to defend each other.
     """
 
-    def __init__(self, color, rank, file):
+    def __init__(self, color):
         self._color = color
-        self._rank = rank
-        self._file = file
 
     def get_color(self):
         """
         Returns piece color
         """
         return self._color
-
-    def get_rank(self):
-        """
-        Returns piece rank
-        """
-        return self._rank
-
-    def get_file(self):
-        """
-        Returns piece file
-        """
-        return self._file
-
-    def set_rank(self, value):
-        """
-        Set piece rank
-        """
-        self._rank = value
-
-    def set_file(self, value):
-        """
-        Set piece file
-        """
-        self._file = value
 
     def is_legal_move(self, from_square, to_square):
         """
@@ -517,40 +471,14 @@ class Horse:
     It is possible for one player's horse to have an asymmetric attack advantage if an opponent's horse is blocked.
     """
 
-    def __init__(self, color, rank, file):
+    def __init__(self, color):
         self._color = color
-        self._rank = rank
-        self._file = file
 
     def get_color(self):
         """
         Returns piece color
         """
         return self._color
-
-    def get_rank(self):
-        """
-        Returns piece rank
-        """
-        return self._rank
-
-    def get_file(self):
-        """
-        Returns piece file
-        """
-        return self._file
-
-    def set_rank(self, value):
-        """
-        Set piece rank
-        """
-        self._rank = value
-
-    def set_file(self, value):
-        """
-        Set piece file
-        """
-        self._file = value
 
     def get_legal_move(self, from_square, to_square):
         """
@@ -560,26 +488,14 @@ class Horse:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if self._color == "red" and \
-                (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
-                 file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-                 file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
-                 file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
-                 file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-                 file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
-                 file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
-                 file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]):
-            return True
-
-        if self._color == "black" and \
-                (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
-                 file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-                 file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
-                 file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:] or
-                 file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:] or
-                 file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:] or
-                 file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:] or
-                 file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]):
+        if ((file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:]) or
+            (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:]) or
+            (file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:]) or
+            (file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:]) or
+            (file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:]) or
+            (file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:]) or
+            (file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]) or
+            (file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:])):
             return True
         return False
 
@@ -593,40 +509,14 @@ class Chariot:
     The chariot is sometimes known as the rook by English-speaking players, since it is like the rook in Western chess.
     """
 
-    def __init__(self, color, rank, file):
+    def __init__(self, color):
         self._color = color
-        self._rank = rank
-        self._file = file
 
     def get_color(self):
         """
         Returns piece color
         """
         return self._color
-
-    def get_rank(self):
-        """
-        Returns piece rank
-        """
-        return self._rank
-
-    def get_file(self):
-        """
-        Returns piece file
-        """
-        return self._file
-
-    def set_rank(self, value):
-        """
-        Set piece rank
-        """
-        self._rank = value
-
-    def set_file(self, value):
-        """
-        Set piece file
-        """
-        self._file = value
 
     def get_legal_move(self, from_square, to_square):
         """
@@ -659,40 +549,14 @@ class Cannon:
     the piece to be captured. Cannons can be exchanged for horses immediately from their starting positions.
     """
 
-    def __init__(self, color, rank, file):
+    def __init__(self, color):
         self._color = color
-        self._rank = rank
-        self._file = file
 
     def get_color(self):
         """
         Returns piece color
         """
         return self._color
-
-    def get_rank(self):
-        """
-        Returns piece rank
-        """
-        return self._rank
-
-    def get_file(self):
-        """
-        Returns piece file
-        """
-        return self._file
-
-    def set_rank(self, value):
-        """
-        Set piece rank
-        """
-        self._rank = value
-
-    def set_file(self, value):
-        """
-        Set piece file
-        """
-        self._file = value
 
     def get_legal_move(self, from_square, to_square):
         """
@@ -725,40 +589,14 @@ class Soldier:
     The soldier is sometimes called the "pawn" by English-speaking players, due to the pieces' similarities.
     """
 
-    def __init__(self, color, rank, file):
+    def __init__(self, color):
         self._color = color
-        self._rank = rank
-        self._file = file
 
     def get_color(self):
         """
         Returns piece color
         """
         return self._color
-
-    def get_rank(self):
-        """
-        Returns piece rank
-        """
-        return self._rank
-
-    def get_file(self):
-        """
-        Returns piece file
-        """
-        return self._file
-
-    def set_rank(self, value):
-        """
-        Set piece rank
-        """
-        self._rank = value
-
-    def set_file(self, value):
-        """
-        Set piece file
-        """
-        self._file = value
 
     def get_legal_move(self, from_square, to_square):
         """
