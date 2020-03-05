@@ -55,7 +55,7 @@ class XiangqiGame:
 
     def print_the_board(self):
         """
-        Returns the printed board with newline for each rank.
+        Returns the printed board with a newline for each rank.
         """
         return print("\n".join(str(rank) for rank in self._the_board))
 
@@ -118,7 +118,7 @@ class XiangqiGame:
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         # return False where move cannot be made if no piece exists at from_square:
-        if self._the_board[file.index(from_square[0])][from_square[1:]] == ""
+        if self._the_board[file.index(from_square[0])][from_square[1:]] == "":
             return False
 
         # return False where move cannot be made if:
@@ -200,8 +200,8 @@ class XiangqiGame:
         # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Cannon):
         #     # Cannons move any distance orthogonally without jumping, so if square_to is empty,
         #     # return False if there is a piece in its path
-              # if square_to contains a piece of the opposite color, and there is ONLY ONE piece in the path between
-              # square_from and square_to, then the Cannon may jump to capture and return True
+        #       if square_to contains a piece of the opposite color, and there is ONLY ONE piece in the path between
+        #       square_from and square_to, then the Cannon may jump to capture and return True
         #
         # # return False if illegal move by Soldier
         # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Soldier):
@@ -253,9 +253,15 @@ class General:
         self._in_check = True
 
     def get_color(self):
+        """
+        Returns piece color
+        """
         return self._color
 
     def get_rank(self):
+        """
+        Returns piece rank
+        """
         return self._rank
 
     def get_file(self):
