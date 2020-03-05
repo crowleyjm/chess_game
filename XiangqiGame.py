@@ -67,7 +67,7 @@ class XiangqiGame:
 
     def get_player_turn(self):
         """
-        Returns the player's turn.
+        Returns the player's turn, either "red" or "black"
         """
         return self._player_turn
 
@@ -250,7 +250,6 @@ class General:
         self._color = color
         self._rank = rank
         self._file = file
-        self._in_check = True
 
     def get_color(self):
         """
@@ -354,7 +353,8 @@ class Advisor:
 
     def is_legal_move(self, from_square, to_square):
         """
-
+        Returns True if legal move and False if illegal move
+        Only considers space itself and move style (one space diagonally)
         """
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
