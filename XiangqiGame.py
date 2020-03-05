@@ -207,20 +207,18 @@ class XiangqiGame:
         # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Soldier):
         #     #
 
-        # otherwise, make move and capture piece if applicable
+        # otherwise, make move and remove any captured piece
         self._the_board[file.index(to_square[0])][to_square[1:]] = \
             self._the_board[file.index(from_square[0])][from_square[1:]]
 
         self._the_board[file.index(from_square[0])][from_square[1:]] = ""
 
-        # if red General is in checkmate, update _game_state to "BLACK WON"
-        # if self.is_in_check("red") and \
-        #         red General has no legal moves:
+        # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
+        # if self.is_in_check("red") and (red General has no legal moves or all red pieces have no legal moves):
         #     self._game_state = "BLACK_WON"
         #
-        # if black General is in checkmate, update _game_state to "RED WON"
-        # if self.is_in_check("black") and \
-        #         black General has no legal moves:
+        # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
+        # if self.is_in_check("black") and (black General has no legal moves or all black pieces have no legal moves):
         #     self._game_state = "RED_WON"
 
         # update _player_turn
@@ -235,7 +233,7 @@ class XiangqiGame:
 
 class General:
     """
-    Represents a General.
+    Represents a General with data members: color, rank, and file.
     The general starts the game at the midpoint of the back edge, within the palace.
     The general may move and capture one point orthogonally and may not leave the palace, with the following exception.
     The two generals may not face each other along the same file with no intervening pieces.
@@ -246,7 +244,6 @@ class General:
     """
 
     def __init__(self, color, rank, file):
-
         self._color = color
         self._rank = rank
         self._file = file
@@ -286,6 +283,7 @@ class General:
         Returns True if legal move and False if illegal move
         Only considers space itself and move style (one space orthogonally)
         """
+        # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
@@ -310,7 +308,7 @@ class General:
 
 class Advisor:
     """
-    Represents an Advisor.
+    Represents an Advisor with data members: color, rank, and file.
     The advisors start on either side of the general. They move and capture one point diagonally and
     may not leave the palace, which confines them to five points on the board.
     The advisor is like the queen in Western chess.
@@ -356,6 +354,7 @@ class Advisor:
         Returns True if legal move and False if illegal move
         Only considers space itself and move style (one space diagonally)
         """
+        # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
@@ -378,7 +377,7 @@ class Advisor:
 
 class Elephant:
     """
-    Represents an Elephant with data member.
+    Represents an Elephant with data members: color, rank, and file.
     These pieces move and capture exactly two points diagonally and may not jump over intervening pieces;
     If an elephant cannot move due to a diagonally adjacent piece, it is known as
     "blocking the elephant's eye"
@@ -423,7 +422,11 @@ class Elephant:
         self._file = value
 
     def is_legal_move(self, from_square, to_square):
-
+        """
+        Returns True if legal move and False if illegal move
+        Only considers space itself and move style (two spaces diagonally and cannot cross river)
+        """
+        # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         # Elephants cannot cross the river
@@ -467,7 +470,7 @@ class Elephant:
 
 class Horse:
     """
-    Represents a Horse with data member.
+    Represents a Horse with data members: color, rank, and file.
     Horses begin the game next to the elephants, on their outside flanks.
     A horse moves and captures one point orthogonally and then one point diagonally away from
     its former position. The horse does not jump as the knight does in Western chess, and
@@ -513,11 +516,11 @@ class Horse:
         self._file = value
 
     def get_legal_move(self, from_square, to_square):
-        # red horse legal spaces if not occupied by red piece
-        # one space orthogonal and one space diagonal, cannot move off board
-
-        # black horse legal spaces if not occupied by black piece
-        # one space orthogonal and one space diagonal, cannot move off board
+        """
+        Returns True if legal move and False if illegal move
+        Only considers space itself and move style (one space orthogonal and one space diagonal)
+        """
+        # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
@@ -546,7 +549,7 @@ class Horse:
 
 class Chariot:
     """
-    Represents a Chariot with data member.
+    Represents a Chariot with data members: color, rank, and file.
     The chariot moves and captures any distance orthogonally, but may not jump over intervening pieces.
     The chariots begin the game on the points at the corners of the board. The chariot is often
     considered to be the strongest piece in the game due to its freedom of movement and lack of restrictions.
@@ -589,15 +592,11 @@ class Chariot:
         self._file = value
 
     def get_legal_move(self, from_square, to_square):
-        # red chariot legal moves
-        # any distance orthogonal if no pieces in between, cannot move off board
-        # if there is a red piece in between it stops one space short
-        # if there is a black piece in between it moves to the space and captures piece
-
-        # black chariot legal moves
-        # any distance orthogonal if no pieces in between, cannot move off board
-        # if there is a black piece in between it stops one space short
-        # if there is a red piece in between it moves to the space and captures piece
+        """
+        Returns True if legal move and False if illegal move
+        Only considers space itself and move style (any distance orthogonal)
+        """
+        # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
@@ -614,7 +613,7 @@ class Chariot:
 
 class Cannon:
     """
-    Represents a Cannon with data member.
+    Represents a Cannon with data members: color, rank, and file.
     Each player has two cannons, which start on the row behind the soldiers, two points in front of the horses.
     Cannons move like chariots, any distance orthogonally without jumping,
     but can only capture by jumping a single piece, friend or foe, along the path of attack.
@@ -627,7 +626,6 @@ class Cannon:
         self._color = color
         self._rank = rank
         self._file = file
-        self._legal_move = True
 
     def get_color(self):
         """
@@ -660,15 +658,11 @@ class Cannon:
         self._file = value
 
     def get_legal_move(self, from_square, to_square):
-        # red cannon legal moves
-        # any distance orthogonal if no pieces in between, cannot move off board
-        # if there is any piece in its path, followed by a black piece, with any number of
-        # empty spaces before or after the middle piece, it may jump that piece to capture the black piece.
-
-        # black cannon legal moves
-        # any distance orthogonal if no pieces in between, cannot move off board
-        # if there is any piece in its path, followed by a red piece, with any number of
-        # empty spaces before or after the middle piece, it may jump that piece to capture the red piece.
+        """
+        Returns True if legal move and False if illegal move
+        Only considers space itself and move style (any distance orthogonal)
+        """
+        # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
@@ -685,7 +679,7 @@ class Cannon:
 
 class Soldier:
     """
-    Represents a Soldier with data member.
+    Represents a Soldier with data members: color, rank, and file.
     Each side starts with five soldiers. Soldiers begin the game located on every other point one row back
     from the edge of the river. They move and capture by advancing one point. Once they have crossed the river,
     they may also move and capture one point horizontally. Soldiers cannot move backward, and
@@ -698,7 +692,6 @@ class Soldier:
         self._color = color
         self._rank = rank
         self._file = file
-        self._legal_move = True
 
     def get_color(self):
         """
@@ -731,16 +724,12 @@ class Soldier:
         self._file = value
 
     def get_legal_move(self, from_square, to_square):
-        # red soldier legal moves
-        # cannot move off board, cannot move to space if occupied by another red piece
-        # rank cannot decrease, so rank + 1
-        # once rank > 5, rank + 1 or file + 1 or file - 1
-
-        # black soldier legal moves
-        # cannot move off board, cannot move to space if occupied by another black piece
-        # rank cannot decrease, so rank + 1
-        # once rank > 5, rank + 1 or file + 1 or file - 1
-
+        """
+        Returns True if legal move and False if illegal move
+        Only considers space itself and move style
+        (one space forward until the river is crossed, then one space forward or horizontal)
+        """
+        # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
