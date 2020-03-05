@@ -180,32 +180,69 @@ class XiangqiGame:
                          self._the_board[7][to_square[1:]] == "" and self._the_board[8][to_square[1:]] == "")):
                     return False
 
-        # # return False if illegal move by Advsior
-        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Advisor):
-        #     #
-        #
-        # # return False if illegal move by Elephant
-        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Elephant):
-        #     # Elephants cannot jump so return False if there is a piece blocking its first diagonal move
-        #
-        # # return False if illegal move by Horse
-        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Horse):
-        #     # Horses cannot jump so return False if there is a piece blocking its first orthogonal move
-        #
-        # # return False if illegal move by Chariot
-        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Chariot):
-        #     # Chariots cannot jump so return False if there is a piece in its orthogonal path
-        #
-        # # return False if illegal move by Cannon
-        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Cannon):
-        #     # Cannons move any distance orthogonally without jumping, so if square_to is empty,
-        #     # return False if there is a piece in its path
-        #       if square_to contains a piece of the opposite color, and there is ONLY ONE piece in the path between
-        #       square_from and square_to, then the Cannon may jump to capture and return True
-        #
-        # # return False if illegal move by Soldier
-        # if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Soldier):
-        #     #
+        # return False if illegal move by Advsior
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Advisor):
+
+            # cannot put player's own General in check
+
+        # return False if illegal move by Elephant
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Elephant):
+            # cannot put player's own General in check
+            if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "red" and \
+ \
+            if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "black" and \
+
+            # Elephants cannot jump so return False if there is a piece blocking its first diagonal move
+            if ((self._the_board[file.index(from_square[0]) + 1][from_square[1:] + 1] == ""  and
+                 self._the_board[file.index(from_square[0]) + 2][from_square[1:] + 2] ==
+                 self._the_board[file.index(to_square[0])][to_square[1:]]) or
+                (self._the_board[file.index(from_square[0]) - 1][from_square[1:] - 1] == "" and
+                 self._the_board[file.index(from_square[0]) - 2][from_square[1:] - 2] ==
+                 self._the_board[file.index(to_square[0])][to_square[1:]]) or
+                (self._the_board[file.index(from_square[0]) + 1][from_square[1:] - 1] == "" and
+                 self._the_board[file.index(from_square[0]) + 2][from_square[1:] - 2] ==
+                 self._the_board[file.index(to_square[0])][to_square[1:]]) or
+                (self._the_board[file.index(from_square[0]) - 1][from_square[1:] + 1] == "" and
+                 self._the_board[file.index(from_square[0]) - 2][from_square[1:] + 2] ==
+                 self._the_board[file.index(to_square[0])][to_square[1:]])):
+                    return False
+
+        # return False if illegal move by Horse
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Horse):
+            # cannot put player's own General in check
+
+            # Horses cannot jump so return False if there is a piece blocking its first orthogonal move
+            if (self._the_board[file.index(from_square[0]) + 1][from_square[1:]] == "" or
+                     self._the_board[file.index(from_square[0]) - 1][from_square[1:]] == "" or
+                     self._the_board[file.index(from_square[0])][from_square[1:] + 1] == "" or
+                     self._the_board[file.index(from_square[0])][from_square[1:] - 1] == ""):
+                return False
+
+        # return False if illegal move by Chariot
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Chariot):
+            # cannot put player's own General in check
+
+            # Chariots cannot jump so return False if there is a piece in its orthogonal path
+            from_square_path = from_square
+            to_square_path = to_square
+            while file.index(from_square[0]) != from_square[1:]
+            if (self._the_board[file.index(from_square[0]) + 1][from_square[1:]] == "" or
+                     self._the_board[file.index(from_square[0]) - 1][from_square[1:]] == "" or
+                     self._the_board[file.index(from_square[0])][from_square[1:] + 1] == "" or
+                     self._the_board[file.index(from_square[0])][from_square[1:] - 1] == ""):
+                return False
+
+        # return False if illegal move by Cannon
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Cannon):
+            # cannot put player's own General in check
+            # Cannons move any distance orthogonally without jumping, so if square_to is empty,
+            # return False if there is a piece in its path
+              if square_to contains a piece of the opposite color, and there is ONLY ONE piece in the path between
+              square_from and square_to, then the Cannon may jump to capture and return True
+
+        # return False if illegal move by Soldier
+        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Soldier):
+            # cannot put player's own General in check
 
         # otherwise, make move and remove any captured piece
         self._the_board[file.index(to_square[0])][to_square[1:]] = \
