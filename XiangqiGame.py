@@ -1,4 +1,4 @@
-# Author: Jillian Crowle
+# Author: Jillian Crowley
 # Date: 03/04/2020
 # Description: From Wikipedia:
 # The Xiangqi game (Chinese chess) represents a battle between two 16-piece armies, with
