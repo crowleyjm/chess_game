@@ -265,12 +265,21 @@ class General:
         return self._rank
 
     def get_file(self):
+        """
+        Returns piece file
+        """
         return self._file
 
     def set_rank(self, value):
+        """
+        Set piece rank
+        """
         self._rank = value
 
     def set_file(self, value):
+        """
+        Set piece file
+        """
         self._file = value
 
     def is_legal_move(self, from_square, to_square):
@@ -314,18 +323,33 @@ class Advisor:
         self._file = file
 
     def get_color(self):
+        """
+        Returns piece color
+        """
         return self._color
 
     def get_rank(self):
+        """
+        Returns piece rank
+        """
         return self._rank
 
     def get_file(self):
+        """
+        Returns piece file
+        """
         return self._file
 
     def set_rank(self, value):
+        """
+        Set piece rank
+        """
         self._rank = value
 
     def set_file(self, value):
+        """
+        Set piece file
+        """
         self._file = value
 
     def is_legal_move(self, from_square, to_square):
@@ -369,18 +393,33 @@ class Elephant:
         self._file = file
 
     def get_color(self):
+        """
+        Returns piece color
+        """
         return self._color
 
     def get_rank(self):
+        """
+        Returns piece rank
+        """
         return self._rank
 
     def get_file(self):
+        """
+        Returns piece file
+        """
         return self._file
 
     def set_rank(self, value):
+        """
+        Set piece rank
+        """
         self._rank = value
 
     def set_file(self, value):
+        """
+        Set piece file
+        """
         self._file = value
 
     def is_legal_move(self, from_square, to_square):
@@ -444,18 +483,33 @@ class Horse:
         self._file = file
 
     def get_color(self):
+        """
+        Returns piece color
+        """
         return self._color
 
     def get_rank(self):
+        """
+        Returns piece rank
+        """
         return self._rank
 
     def get_file(self):
+        """
+        Returns piece file
+        """
         return self._file
 
     def set_rank(self, value):
+        """
+        Set piece rank
+        """
         self._rank = value
 
     def set_file(self, value):
+        """
+        Set piece file
+        """
         self._file = value
 
     def get_legal_move(self, from_square, to_square):
@@ -505,18 +559,33 @@ class Chariot:
         self._file = file
 
     def get_color(self):
+        """
+        Returns piece color
+        """
         return self._color
 
     def get_rank(self):
+        """
+        Returns piece rank
+        """
         return self._rank
 
     def get_file(self):
+        """
+        Returns piece file
+        """
         return self._file
 
     def set_rank(self, value):
+        """
+        Set piece rank
+        """
         self._rank = value
 
     def set_file(self, value):
+        """
+        Set piece file
+        """
         self._file = value
 
     def get_legal_move(self, from_square, to_square):
@@ -561,18 +630,33 @@ class Cannon:
         self._legal_move = True
 
     def get_color(self):
+        """
+        Returns piece color
+        """
         return self._color
 
     def get_rank(self):
+        """
+        Returns piece rank
+        """
         return self._rank
 
     def get_file(self):
+        """
+        Returns piece file
+        """
         return self._file
 
     def set_rank(self, value):
+        """
+        Set piece rank
+        """
         self._rank = value
 
     def set_file(self, value):
+        """
+        Set piece file
+        """
         self._file = value
 
     def get_legal_move(self, from_square, to_square):
@@ -617,18 +701,33 @@ class Soldier:
         self._legal_move = True
 
     def get_color(self):
+        """
+        Returns piece color
+        """
         return self._color
 
     def get_rank(self):
+        """
+        Returns piece rank
+        """
         return self._rank
 
     def get_file(self):
+        """
+        Returns piece file
+        """
         return self._file
 
     def set_rank(self, value):
+        """
+        Set piece rank
+        """
         self._rank = value
 
     def set_file(self, value):
+        """
+        Set piece file
+        """
         self._file = value
 
     def get_legal_move(self, from_square, to_square):
