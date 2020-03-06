@@ -467,25 +467,66 @@ class XiangqiGame:
                 return False
 
         # check if red player's General is in check by black Chariot as a result of the move made
-        # Chariots cannot jump so return False if there is a piece in its orthogonal path
-        from_square_path = from_square
-        to_square_path = to_square
         i = 1
-        if ((isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
-                        [self._red_general_location[1:] - 1], Chariot):
-            while file.index(from_square_path[0]) != file.index(to_square_path[0]):
-                if self._the_board[file.index(from_square_path[0])] == self._the_board[file.index(to_square_path[0])] \
-                        and (self._the_board[file.index(from_square_path[0]) + i][from_square_path[1:]] != "" or
-                            self._the_board[file.index(from_square_path[0]) - i][from_square_path[1:]] != ""):
-                    return False
+        while file.index(self._red_general_location[0] + i) < 10:
+            if ((isinstance(self._the_board[file.index(self._red_general_location[0] + i)]
+                            [self._red_general_location[1:]], Chariot) and
+                 self._the_board[file.index(self._red_general_location[0] + i)]
+                 [self._red_general_location[1:]].get_color() == "black")) or \
+                    (isinstance(self._the_board[file.index(self._red_general_location[0] - i)]
+                                [self._red_general_location[1:]], Chariot) and
+                     self._the_board[file.index(self._red_general_location[0] - i)]
+                     [self._red_general_location[1:]].get_color() == "black"):
+                self._red_in_check = True
+            elif self._the_board[file.index(self._red_general_location[0] + i)] == "" or \
+                    self._the_board[file.index(self._red_general_location[0] - i)] == "":
+                i += 1
 
-                if self._the_board[from_square_path[1:]] != self._the_board[to_square_path[1:]] and \
-                        (self._the_board[file.index(from_square_path[0])][from_square_path[1:] + i] != "" or
-                        self._the_board[file.index(from_square_path[0])][from_square_path[1:] - i] != ""):
-                    return False
+        i = 1
+        while file.index(self._red_general_location[1:] + i) < 11:
+            if ((isinstance(self._the_board[file.index(self._red_general_location[0])]
+                            [self._red_general_location[1:] + i], Chariot) and
+                 self._the_board[file.index(self._red_general_location[0])]
+                 [self._red_general_location[1:] + i].get_color() == "black")) or \
+                    (isinstance(self._the_board[file.index(self._red_general_location[0])]
+                                [self._red_general_location[1:] - i], Chariot) and
+                     self._the_board[file.index(self._red_general_location[0])]
+                     [self._red_general_location[1:] - i].get_color() == "black"):
+                self._red_in_check = True
+            elif self._the_board[self._red_general_location[1:] + i] == "" or \
+                    self._the_board[self._red_general_location[1:] - i] == "":
                 i += 1
 
         # check if black player's General is in check by red Chariot as a result of the move made
+        i = 1
+        while file.index(self._black_general_location[0] + i) < 10:
+            if ((isinstance(self._the_board[file.index(self._black_general_location[0] + i)]
+                            [self._black_general_location[1:]], Chariot) and
+                 self._the_board[file.index(self._black_general_location[0] + i)]
+                 [self._black_general_location[1:]].get_color() == "red")) or \
+                    (isinstance(self._the_board[file.index(self._black_general_location[0] - i)]
+                                [self._black_general_location[1:]], Chariot) and
+                     self._the_board[file.index(self._black_general_location[0] - i)]
+                     [self._black_general_location[1:]].get_color() == "red"):
+                self._black_in_check = True
+            elif self._the_board[file.index(self._black_general_location[0] + i)] == "" or \
+                    self._the_board[file.index(self._black_general_location[0] - i)] == "":
+                i += 1
+
+        i = 1
+        while file.index(self._black_general_location[1:] + i) < 11:
+            if ((isinstance(self._the_board[file.index(self._black_general_location[0])]
+                            [self._black_general_location[1:] + i], Chariot) and
+                 self._the_board[file.index(self._black_general_location[0])]
+                 [self._black_general_location[1:] + i].get_color() == "red")) or \
+                    (isinstance(self._the_board[file.index(self._black_general_location[0])]
+                                [self._black_general_location[1:] - i], Chariot) and
+                     self._the_board[file.index(self._black_general_location[0])]
+                     [self._black_general_location[1:] - i].get_color() == "red"):
+                self._black_in_check = True
+            elif self._the_board[self._black_general_location[1:] + i] == "" or \
+                    self._the_board[self._black_general_location[1:] - i] == "":
+                i += 1
 
         # check if red player's General is in check by black Cannon as a result of the move made
 
