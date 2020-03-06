@@ -108,9 +108,10 @@ class XiangqiGame:
         # to_square is occupied by a piece of the same color as from_square
         # move is not legally available for piece based on class definition
         # game state is finished; either RED_WON or BLACK_WON
-        if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() != self._player_turn or \
-                self._the_board[file.index(to_square[0])][to_square[1:]].get_color() == self._player_turn or \
-                self._the_board[file.index(from_square[0])][from_square[1:]].get_legal_move(from_square, to_square) or \
+        if self._the_board[file.index(from_square[0])][int(from_square[1:])].get_color() != self._player_turn or \
+                self._the_board[file.index(to_square[0])][int(to_square[1:])].get_color() == self._player_turn or \
+                self._the_board[file.index(from_square[0])][int(from_square[1:])]. \
+                        get_legal_move(from_square, to_square) or \
                 self._game_state != "UNFINISHED":
             return False
 
@@ -751,15 +752,15 @@ class XiangqiGame:
                 self._the_board[file.index(to_square[0])][to_square[1:]] = ""
                 return False
 
-        # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
-        # if red player no legal moves):
-        if self._player_turn == "red":
-            self._game_state = "BLACK_WON"
-
-        # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
-        # if black player has no legal moves):
-        if self._player_turn == "black":
-            self._game_state = "RED_WON"
+        # # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
+        # # if red player no legal moves):
+        # if self._player_turn == "red":
+        #     self._game_state = "BLACK_WON"
+        #
+        # # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
+        # # if black player has no legal moves):
+        # if self._player_turn == "black":
+        #     self._game_state = "RED_WON"
 
         # update _player_turn
         if self._player_turn == "red":
