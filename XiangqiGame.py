@@ -756,8 +756,9 @@ class XiangqiGame:
         if self._player_turn == "red":
             self._game_state = "BLACK_WON"
 
-            # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
-            # if black player has no legal moves):
+        # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
+        # if black player has no legal moves):
+        if self._player_turn == "black":
             self._game_state = "RED_WON"
 
         # update _player_turn
@@ -1051,7 +1052,7 @@ class Cannon:
         if ((self._color == "red" or self._color == "black") or
                 file.index(to_square[0]) - file.index(from_square[0] == 0) or
                 to_square[1:] - from_square[1:] == 0):
-                return True
+            return True
         return False
 
 
