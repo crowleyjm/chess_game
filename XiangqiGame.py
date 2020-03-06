@@ -47,13 +47,15 @@ class XiangqiGame:
         # initializes player's turn
         self._player_turn = "red"
 
-        # initializes red General's rank and file
+        # initializes red General's rank, file, and check status
         self._red_general_rank = 0
         self._red_general_file = 4
+        self._red_general_in_check = False
 
-        # initializes black General's rank and file
+        # initializes black General's rank, file, and check status
         self._black_general_rank = 9
         self._black_general_file = 4
+        self._black_general_in_check = False
 
     def get_the_board(self):
         """
@@ -84,33 +86,12 @@ class XiangqiGame:
         Takes as a parameter either 'red' or 'black' and
         returns True if that player is in check, but returns False otherwise
         """
-        # pseudocode written here until code is written for ways the Generals can
-        # be threatened by pieces of the opposite color
+        if player == "red":
+            return self._red_general_in_check
 
-        # if player == "red" and \
-        #         ((isinstance(self._the_board[0][3], General) and General is threatened by a black piece) or
-        #         (isinstance(self._the_board[0][4], General) and General is threatened by a black piece) or
-        #         (isinstance(self._the_board[0][5], General) and General is threatened by a black piece) or
-        #         (isinstance(self._the_board[1][3], General) and General is threatened by a black piece) or
-        #         (isinstance(self._the_board[1][4], General) and General is threatened by a black piece) or
-        #         (isinstance(self._the_board[1][5], General) and General is threatened by a black piece) or
-        #         (isinstance(self._the_board[2][3], General) and General is threatened by a black piece) or
-        #         (isinstance(self._the_board[2][4], General) and General is threatened by a black piece) or
-        #         (isinstance(self._the_board[2][5], General) and General is threatened by a black piece)):
-        #     return True
-        #
-        # elif player == "black" and \
-        #         ((isinstance(self._the_board[0][3], General) and General is threatened by a red piece) or
-        #         (isinstance(self._the_board[0][4], General) and General is threatened by a red piece) or
-        #         (isinstance(self._the_board[0][5], General) and General is threatened by a red piece) or
-        #         (isinstance(self._the_board[1][3], General) and General is threatened by a red piece) or
-        #         (isinstance(self._the_board[1][4], General) and General is threatened by a red piece) or
-        #         (isinstance(self._the_board[1][5], General) and General is threatened by a red piece) or
-        #         (isinstance(self._the_board[2][3], General) and General is threatened by a red piece) or
-        #         (isinstance(self._the_board[2][4], General) and General is threatened by a red piece) or
-        #         (isinstance(self._the_board[2][5], General) and General is threatened by a red piece)):
-        #     return True
-        # return False
+        if player == "black":
+            return self._black_general_in_check
+
 
     def make_move(self, from_square, to_square):
         """
@@ -139,8 +120,6 @@ class XiangqiGame:
             return False
 
         # check for illegal moves in relation to other pieces and return False
-        # pseudocode is written below for Advisor, Elephant, Horse, Chariot, Cannon, and Soldier and
-        # checkmate conditions for each player until I write code for their illegal moves
 
         # return False when red piece tries to move to a space occupied by a red piece
         if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "red" and \
@@ -188,13 +167,18 @@ class XiangqiGame:
                          self._the_board[7][to_square[1:]] == "" and self._the_board[8][to_square[1:]] == "")):
                     return False
 
-        # return False if illegal move by Advsior
+        # return False if illegal move by Advisor
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Advisor):
 
             # cannot put player's own General in check
 
+            # check if opposing player's General is in check by Advisor
+            if
+
+
         # return False if illegal move by Elephant
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Elephant):
+
             # cannot put player's own General in check
             if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "red" and \
 
@@ -217,6 +201,7 @@ class XiangqiGame:
 
         # return False if illegal move by Horse
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Horse):
+
             # cannot put player's own General in check
 
             # Horses cannot jump so return False if there is a piece blocking its first orthogonal move
@@ -248,6 +233,7 @@ class XiangqiGame:
 
         # return False if illegal move by Chariot
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Chariot):
+
             # cannot put player's own General in check
 
             # Chariots cannot jump so return False if there is a piece in its orthogonal path
@@ -276,6 +262,7 @@ class XiangqiGame:
 
         # return False if illegal move by Soldier
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Soldier):
+
             # cannot put player's own General in check
 
         # otherwise, make move and remove any captured piece
@@ -284,16 +271,21 @@ class XiangqiGame:
         self._the_board[file.index(from_square[0])][from_square[1:]] = ""
 
         # if red or black General moved, update rank and file
-        if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], General):
+        if isinstance(self._the_board[file.index(to_square[0])][to_square[1:]], General) and \
+            self._the_board[file.index(to_square[0])][to_square[1:]].get_color() == "red":
             self._red_general_rank = to_square[0]
-            self._red_general_file = from_square[1:]
+            self._red_general_file = to_square[1:]
+        if isinstance(self._the_board[file.index(to_square[0])][to_square[1:]], General) and \
+            self._the_board[file.index(to_square[0])][to_square[1:]].get_color() == "black":
+            self._black_general_rank = to_square[0]
+            self._black_general_file = to_square[1:]
 
         # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
-        # if self.is_in_check("red") and (red General has no legal moves or all red pieces have no legal moves):
+        # if red General has no legal moves or all red pieces have no legal moves):
         #     self._game_state = "BLACK_WON"
         #
         # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
-        # if self.is_in_check("black") and (black General has no legal moves or all black pieces have no legal moves):
+        # if black General has no legal moves or all black pieces have no legal moves):
         #     self._game_state = "RED_WON"
 
         # update _player_turn
@@ -532,14 +524,7 @@ class Chariot:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if self._color == "red" and \
-                file.index(to_square[0]) - file.index(from_square[0] == 0) or \
-                to_square[1:] - from_square[1:] == 0:
-            return True
-
-        if self._color == "black" and \
-                file.index(to_square[0]) - file.index(from_square[0] == 0) or \
-                to_square[1:] - from_square[1:] == 0:
+        if file.index(to_square[0]) - file.index(from_square[0] == 0) or to_square[1:] - from_square[1:] == 0:
             return True
         return False
 
@@ -572,14 +557,7 @@ class Cannon:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if self._color == "red" and \
-                file.index(to_square[0]) - file.index(from_square[0] == 0) or \
-                to_square[1:] - from_square[1:] == 0:
-            return True
-
-        if self._color == "black" and \
-                file.index(to_square[0]) - file.index(from_square[0] == 0) or \
-                to_square[1:] - from_square[1:] == 0:
+        if file.index(to_square[0]) - file.index(from_square[0] == 0) or to_square[1:] - from_square[1:] == 0:
             return True
         return False
 
