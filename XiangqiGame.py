@@ -52,7 +52,7 @@ class XiangqiGame:
         self._red_in_check = False
 
         # initializes black General's location and check status
-        self._black_general_location= "e10"
+        self._black_general_location = "e10"
         self._black_in_check = False
 
     def get_the_board(self):
@@ -90,7 +90,6 @@ class XiangqiGame:
         if player == "black":
             return self._black_in_check
 
-
     def make_move(self, from_square, to_square):
         """
         Takes two parameters - strings that represent the square moved from and
@@ -114,7 +113,7 @@ class XiangqiGame:
         # game state is finished; either RED_WON or BLACK_WON
         if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() != self._player_turn or \
                 self._the_board[file.index(from_square[0])][from_square[1:]]. \
-                        get_legal_move(from_square, to_square) or self._game_state != "UNFINISHED":
+                    get_legal_move(from_square, to_square) or self._game_state != "UNFINISHED":
             return False
 
         # check for illegal moves in relation to other pieces and return False
@@ -167,70 +166,58 @@ class XiangqiGame:
 
         # return False if illegal move by Advisor
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Advisor):
-
-            # cannot put player's own General in check
-
-
+            self._the_board[file.index(from_square[0])][from_square[1:]].get_legal_move(from_square, to_square)
 
         # return False if illegal move by Elephant
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Elephant):
 
-            # cannot put player's own General in check
-            if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "red" and \
-
-            if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() == "black" and \
-
             # Elephants cannot jump so return False if there is a piece blocking its first diagonal move
-            if ((self._the_board[file.index(from_square[0]) + 1][from_square[1:] + 1] == ""  and
+            if ((self._the_board[file.index(from_square[0]) + 1][from_square[1:] + 1] == "" and
                  self._the_board[file.index(from_square[0]) + 2][from_square[1:] + 2] ==
                  self._the_board[file.index(to_square[0])][to_square[1:]]) or
-                (self._the_board[file.index(from_square[0]) - 1][from_square[1:] - 1] == "" and
-                 self._the_board[file.index(from_square[0]) - 2][from_square[1:] - 2] ==
-                 self._the_board[file.index(to_square[0])][to_square[1:]]) or
-                (self._the_board[file.index(from_square[0]) + 1][from_square[1:] - 1] == "" and
-                 self._the_board[file.index(from_square[0]) + 2][from_square[1:] - 2] ==
-                 self._the_board[file.index(to_square[0])][to_square[1:]]) or
-                (self._the_board[file.index(from_square[0]) - 1][from_square[1:] + 1] == "" and
-                 self._the_board[file.index(from_square[0]) - 2][from_square[1:] + 2] ==
-                 self._the_board[file.index(to_square[0])][to_square[1:]])):
-                    return False
+                    (self._the_board[file.index(from_square[0]) - 1][from_square[1:] - 1] == "" and
+                     self._the_board[file.index(from_square[0]) - 2][from_square[1:] - 2] ==
+                     self._the_board[file.index(to_square[0])][to_square[1:]]) or
+                    (self._the_board[file.index(from_square[0]) + 1][from_square[1:] - 1] == "" and
+                     self._the_board[file.index(from_square[0]) + 2][from_square[1:] - 2] ==
+                     self._the_board[file.index(to_square[0])][to_square[1:]]) or
+                    (self._the_board[file.index(from_square[0]) - 1][from_square[1:] + 1] == "" and
+                     self._the_board[file.index(from_square[0]) - 2][from_square[1:] + 2] ==
+                     self._the_board[file.index(to_square[0])][to_square[1:]])):
+                return False
 
         # return False if illegal move by Horse
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Horse):
-
-            # cannot put player's own General in check
 
             # Horses cannot jump so return False if there is a piece blocking its first orthogonal move
             if ((file.index(from_square[0]) - 2 == file.index(to_square[0]) and
                  from_square[1:] - 1 == to_square[1:] and
                  self._the_board[file.index(from_square[0]) - 1][from_square[1:]] != "") or
-                (file.index(from_square[0]) - 2 == file.index(to_square[0]) and
-                 from_square[1:] + 1 == to_square[1:] and
-                self._the_board[file.index(from_square[0]) - 1][from_square[1:]] != "") or
-                (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
-                 from_square[1:] + 2 == to_square[1:] and
-                self._the_board[file.index(from_square[0])][from_square[1:] + 1] != "") or
-                (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
-                 from_square[1:] + 2 == to_square[1:] and
-                self._the_board[file.index(from_square[0])][from_square[1:] + 1] != "") or
-                (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
-                 from_square[1:] + 1 == to_square[1:] and
-                self._the_board[file.index(from_square[0]) + 1][from_square[1:]] != "") or
-                (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
-                 from_square[1:] - 1 == to_square[1:] and
-                self._the_board[file.index(from_square[0]) + 1][from_square[1:]] != "") or
-                (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
-                 from_square[1:] - 2 == to_square[1:] and
-                self._the_board[file.index(from_square[0])][from_square[1:] - 1] != "") or
-                (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
-                 from_square[1:] - 2 == to_square[1:]) and
-                self._the_board[file.index(from_square[0])][from_square[1:] - 1] != ""):
+                    (file.index(from_square[0]) - 2 == file.index(to_square[0]) and
+                     from_square[1:] + 1 == to_square[1:] and
+                     self._the_board[file.index(from_square[0]) - 1][from_square[1:]] != "") or
+                    (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
+                     from_square[1:] + 2 == to_square[1:] and
+                     self._the_board[file.index(from_square[0])][from_square[1:] + 1] != "") or
+                    (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
+                     from_square[1:] + 2 == to_square[1:] and
+                     self._the_board[file.index(from_square[0])][from_square[1:] + 1] != "") or
+                    (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
+                     from_square[1:] + 1 == to_square[1:] and
+                     self._the_board[file.index(from_square[0]) + 1][from_square[1:]] != "") or
+                    (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
+                     from_square[1:] - 1 == to_square[1:] and
+                     self._the_board[file.index(from_square[0]) + 1][from_square[1:]] != "") or
+                    (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
+                     from_square[1:] - 2 == to_square[1:] and
+                     self._the_board[file.index(from_square[0])][from_square[1:] - 1] != "") or
+                    (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
+                     from_square[1:] - 2 == to_square[1:]) and
+                    self._the_board[file.index(from_square[0])][from_square[1:] - 1] != ""):
                 return False
 
         # return False if illegal move by Chariot
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Chariot):
-
-            # cannot put player's own General in check
 
             # Chariots cannot jump so return False if there is a piece in its orthogonal path
             from_square_path = from_square
@@ -238,28 +225,43 @@ class XiangqiGame:
             i = 1
             while file.index(from_square_path[0]) != file.index(to_square_path[0]):
                 if self._the_board[file.index(from_square_path[0])] == self._the_board[file.index(to_square_path[0])] \
-                    and (self._the_board[file.index(from_square_path[0]) + i][from_square_path[1:]] != "" or
-                     self._the_board[file.index(from_square_path[0]) - i][from_square_path[1:]] != ""):
+                        and (self._the_board[file.index(from_square_path[0]) + i][from_square_path[1:]] != "" or
+                             self._the_board[file.index(from_square_path[0]) - i][from_square_path[1:]] != ""):
                     return False
 
-                if self._the_board[from_square_path[1:]] == self._the_board[to_square_path[1:]] and \
-                    (self._the_board[file.index(from_square_path[0])][from_square_path[1:] + i] != "" or
-                     self._the_board[file.index(from_square_path[0])][from_square_path[1:] - i] != ""):
+                if self._the_board[from_square_path[1:]] != self._the_board[to_square_path[1:]] and \
+                        (self._the_board[file.index(from_square_path[0])][from_square_path[1:] + i] != "" or
+                         self._the_board[file.index(from_square_path[0])][from_square_path[1:] - i] != ""):
                     return False
                 i += 1
 
         # return False if illegal move by Cannon
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Cannon):
-            # cannot put player's own General in check
-            # Cannons move any distance orthogonally without jumping, so if square_to is empty,
-            # return False if there is a piece in its path
-              if square_to contains a piece of the opposite color, and there is ONLY ONE piece in the path between
-              square_from and square_to, then the Cannon may jump to capture and return True
+            # Cannons move any distance orthogonally without jumping
+            # if there is ONLY ONE piece in the path between square_from and square_to, then
+            # the Cannon can capture and return True, otherwise return False
+            from_square_path = from_square
+            to_square_path = to_square
+            i = 1
+            count = 0
+            while file.index(from_square_path[0]) != file.index(to_square_path[0]):
+                if self._the_board[file.index(from_square_path[0])] == self._the_board[file.index(to_square_path[0])] \
+                        and (self._the_board[file.index(from_square_path[0]) + i][from_square_path[1:]] != "" or
+                             self._the_board[file.index(from_square_path[0]) - i][from_square_path[1:]] != ""):
+                    count += 1
+
+                if self._the_board[from_square_path[1:]] != self._the_board[to_square_path[1:]] and \
+                        (self._the_board[file.index(from_square_path[0])][from_square_path[1:] + i] != "" or
+                         self._the_board[file.index(from_square_path[0])][from_square_path[1:] - i] != ""):
+                    count += 1
+
+                i += 1
+                if count != 1:
+                    return False
 
         # return False if illegal move by Soldier
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Soldier):
-
-            # cannot put player's own General in check
+            self._the_board[file.index(from_square[0])][from_square[1:]].get_legal_move(from_square, to_square)
 
         # otherwise, make move and remove any captured piece
         self._the_board[file.index(to_square[0])][to_square[1:]] = \
@@ -268,57 +270,57 @@ class XiangqiGame:
 
         # if red or black General moved, update location
         if isinstance(self._the_board[file.index(to_square[0])][to_square[1:]], General) and \
-            self._the_board[file.index(to_square[0])][to_square[1:]].get_color() == "red":
+                self._the_board[file.index(to_square[0])][to_square[1:]].get_color() == "red":
             self._red_general_location = to_square
         if isinstance(self._the_board[file.index(to_square[0])][to_square[1:]], General) and \
-            self._the_board[file.index(to_square[0])][to_square[1:]].get_color() == "black":
+                self._the_board[file.index(to_square[0])][to_square[1:]].get_color() == "black":
             self._black_general_location = to_square
 
         # if red or black player is in check, update check status
 
         # check if red player's General is in check by black Advisor as a result of the move made
         if ((isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
-            [self._red_general_location[1:] + 1], Advisor) and
-            self._the_board[file.index(self._red_general_location[0] + 1)]
-            [self._red_general_location[1:] + 1].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] - 1)]
-            [self._red_general_location[1:] - 1], Advisor) and
-            self._the_board[file.index(self._red_general_location[0] - 1)]
-            [self._red_general_location[1:] - 1].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
-            [self._red_general_location[1:] - 1], Advisor) and
-            self._the_board[file.index(self._red_general_location[0] + 1)]
-            [self._red_general_location[1:] - 1].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] - 1)]
-            [self._red_general_location[1:] + 1], Advisor) and
-            self._the_board[file.index(self._red_general_location[0] - 1)]
-            [self._red_general_location[1:] + 1].get_color() == "black")):
-                self._red_in_check = True
-                # if it is red player's turn, undo move and return False since player cannot
-                # put its own General in check
-                if self._player_turn == "red":
-                    self._the_board[file.index(from_square[0])][from_square[1:]] = \
+                        [self._red_general_location[1:] + 1], Advisor) and
+             self._the_board[file.index(self._red_general_location[0] + 1)]
+             [self._red_general_location[1:] + 1].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] - 1)]
+                            [self._red_general_location[1:] - 1], Advisor) and
+                 self._the_board[file.index(self._red_general_location[0] - 1)]
+                 [self._red_general_location[1:] - 1].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
+                            [self._red_general_location[1:] - 1], Advisor) and
+                 self._the_board[file.index(self._red_general_location[0] + 1)]
+                 [self._red_general_location[1:] - 1].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] - 1)]
+                            [self._red_general_location[1:] + 1], Advisor) and
+                 self._the_board[file.index(self._red_general_location[0] - 1)]
+                 [self._red_general_location[1:] + 1].get_color() == "black")):
+            self._red_in_check = True
+            # if it is red player's turn, undo move and return False since player cannot
+            # put its own General in check
+            if self._player_turn == "red":
+                self._the_board[file.index(from_square[0])][from_square[1:]] = \
                     self._the_board[file.index(to_square[0])][to_square[1:]]
-                    self._the_board[file.index(to_square[0])][to_square[1:]] = ""
-                    return False
+                self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                return False
 
         # check if black player's General is in check by red Advisor as a result of the move made
         if ((isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
-            [self._black_general_location[1:] + 1], Advisor) and
-            self._the_board[file.index(self._black_general_location[0] + 1)]
-            [self._black_general_location[1:] + 1].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] - 1)]
-            [self._black_general_location[1:] - 1], Advisor) and
-            self._the_board[file.index(self._black_general_location[0] - 1)]
-            [self._black_general_location[1:] - 1].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
-            [self._black_general_location[1:] - 1], Advisor) and
-            self._the_board[file.index(self._black_general_location[0] + 1)]
-            [self._black_general_location[1:] - 1].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] - 1)]
-            [self._black_general_location[1:] + 1], Advisor) and
-            self._the_board[file.index(self._black_general_location[0] - 1)]
-            [self._black_general_location[1:] + 1].get_color() == "red")):
+                        [self._black_general_location[1:] + 1], Advisor) and
+             self._the_board[file.index(self._black_general_location[0] + 1)]
+             [self._black_general_location[1:] + 1].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] - 1)]
+                            [self._black_general_location[1:] - 1], Advisor) and
+                 self._the_board[file.index(self._black_general_location[0] - 1)]
+                 [self._black_general_location[1:] - 1].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
+                            [self._black_general_location[1:] - 1], Advisor) and
+                 self._the_board[file.index(self._black_general_location[0] + 1)]
+                 [self._black_general_location[1:] - 1].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] - 1)]
+                            [self._black_general_location[1:] + 1], Advisor) and
+                 self._the_board[file.index(self._black_general_location[0] - 1)]
+                 [self._black_general_location[1:] + 1].get_color() == "red")):
             self._black_in_check = True
             # if it is black player's turn, undo move and return False since player cannot
             # put its own General in check
@@ -330,47 +332,47 @@ class XiangqiGame:
 
         # check if red player's General is in check by black Elephant as a result of the move made
         if ((isinstance(self._the_board[file.index(self._red_general_location[0] + 2)]
-            [self._red_general_location[1:] + 2], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] + 2)]
-            [self._red_general_location[1:] + 2].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
-            [self._red_general_location[1:] - 2], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] - 2)]
-            [self._red_general_location[1:] - 2].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] + 2)]
-            [self._red_general_location[1:] - 2], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] + 2)]
-            [self._red_general_location[1:] - 2].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
-            [self._red_general_location[1:] + 2], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] - 2)]
-            [self._red_general_location[1:] + 2].get_color() == "black")):
-                self._red_in_check = True
-                # if it is red player's turn, undo move and return False since player cannot
-                # put its own General in check
-                if self._player_turn == "red":
-                    self._the_board[file.index(from_square[0])][from_square[1:]] = \
+                        [self._red_general_location[1:] + 2], Elephant) and
+             self._the_board[file.index(self._red_general_location[0] + 2)]
+             [self._red_general_location[1:] + 2].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
+                            [self._red_general_location[1:] - 2], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] - 2)]
+                 [self._red_general_location[1:] - 2].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] + 2)]
+                            [self._red_general_location[1:] - 2], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] + 2)]
+                 [self._red_general_location[1:] - 2].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
+                            [self._red_general_location[1:] + 2], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] - 2)]
+                 [self._red_general_location[1:] + 2].get_color() == "black")):
+            self._red_in_check = True
+            # if it is red player's turn, undo move and return False since player cannot
+            # put its own General in check
+            if self._player_turn == "red":
+                self._the_board[file.index(from_square[0])][from_square[1:]] = \
                     self._the_board[file.index(to_square[0])][to_square[1:]]
-                    self._the_board[file.index(to_square[0])][to_square[1:]] = ""
-                    return False
+                self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                return False
 
         # check if black player's General is in check by red Elephant as a result of the move made
         if ((isinstance(self._the_board[file.index(self._black_general_location[0] + 2)]
-            [self._black_general_location[1:] + 2], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] + 2)]
-            [self._black_general_location[1:] + 2].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] - 2)]
-            [self._black_general_location[1:] - 2], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] - 2)]
-            [self._black_general_location[1:] - 2].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] + 2)]
-            [self._black_general_location[1:] - 2], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] + 2)]
-            [self._black_general_location[1:] - 2].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] - 2)]
-            [self._black_general_location[1:] + 2], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] - 2)]
-            [self._black_general_location[1:] + 2].get_color() == "red")):
+                        [self._black_general_location[1:] + 2], Elephant) and
+             self._the_board[file.index(self._black_general_location[0] + 2)]
+             [self._black_general_location[1:] + 2].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] - 2)]
+                            [self._black_general_location[1:] - 2], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] - 2)]
+                 [self._black_general_location[1:] - 2].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] + 2)]
+                            [self._black_general_location[1:] - 2], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] + 2)]
+                 [self._black_general_location[1:] - 2].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] - 2)]
+                            [self._black_general_location[1:] + 2], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] - 2)]
+                 [self._black_general_location[1:] + 2].get_color() == "red")):
             self._black_in_check = True
             # if it is black player's turn, undo move and return False since player cannot
             # put its own General in check
@@ -382,87 +384,87 @@ class XiangqiGame:
 
         # check if red player's General is in check by black Horse as a result of the move made
         if ((isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
-            [self._red_general_location[1:] - 1], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] - 2)]
-            [self._red_general_location[1:] - 1].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
-            [self._red_general_location[1:] + 1], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] - 2)]
-            [self._red_general_location[1:]  + 1].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
-            [self._red_general_location[1:] + 2], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] - 1)]
-            [self._red_general_location[1:] + 2].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
-            [self._red_general_location[1:] + 2], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] + 1)]
-            [self._red_general_location[1:] + 2].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] + 2)]
-            [self._red_general_location[1:] + 1], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] + 2)]
-            [self._red_general_location[1:] + 1].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] + 2)]
-            [self._red_general_location[1:] - 1], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] + 2)]
-            [self._red_general_location[1:] - 1].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
-            [self._red_general_location[1:] - 2], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] + 1)]
-            [self._red_general_location[1:] - 2].get_color() == "black") or
-            (isinstance(self._the_board[file.index(self._red_general_location[0] - 1)]
-            [self._red_general_location[1:] - 2], Elephant) and
-            self._the_board[file.index(self._red_general_location[0] - 1)]
-            [self._red_general_location[1:] - 2].get_color() == "black")):
-                self._red_in_check = True
-                # if it is red player's turn, undo move and return False since player cannot
-                # put its own General in check
-                if self._player_turn == "red":
-                    self._the_board[file.index(from_square[0])][from_square[1:]] = \
+                        [self._red_general_location[1:] - 1], Elephant) and
+             self._the_board[file.index(self._red_general_location[0] - 2)]
+             [self._red_general_location[1:] - 1].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
+                            [self._red_general_location[1:] + 1], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] - 2)]
+                 [self._red_general_location[1:] + 1].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
+                            [self._red_general_location[1:] + 2], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] - 1)]
+                 [self._red_general_location[1:] + 2].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
+                            [self._red_general_location[1:] + 2], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] + 1)]
+                 [self._red_general_location[1:] + 2].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] + 2)]
+                            [self._red_general_location[1:] + 1], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] + 2)]
+                 [self._red_general_location[1:] + 1].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] + 2)]
+                            [self._red_general_location[1:] - 1], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] + 2)]
+                 [self._red_general_location[1:] - 1].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
+                            [self._red_general_location[1:] - 2], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] + 1)]
+                 [self._red_general_location[1:] - 2].get_color() == "black") or
+                (isinstance(self._the_board[file.index(self._red_general_location[0] - 1)]
+                            [self._red_general_location[1:] - 2], Elephant) and
+                 self._the_board[file.index(self._red_general_location[0] - 1)]
+                 [self._red_general_location[1:] - 2].get_color() == "black")):
+            self._red_in_check = True
+            # if it is red player's turn, undo move and return False since player cannot
+            # put its own General in check
+            if self._player_turn == "red":
+                self._the_board[file.index(from_square[0])][from_square[1:]] = \
                     self._the_board[file.index(to_square[0])][to_square[1:]]
-                    self._the_board[file.index(to_square[0])][to_square[1:]] = ""
-                    return False
+                self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                return False
 
         # check if black player's General is in check by red Horse as a result of the move made
         if ((isinstance(self._the_board[file.index(self._black_general_location[0] - 2)]
-            [self._black_general_location[1:] - 1], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] - 2)]
-            [self._black_general_location[1:] - 1].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] - 2)]
-            [self._black_general_location[1:] + 1], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] - 2)]
-            [self._black_general_location[1:]  + 1].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
-            [self._black_general_location[1:] + 2], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] - 1)]
-            [self._black_general_location[1:] + 2].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
-            [self._black_general_location[1:] + 2], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] + 1)]
-            [self._black_general_location[1:] + 2].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] + 2)]
-            [self._black_general_location[1:] + 1], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] + 2)]
-            [self._black_general_location[1:] + 1].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] + 2)]
-            [self._black_general_location[1:] - 1], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] + 2)]
-            [self._black_general_location[1:] - 1].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
-            [self._black_general_location[1:] - 2], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] + 1)]
-            [self._black_general_location[1:] - 2].get_color() == "red") or
-            (isinstance(self._the_board[file.index(self._black_general_location[0] - 1)]
-            [self._black_general_location[1:] - 2], Elephant) and
-            self._the_board[file.index(self._black_general_location[0] - 1)]
-            [self._black_general_location[1:] - 2].get_color() == "red")):
-                self._black_in_check = True
-                # if it is black player's turn, undo move and return False since player cannot
-                # put its own General in check
-                if self._player_turn == "black":
-                    self._the_board[file.index(from_square[0])][from_square[1:]] = \
+                        [self._black_general_location[1:] - 1], Elephant) and
+             self._the_board[file.index(self._black_general_location[0] - 2)]
+             [self._black_general_location[1:] - 1].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] - 2)]
+                            [self._black_general_location[1:] + 1], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] - 2)]
+                 [self._black_general_location[1:] + 1].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
+                            [self._black_general_location[1:] + 2], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] - 1)]
+                 [self._black_general_location[1:] + 2].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
+                            [self._black_general_location[1:] + 2], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] + 1)]
+                 [self._black_general_location[1:] + 2].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] + 2)]
+                            [self._black_general_location[1:] + 1], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] + 2)]
+                 [self._black_general_location[1:] + 1].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] + 2)]
+                            [self._black_general_location[1:] - 1], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] + 2)]
+                 [self._black_general_location[1:] - 1].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
+                            [self._black_general_location[1:] - 2], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] + 1)]
+                 [self._black_general_location[1:] - 2].get_color() == "red") or
+                (isinstance(self._the_board[file.index(self._black_general_location[0] - 1)]
+                            [self._black_general_location[1:] - 2], Elephant) and
+                 self._the_board[file.index(self._black_general_location[0] - 1)]
+                 [self._black_general_location[1:] - 2].get_color() == "red")):
+            self._black_in_check = True
+            # if it is black player's turn, undo move and return False since player cannot
+            # put its own General in check
+            if self._player_turn == "black":
+                self._the_board[file.index(from_square[0])][from_square[1:]] = \
                     self._the_board[file.index(to_square[0])][to_square[1:]]
-                    self._the_board[file.index(to_square[0])][to_square[1:]] = ""
-                    return False
+                self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                return False
 
         # check if red player's General is in check by black Chariot as a result of the move made
 
@@ -475,7 +477,6 @@ class XiangqiGame:
         # check if red player's General is in check by black Soldier as a result of the move made
 
         # check if black player's General is in check by red Soldier as a result of the move made
-
 
         # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
         # if red General has no legal moves or all red pieces have no legal moves):
@@ -692,13 +693,13 @@ class Horse:
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if ((file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:]) or
-            (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:]) or
-            (file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:]) or
-            (file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:]) or
-            (file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:]) or
-            (file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:]) or
-            (file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]) or
-            (file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:])):
+                (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:]) or
+                (file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:]) or
+                (file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:]) or
+                (file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:]) or
+                (file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:]) or
+                (file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]) or
+                (file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:])):
             return True
         return False
 
@@ -729,7 +730,7 @@ class Chariot:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if file.index(to_square[0]) - file.index(from_square[0] == 0) or to_square[1:] - from_square[1:] == 0:
+        if (file.index(to_square[0]) - file.index(from_square[0]) == 0) or (to_square[1:] - from_square[1:] == 0):
             return True
         return False
 
