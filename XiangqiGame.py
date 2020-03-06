@@ -122,36 +122,54 @@ class XiangqiGame:
         if isinstance(self._the_board[file.index(from_square[0])][int(from_square[1:])], General):
             if self._the_board[file.index(from_square[0])][int(from_square[1:])].get_color() == "red":
                 if (isinstance(self._the_board[9][int(to_square[1:])], General) and
-                        self._the_board[8][int(to_square[1:])] == "" and self._the_board[7][int(to_square[1:])] == "" and
-                        self._the_board[6][int(to_square[1:])] == "" and self._the_board[5][int(to_square[1:])] == "" and
-                        self._the_board[4][int(to_square[1:])] == "" and self._the_board[3][int(to_square[1:])] == "" and
+                        self._the_board[8][int(to_square[1:])] == "" and self._the_board[7][
+                            int(to_square[1:])] == "" and
+                        self._the_board[6][int(to_square[1:])] == "" and self._the_board[5][
+                            int(to_square[1:])] == "" and
+                        self._the_board[4][int(to_square[1:])] == "" and self._the_board[3][
+                            int(to_square[1:])] == "" and
                         self._the_board[2][int(to_square[1:])] == "" and self._the_board[1][int(to_square[1:])] == "" or
                         (isinstance(self._the_board[8][int(to_square[1:])], General) and
-                         self._the_board[7][int(to_square[1:])] == "" and self._the_board[6][int(to_square[1:])] == "" and
-                         self._the_board[5][int(to_square[1:])] == "" and self._the_board[4][int(to_square[1:])] == "" and
-                         self._the_board[3][int(to_square[1:])] == "" and self._the_board[2][int(to_square[1:])] == "" and
+                         self._the_board[7][int(to_square[1:])] == "" and self._the_board[6][
+                             int(to_square[1:])] == "" and
+                         self._the_board[5][int(to_square[1:])] == "" and self._the_board[4][
+                             int(to_square[1:])] == "" and
+                         self._the_board[3][int(to_square[1:])] == "" and self._the_board[2][
+                             int(to_square[1:])] == "" and
                          self._the_board[1][int(to_square[1:])] == "") or
                         (isinstance(self._the_board[7][int(to_square[1:])], General) and
-                         self._the_board[6][int(to_square[1:])] == "" and self._the_board[5][int(to_square[1:])] == "" and
-                         self._the_board[4][int(to_square[1:])] == "" and self._the_board[3][int(to_square[1:])] == "" and
-                         self._the_board[2][int(to_square[1:])] == "" and self._the_board[1][int(to_square[1:])] == "")):
-                        return False
+                         self._the_board[6][int(to_square[1:])] == "" and self._the_board[5][
+                             int(to_square[1:])] == "" and
+                         self._the_board[4][int(to_square[1:])] == "" and self._the_board[3][
+                             int(to_square[1:])] == "" and
+                         self._the_board[2][int(to_square[1:])] == "" and self._the_board[1][
+                             int(to_square[1:])] == "")):
+                    return False
 
             if self._the_board[file.index(from_square[0])][int(from_square[1:])].get_color() == "black":
                 if (isinstance(self._the_board[0][int(to_square[1:])], General) and
-                        self._the_board[1][int(to_square[1:])] == "" and self._the_board[2][int(to_square[1:])] == "" and
-                        self._the_board[3][int(to_square[1:])] == "" and self._the_board[4][int(to_square[1:])] == "" and
-                        self._the_board[5][int(to_square[1:])] == "" and self._the_board[6][int(to_square[1:])] == "" and
+                        self._the_board[1][int(to_square[1:])] == "" and self._the_board[2][
+                            int(to_square[1:])] == "" and
+                        self._the_board[3][int(to_square[1:])] == "" and self._the_board[4][
+                            int(to_square[1:])] == "" and
+                        self._the_board[5][int(to_square[1:])] == "" and self._the_board[6][
+                            int(to_square[1:])] == "" and
                         self._the_board[7][int(to_square[1:])] == "" and self._the_board[8][int(to_square[1:])] == "" or
                         (isinstance(self._the_board[8][int(to_square[1:])], General) and
-                         self._the_board[2][int(to_square[1:])] == "" and self._the_board[3][int(to_square[1:])] == "" and
-                         self._the_board[4][int(to_square[1:])] == "" and self._the_board[5][int(to_square[1:])] == "" and
-                         self._the_board[6][int(to_square[1:])] == "" and self._the_board[7][int(to_square[1:])] == "" and
+                         self._the_board[2][int(to_square[1:])] == "" and self._the_board[3][
+                             int(to_square[1:])] == "" and
+                         self._the_board[4][int(to_square[1:])] == "" and self._the_board[5][
+                             int(to_square[1:])] == "" and
+                         self._the_board[6][int(to_square[1:])] == "" and self._the_board[7][
+                             int(to_square[1:])] == "" and
                          self._the_board[8][int(to_square[1:])] == "") or
                         (isinstance(self._the_board[7][int(to_square[1:])], General) and
-                         self._the_board[3][int(to_square[1:])] == "" and self._the_board[4][int(to_square[1:])] == "" and
-                         self._the_board[5][int(to_square[1:])] == "" and self._the_board[6][int(to_square[1:])] == "" and
-                         self._the_board[7][int(to_square[1:])] == "" and self._the_board[8][int(to_square[1:])] == "")):
+                         self._the_board[3][int(to_square[1:])] == "" and self._the_board[4][
+                             int(to_square[1:])] == "" and
+                         self._the_board[5][int(to_square[1:])] == "" and self._the_board[6][
+                             int(to_square[1:])] == "" and
+                         self._the_board[7][int(to_square[1:])] == "" and self._the_board[8][
+                             int(to_square[1:])] == "")):
                     return False
 
         # return False if illegal move by Advisor
