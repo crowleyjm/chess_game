@@ -753,11 +753,12 @@ class XiangqiGame:
 
         # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
         # if red player no legal moves):
-        #     self._game_state = "BLACK_WON"
-        #
-        # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
-        # if black player has no legal moves):
-        #     self._game_state = "RED_WON"
+        if self._player_turn == "red":
+            self._game_state = "BLACK_WON"
+
+            # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
+            # if black player has no legal moves):
+            self._game_state = "RED_WON"
 
         # update _player_turn
         if self._player_turn == "red":
@@ -965,14 +966,23 @@ class Horse:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if ((file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:]) or
-                (file.index(from_square[0]) - 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:]) or
-                (file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:]) or
-                (file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] + 2 == to_square[1:]) or
-                (file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] + 1 == to_square[1:]) or
-                (file.index(from_square[0]) + 2 == file.index(to_square[0]) and from_square[1:] - 1 == to_square[1:]) or
-                (file.index(from_square[0]) + 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:]) or
-                (file.index(from_square[0]) - 1 == file.index(to_square[0]) and from_square[1:] - 2 == to_square[1:])):
+        if ((self._color == "red" or self._color == "black") and
+                ((file.index(from_square[0]) - 2 == file.index(to_square[0]) and
+                  from_square[1:] - 1 == to_square[1:]) or
+                 (file.index(from_square[0]) - 2 == file.index(to_square[0]) and
+                  from_square[1:] + 1 == to_square[1:]) or
+                 (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
+                  from_square[1:] + 2 == to_square[1:]) or
+                 (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
+                  from_square[1:] + 2 == to_square[1:]) or
+                 (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
+                  from_square[1:] + 1 == to_square[1:]) or
+                 (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
+                  from_square[1:] - 1 == to_square[1:]) or
+                 (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
+                  from_square[1:] - 2 == to_square[1:]) or
+                 (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
+                  from_square[1:] - 2 == to_square[1:]))):
             return True
         return False
 
@@ -1003,7 +1013,9 @@ class Chariot:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if (file.index(to_square[0]) - file.index(from_square[0]) == 0) or (to_square[1:] - from_square[1:] == 0):
+        if ((self._color == "red" or self._color == "black") or
+                (file.index(to_square[0]) - file.index(from_square[0]) == 0) or
+                (to_square[1:] - from_square[1:] == 0)):
             return True
         return False
 
@@ -1036,8 +1048,10 @@ class Cannon:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        if file.index(to_square[0]) - file.index(from_square[0] == 0) or to_square[1:] - from_square[1:] == 0:
-            return True
+        if ((self._color == "red" or self._color == "black") or
+                file.index(to_square[0]) - file.index(from_square[0] == 0) or
+                to_square[1:] - from_square[1:] == 0):
+                return True
         return False
 
 
