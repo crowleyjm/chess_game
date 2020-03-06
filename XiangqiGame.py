@@ -112,8 +112,8 @@ class XiangqiGame:
         # move is not legally available for piece based on class definition
         # game state is finished; either RED_WON or BLACK_WON
         if self._the_board[file.index(from_square[0])][from_square[1:]].get_color() != self._player_turn or \
-                self._the_board[file.index(from_square[0])][from_square[1:]]. \
-                    get_legal_move(from_square, to_square) or self._game_state != "UNFINISHED":
+                self._the_board[file.index(from_square[0])][from_square[1:]].get_legal_move(from_square, to_square) or \
+                self._game_state != "UNFINISHED":
             return False
 
         # check for illegal moves in relation to other pieces and return False
