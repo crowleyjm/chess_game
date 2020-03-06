@@ -253,12 +253,18 @@ class XiangqiGame:
             # Chariots cannot jump so return False if there is a piece in its orthogonal path
             from_square_path = from_square
             to_square_path = to_square
-            while file.index(from_square[0]) != from_square[1:]
-            if (self._the_board[file.index(from_square[0]) + 1][from_square[1:]] == "" or
-                     self._the_board[file.index(from_square[0]) - 1][from_square[1:]] == "" or
-                     self._the_board[file.index(from_square[0])][from_square[1:] + 1] == "" or
-                     self._the_board[file.index(from_square[0])][from_square[1:] - 1] == ""):
-                return False
+            i = 1
+            while file.index(from_square_path[0]) != file.index(to_square_path[0]):
+                if self._the_board[file.index(from_square_path[0])] == self._the_board[file.index(to_square_path[0])] \
+                    and (self._the_board[file.index(from_square_path[0]) + i][from_square_path[1:]] != "" or
+                     self._the_board[file.index(from_square_path[0]) - i][from_square_path[1:]] != ""):
+                    return False
+
+                if self._the_board[from_square_path[1:]] == self._the_board[to_square_path[1:]] and \
+                    (self._the_board[file.index(from_square_path[0])][from_square_path[1:] + i] != "" or
+                     self._the_board[file.index(from_square_path[0])][from_square_path[1:] - i] != ""):
+                    return False
+                i += 1
 
         # return False if illegal move by Cannon
         if isinstance(self._the_board[file.index(from_square[0])][from_square[1:]], Cannon):
