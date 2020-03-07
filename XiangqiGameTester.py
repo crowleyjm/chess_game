@@ -6,7 +6,7 @@ import unittest
 from XiangqiGame import General, Advisor, Elephant, Horse, Chariot, Cannon, Soldier
 
 
-class TestStore(unittest.TestCase, General, Advisor, Elephant, Horse, Chariot, Cannon, Soldier):
+class TestXiangqiGame(unittest.TestCase, General, Advisor, Elephant, Horse, Chariot, Cannon, Soldier):
     """
     Contains unit tests for the functions in XiangqiGame
     """
@@ -25,7 +25,7 @@ class TestStore(unittest.TestCase, General, Advisor, Elephant, Horse, Chariot, C
     def test_advisor_is_legal_move(self):
         advisor = Advisor("red")
         color = advisor.get_color()
-        result_1 = advisor.is_legal_move("d1", "e1")
+        result_1 = advisor.is_legal_move("d1", "e2")
         result_2 = advisor.is_legal_move("f1", "e2")
         result_3 = advisor.is_legal_move("e2", "d3")
         result_4 = advisor.is_legal_move("d1", "d2")
@@ -35,10 +35,10 @@ class TestStore(unittest.TestCase, General, Advisor, Elephant, Horse, Chariot, C
         self.assertEqual(final_result, ("red", True, True, True, False, False, False))
 
     def test_elephant_is_legal_move(self):
-        elephant = Advisor("red")
+        elephant = Elephant("red")
         color = elephant.get_color()
         result_1 = elephant.is_legal_move("c1", "a3")
-        result_2 = elephant.is_legal_move("f1", "e2")
+        result_2 = elephant.is_legal_move("a3", "c5")
         result_3 = elephant.is_legal_move("g1", "e3")
         result_4 = elephant.is_legal_move("c5", "d7")
         result_5 = elephant.is_legal_move("c1", "d2")
@@ -75,7 +75,7 @@ class TestStore(unittest.TestCase, General, Advisor, Elephant, Horse, Chariot, C
         color = cannon.get_color()
         result_1 = cannon.is_legal_move("a1", "a5")
         result_2 = cannon.is_legal_move("a1", "a9")
-        result_3 = cannon.is_legal_move("i1", "a2")
+        result_3 = cannon.is_legal_move("i1", "a1")
         result_4 = cannon.is_legal_move("a1", "b3")
         result_5 = cannon.is_legal_move("a1", "c4")
         result_6 = cannon.is_legal_move("i1", "g2")
@@ -96,5 +96,5 @@ class TestStore(unittest.TestCase, General, Advisor, Elephant, Horse, Chariot, C
 
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestStore)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestXiangqiGame)
     unittest.TextTestRunner(verbosity=2).run(suite)

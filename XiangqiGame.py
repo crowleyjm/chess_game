@@ -826,14 +826,14 @@ class General:
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        if self._color == "red" and from_row < 3 and 6 > from_row > 2 and \
-                (((from_row + 1 == to_row) or (from_row - 1 == to_row)) and (from_column == to_column)) or \
-                (((from_column + 1 == to_column) or (from_column - 1 == to_column)) and (from_row == to_row)):
+        if self._color == "red" and from_row < 3 and 6 > from_column > 2 and 6 > to_column > 2 and \
+                ((((from_row + 1 == to_row) or (from_row - 1 == to_row)) and (from_column == to_column)) or
+                 (((from_column + 1 == to_column) or (from_column - 1 == to_column)) and (from_row == to_row))):
             return True
 
-        if self._color == "black" and from_row > 6 and 6 > from_row > 2 and \
-                (((from_row + 1 == to_row) or (from_row - 1 == to_row)) and (from_column == to_column)) or \
-                (((from_column + 1 == to_column) or (from_column - 1 == to_column)) and (from_row == to_row)):
+        if self._color == "black" and from_row > 6 and 6 > from_column > 2 and 6 > to_column > 2 and \
+                ((((from_row + 1 == to_row) or (from_row - 1 == to_row)) and (from_column == to_column)) or
+                 (((from_column + 1 == to_column) or (from_column - 1 == to_column)) and (from_row == to_row))):
             return True
         return False
 
@@ -869,14 +869,14 @@ class Advisor:
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        if self._color == "red" and from_row < 3 and 6 > from_row > 2 and \
+        if self._color == "red" and from_row < 3 and 6 > from_column > 2 and 6 > to_column > 2 and \
                 (((from_row + 1 == to_row) and (from_column + 1 == to_column)) or
                  ((from_row - 1 == to_row) and (from_column - 1 == to_column)) or
                  ((from_row + 1 == to_row) and (from_column - 1 == to_column)) or
                  ((from_row - 1 == to_row) and (from_column + 1 == to_column))):
             return True
 
-        if self._color == "black" and from_row > 6 and 6 > from_row > 2 and \
+        if self._color == "black" and from_row > 6 and 6 > from_column > 2 and 6 > to_column > 2 and \
                 (((from_row + 1 == to_row) and (from_column + 1 == to_column)) or
                  ((from_row - 1 == to_row) and (from_column - 1 == to_column)) or
                  ((from_row + 1 == to_row) and (from_column - 1 == to_column)) or
@@ -921,25 +921,25 @@ class Elephant:
 
         # Elephants cannot cross the river
         if self._color == "red" and \
-                ((from_row == 0 and from_column == 2) or (from_row == 0 and from_column == 6) or
-                 (from_row == 2 and from_column == 0) or (from_row == 2 and from_column == 4) or
-                 (from_row == 2 and from_column == 9) or (from_row == 4 and from_column == 2) or
-                 (from_row == 4 and from_column == 7)) and \
-                ((to_row == from_row + 2 and to_column == from_column + 2) or
-                 (to_row == from_row - 2 and to_column == from_column - 2) or
-                 (to_row == from_row + 2 and to_column == from_column - 2) or
-                 (to_row == from_row - 2 and to_column == from_column + 2)):
+                (((from_row == 0 and from_column == 2) or (from_row == 0 and from_column == 6) or
+                  (from_row == 2 and from_column == 0) or (from_row == 2 and from_column == 4) or
+                  (from_row == 2 and from_column == 8) or (from_row == 4 and from_column == 2) or
+                  (from_row == 4 and from_column == 6)) and
+                 ((to_row == from_row + 2 and to_column == from_column + 2) or
+                  (to_row == from_row - 2 and to_column == from_column - 2) or
+                  (to_row == from_row + 2 and to_column == from_column - 2) or
+                  (to_row == from_row - 2 and to_column == from_column + 2))):
             return True
 
         if self._color == "black" and \
-                ((from_row == 9 and from_column == 2) or (from_row == 9 and from_column == 6) or
-                 (from_row == 7 and from_column == 0) or (from_row == 7 and from_column == 4) or
-                 (from_row == 7 and from_column == 9) or (from_row == 5 and from_column == 2) or
-                 (from_row == 5 and from_column == 7)) and \
-                ((to_row == from_row + 2 and to_column == from_column + 2) or
-                 (to_row == from_row - 2 and to_column == from_column - 2) or
-                 (to_row == from_row + 2 and to_column == from_column - 2) or
-                 (to_row == from_row - 2 and to_column == from_column + 2)):
+                (((from_row == 9 and from_column == 2) or (from_row == 9 and from_column == 6) or
+                  (from_row == 7 and from_column == 0) or (from_row == 7 and from_column == 4) or
+                  (from_row == 7 and from_column == 9) or (from_row == 5 and from_column == 2) or
+                  (from_row == 5 and from_column == 6)) and
+                 ((to_row == from_row + 2 and to_column == from_column + 2) or
+                  (to_row == from_row - 2 and to_column == from_column - 2) or
+                  (to_row == from_row + 2 and to_column == from_column - 2) or
+                  (to_row == from_row - 2 and to_column == from_column + 2))):
             return True
         return False
 
@@ -1024,8 +1024,8 @@ class Chariot:
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        if ((self._color == "red" or self._color == "black") or
-                (to_row == from_row) or (to_column == from_column)):
+        if ((self._color == "red" or self._color == "black") and
+                ((to_row == from_row) or (to_column == from_column))):
             return True
         return False
 
@@ -1064,8 +1064,8 @@ class Cannon:
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        if ((self._color == "red" or self._color == "black") or
-                (to_row == from_row) or (to_column == from_column)):
+        if ((self._color == "red" or self._color == "black") and
+                ((to_row == from_row) or (to_column == from_column))):
             return True
         return False
 
