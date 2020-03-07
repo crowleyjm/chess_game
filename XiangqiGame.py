@@ -819,6 +819,8 @@ class General:
         """
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
+        # define board indices
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -860,6 +862,8 @@ class Advisor:
         """
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
+        # define board indices
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -908,6 +912,8 @@ class Elephant:
         """
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
+        # define board indices
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -966,20 +972,22 @@ class Horse:
         """
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
+        # define board indices
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
         if ((self._color == "red" or self._color == "black") and
-            ((from_row - 2 == to_row and from_column - 1 == to_column) or
-            (from_row - 2 == to_row and from_column + 1 == to_column) or
-            (from_row - 1 == to_row and from_column + 2 == to_column) or
-            (from_row + 1 == to_row and from_column + 2 == to_column) or
-            (from_row + 2 == to_row and from_column + 1 == to_column) or
-            (from_row + 2 == to_row and from_column - 1 == to_column) or
-            (from_row + 1 == to_row and from_column - 2 == to_column) or
-            (from_row - 1 == to_row and from_column - 2 == to_column)):
+                ((from_row - 2 == to_row and from_column - 1 == to_column) or
+                 (from_row - 2 == to_row and from_column + 1 == to_column) or
+                 (from_row - 1 == to_row and from_column + 2 == to_column) or
+                 (from_row + 1 == to_row and from_column + 2 == to_column) or
+                 (from_row + 2 == to_row and from_column + 1 == to_column) or
+                 (from_row + 2 == to_row and from_column - 1 == to_column) or
+                 (from_row + 1 == to_row and from_column - 2 == to_column) or
+                 (from_row - 1 == to_row and from_column - 2 == to_column))):
             return True
         return False
 
@@ -1010,9 +1018,14 @@ class Chariot:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
+        # define board indices
+        from_row = int(from_square[1:]) - 1
+        from_column = file.index(from_square[0])
+        to_row = int(to_square[1:]) - 1
+        to_column = file.index(to_square[0])
+
         if ((self._color == "red" or self._color == "black") or
-                (file.index(to_square[0]) - file.index(from_square[0]) == 0) or
-                (int(to_square[1:]) - int(from_square[1:]) == 0)):
+                (to_row == from_row) or (to_column == from_column)):
             return True
         return False
 
@@ -1045,9 +1058,14 @@ class Cannon:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
+        # define board indices
+        from_row = int(from_square[1:]) - 1
+        from_column = file.index(from_square[0])
+        to_row = int(to_square[1:]) - 1
+        to_column = file.index(to_square[0])
+
         if ((self._color == "red" or self._color == "black") or
-                file.index(to_square[0]) - file.index(from_square[0] == 0) or
-                int(to_square[1:]) - int(from_square[1:]) == 0):
+                (to_row == from_row) or (to_column == from_column)):
             return True
         return False
 
@@ -1081,22 +1099,20 @@ class Soldier:
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
+        # define board indices
+        from_row = int(from_square[1:]) - 1
+        from_column = file.index(from_square[0])
+        to_row = int(to_square[1:]) - 1
+        to_column = file.index(to_square[0])
+
         if self._color == "red" and \
-                file.index(from_square[0]) < file.index(to_square[0]) and \
-                ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
-                  (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
-                  int(to_square[1:]) - int(from_square[1:]) == 0)) or \
-                (file.index(from_square[0]) > 4 and file.index(to_square[0]) - file.index(from_square[0]) == 0 and
-                 (int(to_square[1:]) + 1 == int(from_square[1:]) or int(to_square[1:]) - 1 == int(from_square[1:]))):
+                ((from_row + 1 == to_row and to_column == from_column) or
+                 (4 < from_row == to_row and (from_column + 1 == to_column or from_column - 1 == to_column))):
             return True
 
         if self._color == "black" and \
-                file.index(from_square[0]) > file.index(to_square[0]) and \
-                ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
-                  (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
-                  int(to_square[1:]) - int(from_square[1:]) == 0)) or \
-                (file.index(from_square[0]) < 5 and file.index(to_square[0]) - file.index(from_square[0]) == 0 and
-                 (int(to_square[1:]) + 1 == int(from_square[1:]) or int(to_square[1:]) - 1 == int(from_square[1:]))):
+                ((from_row + 1 == to_row and to_column == from_column) or
+                 (5 > from_row == to_row and (from_column + 1 == to_column or from_column - 1 == to_column))):
             return True
         return False
 
