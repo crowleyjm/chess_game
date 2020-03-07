@@ -28,7 +28,7 @@ class TestXiangqiGame(unittest.TestCase, XiangqiGame, General, Advisor, Elephant
         result_2 = game.is_valid_move_general("e1", "d1")
         result_3 = game.is_valid_move_general("e1", "f1")
         final_result = (result_1, result_2, result_3)
-        self.assertEqual(final_result, (True, False, False))
+        self.assertEqual(final_result, (True, True, True))
     #
     # def test_advisor_is_legal_move(self):
     #     advisor = Advisor("red")

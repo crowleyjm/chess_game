@@ -535,6 +535,7 @@ class XiangqiGame:
                      self._the_board[5][to_column] == "" and self._the_board[6][to_column] == "" and
                      self._the_board[7][to_column] == "" and self._the_board[8][to_column] == "")):
                 return False
+        return True
 
     def is_valid_move_elephant(self, from_square, to_square):
         """
