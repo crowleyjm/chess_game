@@ -915,39 +915,25 @@ class Elephant:
 
         # Elephants cannot cross the river
         if self._color == "red" and \
-                ((file.index(from_square[0]) == 0 and int(from_square[1:]) == 2) or
-                 (file.index(from_square[0]) == 0 and int(from_square[1:]) == 6) or
-                 (file.index(from_square[0]) == 2 and int(from_square[1:]) == 0) or
-                 (file.index(from_square[0]) == 2 and int(from_square[1:]) == 4) or
-                 (file.index(from_square[0]) == 2 and int(from_square[1:]) == 9) or
-                 (file.index(from_square[0]) == 4 and int(from_square[1:]) == 2) or
-                 (file.index(from_square[0]) == 4 and int(from_square[1:]) == 7)) and \
-                (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 int(to_square[1:]) == int(from_square[1:]) + 2) or \
-                (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
-                 int(to_square[1:]) == int(from_square[1:]) - 2) or \
-                (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 int(to_square[1:]) == int(from_square[1:]) - 2) or \
-                (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
-                 int(to_square[1:]) == int(from_square[1:]) + 2):
+                ((from_row == 0 and from_column == 2) or (from_row == 0 and from_column == 6) or
+                 (from_row == 2 and from_column == 0) or (from_row == 2 and from_column == 4) or
+                 (from_row == 2 and from_column == 9) or (from_row == 4 and from_column == 2) or
+                 (from_row == 4 and from_column == 7)) and \
+                ((to_row == from_row + 2 and to_column == from_column + 2) or
+                 (to_row == from_row - 2 and to_column == from_column - 2) or
+                 (to_row == from_row + 2 and to_column == from_column - 2) or
+                 (to_row == from_row - 2 and to_column == from_column + 2)):
             return True
 
         if self._color == "black" and \
-                ((file.index(from_square[0]) == 9 and int(from_square[1:]) == 2) or
-                 (file.index(from_square[0]) == 9 and int(from_square[1:]) == 6) or
-                 (file.index(from_square[0]) == 7 and int(from_square[1:]) == 0) or
-                 (file.index(from_square[0]) == 7 and int(from_square[1:]) == 4) or
-                 (file.index(from_square[0]) == 7 and int(from_square[1:]) == 9) or
-                 (file.index(from_square[0]) == 5 and int(from_square[1:]) == 2) or
-                 (file.index(from_square[0]) == 5 and int(from_square[1:]) == 7)) and \
-                (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 int(to_square[1:]) == int(from_square[1:]) + 1) or \
-                (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
-                 int(to_square[1:]) == int(from_square[1:]) - 1) or \
-                (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 int(to_square[1:]) == int(from_square[1:]) - 2) or \
-                (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
-                 int(to_square[1:]) == int(from_square[1:]) + 2):
+                ((from_row == 9 and from_column == 2) or (from_row == 9 and from_column == 6) or
+                 (from_row == 7 and from_column == 0) or (from_row == 7 and from_column == 4) or
+                 (from_row == 7 and from_column == 9) or (from_row == 5 and from_column == 2) or
+                 (from_row == 5 and from_column == 7)) and \
+                ((to_row == from_row + 2 and to_column == from_column + 2) or
+                 (to_row == from_row - 2 and to_column == from_column - 2) or
+                 (to_row == from_row + 2 and to_column == from_column - 2) or
+                 (to_row == from_row - 2 and to_column == from_column + 2)):
             return True
         return False
 
@@ -980,24 +966,20 @@ class Horse:
         """
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+        from_row = int(from_square[1:]) - 1
+        from_column = file.index(from_square[0])
+        to_row = int(to_square[1:]) - 1
+        to_column = file.index(to_square[0])
 
         if ((self._color == "red" or self._color == "black") and
-                ((file.index(from_square[0]) - 2 == file.index(to_square[0]) and
-                  int(from_square[1:] - 1 == int(to_square[1:]))) or
-                 (file.index(from_square[0]) - 2 == file.index(to_square[0]) and
-                  int(from_square[1:] + 1 == int(to_square[1:]))) or
-                 (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
-                  int(from_square[1:] + 2 == int(to_square[1:]))) or
-                 (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
-                  int(from_square[1:] + 2 == int(to_square[1:]))) or
-                 (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
-                  int(from_square[1:] + 1 == int(to_square[1:]))) or
-                 (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
-                  int(from_square[1:] - 1 == int(to_square[1:]))) or
-                 (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
-                  int(from_square[1:] - 2 == int(to_square[1:]))) or
-                 (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
-                  int(from_square[1:] - 2 == int(to_square[1:]))))):
+            ((from_row - 2 == to_row and from_column - 1 == to_column) or
+            (from_row - 2 == to_row and from_column + 1 == to_column) or
+            (from_row - 1 == to_row and from_column + 2 == to_column) or
+            (from_row + 1 == to_row and from_column + 2 == to_column) or
+            (from_row + 2 == to_row and from_column + 1 == to_column) or
+            (from_row + 2 == to_row and from_column - 1 == to_column) or
+            (from_row + 1 == to_row and from_column - 2 == to_column) or
+            (from_row - 1 == to_row and from_column - 2 == to_column)):
             return True
         return False
 
@@ -1125,8 +1107,9 @@ def main():
     black_in_check = game.is_in_check('black')
     game.make_move('e7', 'e6')
     state = game.get_game_state()
+    results = (move_result, black_in_check, state)
 
-    return (move_result, black_in_check, state)
+    return results
 
 
 if __name__ == '__main__':
