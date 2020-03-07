@@ -108,9 +108,9 @@ class XiangqiGame:
         # to_square is occupied by a piece of the same color as from_square
         # move is not legally available for piece based on class definition
         # game state is finished; either RED_WON or BLACK_WON
-        if self._the_board[file.index(from_square[0])][int(from_square[1:])].get_color() != self._player_turn or \
-                self._the_board[file.index(to_square[0])][int(to_square[1:])].get_color() == self._player_turn or \
-                self._the_board[file.index(from_square[0])][int(from_square[1:])]. \
+        if self._the_board[int(from_square[1:])-1][file.index(from_square[0])].get_color() != self._player_turn or \
+                self._the_board[int(to_square[1:]-1)][file.index(to_square[0])].get_color() == self._player_turn or \
+                self._the_board[int(from_square[1:]-1)][file.index(from_square[0])]. \
                         get_legal_move(from_square, to_square) or \
                 self._game_state != "UNFINISHED":
             return False
@@ -119,8 +119,8 @@ class XiangqiGame:
 
         # return False if illegal move by General
         # return False when Generals cannot face each other along the same file with no intervening pieces
-        if isinstance(self._the_board[file.index(from_square[0])][int(from_square[1:])], General):
-            if self._the_board[file.index(from_square[0])][int(from_square[1:])].get_color() == "red":
+        if isinstance(self._the_board[int(from_square[1:])-1][file.index(from_square[0])], General):
+            if self._the_board[int(from_square[1:])-1][file.index(from_square[0])].get_color() == "red":
                 if (isinstance(self._the_board[9][int(to_square[1:])], General) and
                         self._the_board[8][int(to_square[1:])] == "" and self._the_board[7][
                             int(to_square[1:])] == "" and
@@ -821,9 +821,9 @@ class General:
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
-                file.index(from_square[0]) < 3 and 6 > int(from_square[1:]) > 2 and \
-                ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
-                  (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
+                file.index(from_square[1:]-1) < 3 and 6 > int(from_square[0]) > 2 and \
+                ((file.index(from_square[0]) + 1 == file.index(to_square[0]) or
+                  (file.index(from_square[0]) - 1 == file.index(to_square[0])) and
                   int(to_square[1:]) - int(from_square[1:]) == 0)) or \
                 (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
                  (int(to_square[1:]) + 1 == int(from_square[1:]) or int(to_square[1:]) - 1 == int(from_square[1:]))):
