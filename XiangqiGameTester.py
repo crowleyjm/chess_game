@@ -1,6 +1,6 @@
 # Author: Jillian Crowley
-# Date: 01/15/2020
-# Description:  Writes six unit tests for Store.py using five different assert functions.
+# Date: 03/07/2020
+# Description:  Writes unit tests for XiangqiGame.py.
 
 import unittest
 from XiangqiGame import General, Advisor, Elephant, Horse, Chariot, Cannon, Soldier
