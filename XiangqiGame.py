@@ -989,21 +989,21 @@ class Horse:
 
         if ((self._color == "red" or self._color == "black") and
                 ((file.index(from_square[0]) - 2 == file.index(to_square[0]) and
-                  int(from_square[1:] - 1 == int(to_square[1:])) or
+                  int(from_square[1:] - 1 == int(to_square[1:]))) or
                  (file.index(from_square[0]) - 2 == file.index(to_square[0]) and
-                  int(from_square[1:] + 1 == int(to_square[1:])) or
+                  int(from_square[1:] + 1 == int(to_square[1:]))) or
                  (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
-                  int(from_square[1:] + 2 == int(to_square[1:])) or
+                  int(from_square[1:] + 2 == int(to_square[1:]))) or
                  (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
-                  int(from_square[1:] + 2 == int(to_square[1:])) or
+                  int(from_square[1:] + 2 == int(to_square[1:]))) or
                  (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
-                  int(from_square[1:] + 1 == int(to_square[1:])) or
+                  int(from_square[1:] + 1 == int(to_square[1:]))) or
                  (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
-                  int(from_square[1:] - 1 == int(to_square[1:])) or
+                  int(from_square[1:] - 1 == int(to_square[1:]))) or
                  (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
-                  int(from_square[1:] - 2 == int(to_square[1:])) or
+                  int(from_square[1:] - 2 == int(to_square[1:]))) or
                  (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
-                  int(from_square[1:] - 2 == int(to_square[1:])))):
+                  int(from_square[1:] - 2 == int(to_square[1:]))))):
             return True
         return False
 
