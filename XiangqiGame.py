@@ -478,20 +478,21 @@ class XiangqiGame:
         i = 1
         while file.index(self._red_general_location[0] + i) < 10:
             if ((isinstance(self._the_board[file.index(self._red_general_location[0] + i)]
-                            [self._red_general_location[1:]], Chariot) and
+                            [int(self._red_general_location[1:])], Chariot) and
                  self._the_board[file.index(self._red_general_location[0] + i)]
-                 [self._red_general_location[1:]].get_color() == "black")) or \
+                 [int(self._red_general_location[1:])].get_color() == "black")) or \
                     (isinstance(self._the_board[file.index(self._red_general_location[0] - i)]
-                                [self._red_general_location[1:]], Chariot) and
+                                [int(self._red_general_location[1:])], Chariot) and
                      self._the_board[file.index(self._red_general_location[0] - i)]
-                     [self._red_general_location[1:]].get_color() == "black"):
+                     [int(self._red_general_location[1:])].get_color() == "black"):
                 self._red_in_check = True
                 # if it is red player's turn, undo move and return False since player cannot
                 # put its own General in check
                 if self._player_turn == "red":
-                    self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                        self._the_board[file.index(to_square[0])][to_square[1:]]
-                    self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                    self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                        self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                    # WON'T WORK. NEED TO PUT BACK CAPTURED PIECE
+                    self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                     return False
             elif self._the_board[file.index(self._red_general_location[0] + i)] == "" or \
                     self._the_board[file.index(self._red_general_location[0] - i)] == "":
@@ -500,68 +501,68 @@ class XiangqiGame:
         i = 1
         while file.index(self._red_general_location[1:] + i) < 11:
             if ((isinstance(self._the_board[file.index(self._red_general_location[0])]
-                            [self._red_general_location[1:] + i], Chariot) and
+                            [int(self._red_general_location[1:]) + i], Chariot) and
                  self._the_board[file.index(self._red_general_location[0])]
-                 [self._red_general_location[1:] + i].get_color() == "black")) or \
+                 [int(self._red_general_location[1:]) + i].get_color() == "black")) or \
                     (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                [self._red_general_location[1:] - i], Chariot) and
+                                [int(self._red_general_location[1:]) - i], Chariot) and
                      self._the_board[file.index(self._red_general_location[0])]
-                     [self._red_general_location[1:] - i].get_color() == "black"):
+                     [int(self._red_general_location[1:]) - i].get_color() == "black"):
                 self._red_in_check = True
                 # if it is red player's turn, undo move and return False since player cannot
                 # put its own General in check
                 if self._player_turn == "black":
-                    self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                        self._the_board[file.index(to_square[0])][to_square[1:]]
-                    self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                    self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                        self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                    self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                     return False
-            elif self._the_board[self._red_general_location[1:] + i] == "" or \
-                    self._the_board[self._red_general_location[1:] - i] == "":
+            elif self._the_board[int(self._red_general_location[1:]) + i] == "" or \
+                    self._the_board[int(self._red_general_location[1:]) - i] == "":
                 i += 1
 
         # check if black player's General is in check by red Chariot as a result of the move made
         i = 1
         while file.index(self._black_general_location[0] + i) < 10:
             if ((isinstance(self._the_board[file.index(self._black_general_location[0] + i)]
-                            [self._black_general_location[1:]], Chariot) and
+                            [int(self._black_general_location[1:])], Chariot) and
                  self._the_board[file.index(self._black_general_location[0] + i)]
-                 [self._black_general_location[1:]].get_color() == "red")) or \
+                 [int(self._black_general_location[1:])].get_color() == "red")) or \
                     (isinstance(self._the_board[file.index(self._black_general_location[0] - i)]
-                                [self._black_general_location[1:]], Chariot) and
+                                [int(self._black_general_location[1:])], Chariot) and
                      self._the_board[file.index(self._black_general_location[0] - i)]
-                     [self._black_general_location[1:]].get_color() == "red"):
+                     [int(self._black_general_location[1:])].get_color() == "red"):
                 self._black_in_check = True
                 # if it is red player's turn, undo move and return False since player cannot
                 # put its own General in check
                 if self._player_turn == "black":
-                    self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                        self._the_board[file.index(to_square[0])][to_square[1:]]
-                    self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                    self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                        self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                    self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                     return False
             elif self._the_board[file.index(self._black_general_location[0] + i)] == "" or \
                     self._the_board[file.index(self._black_general_location[0] - i)] == "":
                 i += 1
 
         i = 1
-        while file.index(self._black_general_location[1:] + i) < 11:
+        while file.index(int(self._black_general_location[1:]) + i) < 11:
             if ((isinstance(self._the_board[file.index(self._black_general_location[0])]
-                            [self._black_general_location[1:] + i], Chariot) and
+                            [int(self._black_general_location[1:]) + i], Chariot) and
                  self._the_board[file.index(self._black_general_location[0])]
-                 [self._black_general_location[1:] + i].get_color() == "red")) or \
+                 [int(self._black_general_location[1:]) + i].get_color() == "red")) or \
                     (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                [self._black_general_location[1:] - i], Chariot) and
+                                [int(self._black_general_location[1:]) - i], Chariot) and
                      self._the_board[file.index(self._black_general_location[0])]
-                     [self._black_general_location[1:] - i].get_color() == "red"):
+                     [int(self._black_general_location[1:]) - i].get_color() == "red"):
                 self._black_in_check = True
                 # if it is red player's turn, undo move and return False since player cannot
                 # put its own General in check
                 if self._player_turn == "black":
-                    self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                        self._the_board[file.index(to_square[0])][to_square[1:]]
-                    self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                    self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                        self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                    self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                     return False
-            elif self._the_board[self._black_general_location[1:] + i] == "" or \
-                    self._the_board[self._black_general_location[1:] - i] == "":
+            elif self._the_board[int(self._black_general_location[1:]) + i] == "" or \
+                    self._the_board[int(self._black_general_location[1:]) - i] == "":
                 i += 1
 
         # check if red player's General is in check by black Cannon as a result of the move made
@@ -569,37 +570,37 @@ class XiangqiGame:
         count = 0
         while file.index(self._red_general_location[0] + i) < 10:
             if ((isinstance(self._the_board[file.index(self._red_general_location[0] + i)]
-                            [self._red_general_location[1:]], Chariot) and
+                            [int(self._red_general_location[1:])], Chariot) and
                  self._the_board[file.index(self._red_general_location[0] + i)]
-                 [self._red_general_location[1:]].get_color() == "black") is False and
+                 [int(self._red_general_location[1:])].get_color() == "black") is False and
                     (self._the_board[file.index(self._red_general_location[0] + i)]
-                     [self._red_general_location[1:]] != "") or
+                     [int(self._red_general_location[1:])] != "") or
                     (isinstance(self._the_board[file.index(self._red_general_location[0] - i)]
-                                [self._red_general_location[1:]], Chariot) and
+                                [int(self._red_general_location[1:])], Chariot) and
                      self._the_board[file.index(self._red_general_location[0] - i)]
-                     [self._red_general_location[1:]].get_color() == "black") is False and
+                     [int(self._red_general_location[1:])].get_color() == "black") is False and
                     (self._the_board[file.index(self._red_general_location[0] - i)]
-                     [self._red_general_location[1:]] != "")):
+                     [int(self._red_general_location[1:])] != "")):
                 count += 1
                 i += 1
 
         if count == 1:
             while file.index(self._red_general_location[0] + i) < 10:
                 if ((isinstance(self._the_board[file.index(self._red_general_location[0] + i)]
-                                [self._red_general_location[1:]], Chariot) and
+                                [int(self._red_general_location[1:])], Chariot) and
                      self._the_board[file.index(self._red_general_location[0] + i)]
-                     [self._red_general_location[1:]].get_color() == "black")) or \
+                     [int(self._red_general_location[1:])].get_color() == "black")) or \
                         (isinstance(self._the_board[file.index(self._red_general_location[0] - i)]
-                                    [self._red_general_location[1:]], Chariot) and
+                                    [int(self._red_general_location[1:])], Chariot) and
                          self._the_board[file.index(self._red_general_location[0] - i)]
-                         [self._red_general_location[1:]].get_color() == "black"):
+                         [int(self._red_general_location[1:])].get_color() == "black"):
                     self._red_in_check = True
                     # if it is red player's turn, undo move and return False since player cannot
                     # put its own General in check
                     if self._player_turn == "red":
-                        self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                            self._the_board[file.index(to_square[0])][to_square[1:]]
-                        self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                        self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                            self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                        self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                         return False
                 elif self._the_board[file.index(self._red_general_location[0] + i)] == "" or \
                         self._the_board[file.index(self._red_general_location[0] - i)] == "":
@@ -609,37 +610,37 @@ class XiangqiGame:
         count = 0
         while file.index(self._red_general_location[0] + i) < 11:
             if ((isinstance(self._the_board[file.index(self._red_general_location[0])]
-                            [self._red_general_location[1:] + i], Chariot) and
+                            [int(self._red_general_location[1:]) + i], Chariot) and
                  self._the_board[file.index(self._red_general_location[0])]
-                 [self._red_general_location[1:] + i].get_color() == "black") is False and
+                 [int(self._red_general_location[1:]) + i].get_color() == "black") is False and
                     (self._the_board[file.index(self._red_general_location[0])]
-                     [self._red_general_location[1:] + i] != "") or
+                     [int(self._red_general_location[1:]) + i] != "") or
                     (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                [self._red_general_location[1:] - i], Chariot) and
+                                [int(self._red_general_location[1:]) - i], Chariot) and
                      self._the_board[file.index(self._red_general_location[0])]
-                     [self._red_general_location[1:] - i].get_color() == "black") is False and
+                     [int(self._red_general_location[1:]) - i].get_color() == "black") is False and
                     (self._the_board[file.index(self._red_general_location[0])]
-                     [self._red_general_location[1:] - i] != "")):
+                     [int(self._red_general_location[1:]) - i] != "")):
                 count += 1
                 i += 1
 
         if count == 1:
             while file.index(self._red_general_location[0] + i) < 11:
                 if ((isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                [self._red_general_location[1:] + i], Chariot) and
+                                [int(self._red_general_location[1:]) + i], Chariot) and
                      self._the_board[file.index(self._red_general_location[0])]
-                     [self._red_general_location[1:] + i].get_color() == "black")) or \
+                     [int(self._red_general_location[1:]) + i].get_color() == "black")) or \
                         (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                    [self._red_general_location[1:] - i], Chariot) and
+                                    [int(self._red_general_location[1:]) - i], Chariot) and
                          self._the_board[file.index(self._red_general_location[0])]
-                         [self._red_general_location[1:] - i].get_color() == "black"):
+                         [int(self._red_general_location[1:]) - i].get_color() == "black"):
                     self._red_in_check = True
                     # if it is red player's turn, undo move and return False since player cannot
                     # put its own General in check
                     if self._player_turn == "red":
-                        self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                            self._the_board[file.index(to_square[0])][to_square[1:]]
-                        self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                        self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                            self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                        self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                         return False
                 elif self._the_board[file.index(self._red_general_location[0] + i)] == "" or \
                         self._the_board[file.index(self._red_general_location[0] - i)] == "":
@@ -650,37 +651,37 @@ class XiangqiGame:
         count = 0
         while file.index(self._black_general_location[0] + i) < 10:
             if ((isinstance(self._the_board[file.index(self._black_general_location[0] + i)]
-                            [self._black_general_location[1:]], Chariot) and
+                            [int(self._black_general_location[1:])], Chariot) and
                  self._the_board[file.index(self._black_general_location[0] + i)]
-                 [self._black_general_location[1:]].get_color() == "red") is False and
+                 [int(self._black_general_location[1:])].get_color() == "red") is False and
                     (self._the_board[file.index(self._black_general_location[0] + i)]
-                     [self._black_general_location[1:]] != "") or
+                     [int(self._black_general_location[1:])] != "") or
                     (isinstance(self._the_board[file.index(self._black_general_location[0] - i)]
-                                [self._black_general_location[1:]], Chariot) and
+                                [int(self._black_general_location[1:])], Chariot) and
                      self._the_board[file.index(self._black_general_location[0] - i)]
-                     [self._black_general_location[1:]].get_color() == "red") is False and
+                     [int(self._black_general_location[1:])].get_color() == "red") is False and
                     (self._the_board[file.index(self._black_general_location[0] - i)]
-                     [self._black_general_location[1:]] != "")):
+                     [int(self._black_general_location[1:])] != "")):
                 count += 1
                 i += 1
 
         if count == 1:
             while file.index(self._black_general_location[0] + i) < 10:
                 if ((isinstance(self._the_board[file.index(self._black_general_location[0] + i)]
-                                [self._black_general_location[1:]], Chariot) and
+                                [int(self._black_general_location[1:])], Chariot) and
                      self._the_board[file.index(self._black_general_location[0] + i)]
-                     [self._black_general_location[1:]].get_color() == "black")) or \
+                     [int(self._black_general_location[1:])].get_color() == "black")) or \
                         (isinstance(self._the_board[file.index(self._black_general_location[0] - i)]
-                                    [self._black_general_location[1:]], Chariot) and
+                                    [int(self._black_general_location[1:])], Chariot) and
                          self._the_board[file.index(self._black_general_location[0] - i)]
-                         [self._black_general_location[1:]].get_color() == "black"):
+                         [int(self._black_general_location[1:])].get_color() == "black"):
                     self._black_in_check = True
                     # if it is red player's turn, undo move and return False since player cannot
                     # put its own General in check
                     if self._player_turn == "black":
-                        self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                            self._the_board[file.index(to_square[0])][to_square[1:]]
-                        self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                        self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                            self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                        self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                         return False
                 elif self._the_board[file.index(self._black_general_location[0] + i)] == "" or \
                         self._the_board[file.index(self._black_general_location[0] - i)] == "":
@@ -690,37 +691,37 @@ class XiangqiGame:
         count = 0
         while file.index(self._black_general_location[0] + i) < 11:
             if ((isinstance(self._the_board[file.index(self._black_general_location[0])]
-                            [self._black_general_location[1:] + i], Chariot) and
+                            [int(self._black_general_location[1:]) + i], Chariot) and
                  self._the_board[file.index(self._black_general_location[0])]
-                 [self._black_general_location[1:] + i].get_color() == "red") is False and
+                 [int(self._black_general_location[1:]) + i].get_color() == "red") is False and
                     (self._the_board[file.index(self._black_general_location[0])]
-                     [self._black_general_location[1:] + i] != "") or
+                     [int(self._black_general_location[1:]) + i] != "") or
                     (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                [self._black_general_location[1:] - i], Chariot) and
+                                [int(self._black_general_location[1:]) - i], Chariot) and
                      self._the_board[file.index(self._black_general_location[0])]
-                     [self._black_general_location[1:] - i].get_color() == "red") is False and
+                     [int(self._black_general_location[1:]) - i].get_color() == "red") is False and
                     (self._the_board[file.index(self._black_general_location[0])]
-                     [self._black_general_location[1:] - i] != "")):
+                     [int(self._black_general_location[1:]) - i] != "")):
                 count += 1
                 i += 1
 
         if count == 1:
             while file.index(self._black_general_location[0] + i) < 11:
                 if ((isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                [self._black_general_location[1:] + i], Chariot) and
+                                [int(self._black_general_location[1:]) + i], Chariot) and
                      self._the_board[file.index(self._black_general_location[0])]
-                     [self._black_general_location[1:] + i].get_color() == "red")) or \
+                     [int(self._black_general_location[1:]) + i].get_color() == "red")) or \
                         (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                    [self._black_general_location[1:] - i], Chariot) and
+                                    [int(self._black_general_location[1:]) - i], Chariot) and
                          self._the_board[file.index(self._black_general_location[0])]
-                         [self._black_general_location[1:] - i].get_color() == "red"):
+                         [int(self._black_general_location[1:]) - i].get_color() == "red"):
                     self._black_in_check = True
                     # if it is red player's turn, undo move and return False since player cannot
                     # put its own General in check
                     if self._player_turn == "black":
-                        self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                            self._the_board[file.index(to_square[0])][to_square[1:]]
-                        self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                        self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                            self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                        self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                         return False
                 elif self._the_board[file.index(self._black_general_location[0] + i)] == "" or \
                         self._the_board[file.index(self._black_general_location[0] - i)] == "":
@@ -728,46 +729,46 @@ class XiangqiGame:
 
         # check if red player's General is in check by black Soldier as a result of the move made
         if ((isinstance(self._the_board[file.index(self._red_general_location[0] - 1)]
-                        [self._red_general_location[1:]], Soldier) and
+                        [int(self._red_general_location[1:])], Soldier) and
              self._the_board[file.index(self._red_general_location[0] - 1)]
-             [self._red_general_location[1:]].get_color() == "black") or
+             [int(self._red_general_location[1:])].get_color() == "black") or
                 (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                            [self._red_general_location[1:] - 1], Soldier) and
+                            [int(self._red_general_location[1:]) - 1], Soldier) and
                  self._the_board[file.index(self._red_general_location[0])]
-                 [self._red_general_location[1:] - 1].get_color() == "black") or
+                 [int(self._red_general_location[1:]) - 1].get_color() == "black") or
                 (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                            [self._red_general_location[1:] + 1], Soldier) and
+                            [int(self._red_general_location[1:]) + 1], Soldier) and
                  self._the_board[file.index(self._red_general_location[0])]
-                 [self._red_general_location[1:] + 1].get_color() == "black")):
+                 [int(self._red_general_location[1:]) + 1].get_color() == "black")):
             self._red_in_check = True
             # if it is red player's turn, undo move and return False since player cannot
             # put its own General in check
             if self._player_turn == "red":
-                self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                    self._the_board[file.index(to_square[0])][to_square[1:]]
-                self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                    self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                 return False
 
         # check if black player's General is in check by red Soldier as a result of the move made
         if ((isinstance(self._the_board[file.index(self._black_general_location[0] - 1)]
-                        [self._black_general_location[1:]], Soldier) and
+                        [int(self._black_general_location[1:])], Soldier) and
              self._the_board[file.index(self._black_general_location[0] - 1)]
-             [self._black_general_location[1:]].get_color() == "red") or
+             [int(self._black_general_location[1:])].get_color() == "red") or
                 (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                            [self._black_general_location[1:] - 1], Soldier) and
+                            [int(self._black_general_location[1:]) - 1], Soldier) and
                  self._the_board[file.index(self._black_general_location[0])]
-                 [self._black_general_location[1:] - 1].get_color() == "red") or
+                 [int(self._black_general_location[1:]) - 1].get_color() == "red") or
                 (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                            [self._black_general_location[1:] + 1], Soldier) and
+                            [int(self._black_general_location[1:]) + 1], Soldier) and
                  self._the_board[file.index(self._black_general_location[0])]
-                 [self._black_general_location[1:] + 1].get_color() == "red")):
+                 [int(self._black_general_location[1:]) + 1].get_color() == "red")):
             self._black_in_check = True
             # if it is black player's turn, undo move and return False since player cannot
             # put its own General in check
             if self._player_turn == "black":
-                self._the_board[file.index(from_square[0])][from_square[1:]] = \
-                    self._the_board[file.index(to_square[0])][to_square[1:]]
-                self._the_board[file.index(to_square[0])][to_square[1:]] = ""
+                self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
+                    self._the_board[file.index(to_square[0])][int(to_square[1:])]
+                self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
                 return False
 
         # # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
@@ -820,21 +821,21 @@ class General:
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
-                file.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
+                file.index(from_square[0]) < 3 and 6 > int(from_square[1:]) > 2 and \
                 ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
                   (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
-                  to_square[1:] - from_square[1:] == 0)) or \
+                  int(to_square[1:]) - int(from_square[1:]) == 0)) or \
                 (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
-                 (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
+                 (int(to_square[1:]) + 1 == int(from_square[1:]) or int(to_square[1:]) - 1 == int(from_square[1:]))):
             return True
 
         if self._color == "black" and \
-                file.index(from_square[0]) > 6 and 6 > from_square[1:] > 2 and \
+                file.index(from_square[0]) > 6 and 6 > int(from_square[1:]) > 2 and \
                 ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
                   (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
-                  to_square[1:] - from_square[1:] == 0)) or \
+                  int(to_square[1:]) - int(from_square[1:]) == 0)) or \
                 (file.index(to_square[0]) - file.index(from_square[0]) == 0 and
-                 (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
+                 (int(to_square[1:]) + 1 == int(from_square[1:]) or int(to_square[1:]) - 1 == int(from_square[1:]))):
             return True
         return False
 
@@ -865,27 +866,27 @@ class Advisor:
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
         if self._color == "red" and \
-                file.index(from_square[0]) < 3 and 6 > from_square[1:] > 2 and \
+                file.index(from_square[0]) < 3 and 6 > int(from_square[1:]) > 2 and \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 1 and
-                 to_square[1:] == from_square[1:] + 1) or \
+                 int(to_square[1:]) == int(from_square[1:]) + 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
-                 to_square[1:] == from_square[1:] - 1) or \
+                 int(to_square[1:]) == int(from_square[1:]) - 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 1 and
-                 to_square[1:] == from_square[1:] - 1) or \
+                 int(to_square[1:]) == int(from_square[1:]) - 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
-                 to_square[1:] == from_square[1:] + 1):
+                 int(to_square[1:]) == int(from_square[1:]) + 1):
             return True
 
         if self._color == "black" and \
-                file.index(from_square[0]) > 6 and 6 > from_square[1:] > 2 and \
+                file.index(from_square[0]) > 6 and 6 > int(from_square[1:]) > 2 and \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 1 and
-                 to_square[1:] == from_square[1:] + 1) or \
+                 int(to_square[1:]) == int(from_square[1:]) + 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
-                 to_square[1:] == from_square[1:] - 1) or \
+                 int(to_square[1:]) == int(from_square[1:]) - 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 1 and
-                 to_square[1:] == from_square[1:] - 1) or \
+                 int(to_square[1:]) == int(from_square[1:]) - 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
-                 to_square[1:] == from_square[1:] + 1):
+                 int(to_square[1:]) == int(from_square[1:]) + 1):
             return True
         return False
 
@@ -920,39 +921,39 @@ class Elephant:
 
         # Elephants cannot cross the river
         if self._color == "red" and \
-                ((file.index(from_square[0]) == 0 and from_square[1:] == 2) or
-                 (file.index(from_square[0]) == 0 and from_square[1:] == 6) or
-                 (file.index(from_square[0]) == 2 and from_square[1:] == 0) or
-                 (file.index(from_square[0]) == 2 and from_square[1:] == 4) or
-                 (file.index(from_square[0]) == 2 and from_square[1:] == 9) or
-                 (file.index(from_square[0]) == 4 and from_square[1:] == 2) or
-                 (file.index(from_square[0]) == 4 and from_square[1:] == 7)) and \
+                ((file.index(from_square[0]) == 0 and int(from_square[1:]) == 2) or
+                 (file.index(from_square[0]) == 0 and int(from_square[1:]) == 6) or
+                 (file.index(from_square[0]) == 2 and int(from_square[1:]) == 0) or
+                 (file.index(from_square[0]) == 2 and int(from_square[1:]) == 4) or
+                 (file.index(from_square[0]) == 2 and int(from_square[1:]) == 9) or
+                 (file.index(from_square[0]) == 4 and int(from_square[1:]) == 2) or
+                 (file.index(from_square[0]) == 4 and int(from_square[1:]) == 7)) and \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 to_square[1:] == from_square[1:] + 2) or \
+                 int(to_square[1:]) == int(from_square[1:]) + 2) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
-                 to_square[1:] == from_square[1:] - 2) or \
+                 int(to_square[1:]) == int(from_square[1:]) - 2) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 to_square[1:] == from_square[1:] - 2) or \
+                 int(to_square[1:]) == int(from_square[1:]) - 2) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
-                 to_square[1:] == from_square[1:] + 2):
+                 int(to_square[1:]) == int(from_square[1:]) + 2):
             return True
 
         if self._color == "black" and \
-                ((file.index(from_square[0]) == 9 and from_square[1:] == 2) or
-                 (file.index(from_square[0]) == 9 and from_square[1:] == 6) or
-                 (file.index(from_square[0]) == 7 and from_square[1:] == 0) or
-                 (file.index(from_square[0]) == 7 and from_square[1:] == 4) or
-                 (file.index(from_square[0]) == 7 and from_square[1:] == 9) or
-                 (file.index(from_square[0]) == 5 and from_square[1:] == 2) or
-                 (file.index(from_square[0]) == 5 and from_square[1:] == 7)) and \
+                ((file.index(from_square[0]) == 9 and int(from_square[1:]) == 2) or
+                 (file.index(from_square[0]) == 9 and int(from_square[1:]) == 6) or
+                 (file.index(from_square[0]) == 7 and int(from_square[1:]) == 0) or
+                 (file.index(from_square[0]) == 7 and int(from_square[1:]) == 4) or
+                 (file.index(from_square[0]) == 7 and int(from_square[1:]) == 9) or
+                 (file.index(from_square[0]) == 5 and int(from_square[1:]) == 2) or
+                 (file.index(from_square[0]) == 5 and int(from_square[1:]) == 7)) and \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 to_square[1:] == from_square[1:] + 1) or \
+                 int(to_square[1:]) == int(from_square[1:]) + 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 1 and
-                 to_square[1:] == from_square[1:] - 1) or \
+                 int(to_square[1:]) == int(from_square[1:]) - 1) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) + 2 and
-                 to_square[1:] == from_square[1:] - 2) or \
+                 int(to_square[1:]) == int(from_square[1:]) - 2) or \
                 (file.index(to_square[0]) == file.index(from_square[0]) - 2 and
-                 to_square[1:] == from_square[1:] + 2):
+                 int(to_square[1:]) == int(from_square[1:]) + 2):
             return True
         return False
 
@@ -988,21 +989,21 @@ class Horse:
 
         if ((self._color == "red" or self._color == "black") and
                 ((file.index(from_square[0]) - 2 == file.index(to_square[0]) and
-                  from_square[1:] - 1 == to_square[1:]) or
+                  int(from_square[1:] - 1 == int(to_square[1:])) or
                  (file.index(from_square[0]) - 2 == file.index(to_square[0]) and
-                  from_square[1:] + 1 == to_square[1:]) or
+                  int(from_square[1:] + 1 == int(to_square[1:])) or
                  (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
-                  from_square[1:] + 2 == to_square[1:]) or
+                  int(from_square[1:] + 2 == int(to_square[1:])) or
                  (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
-                  from_square[1:] + 2 == to_square[1:]) or
+                  int(from_square[1:] + 2 == int(to_square[1:])) or
                  (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
-                  from_square[1:] + 1 == to_square[1:]) or
+                  int(from_square[1:] + 1 == int(to_square[1:])) or
                  (file.index(from_square[0]) + 2 == file.index(to_square[0]) and
-                  from_square[1:] - 1 == to_square[1:]) or
+                  int(from_square[1:] - 1 == int(to_square[1:])) or
                  (file.index(from_square[0]) + 1 == file.index(to_square[0]) and
-                  from_square[1:] - 2 == to_square[1:]) or
+                  int(from_square[1:] - 2 == int(to_square[1:])) or
                  (file.index(from_square[0]) - 1 == file.index(to_square[0]) and
-                  from_square[1:] - 2 == to_square[1:]))):
+                  int(from_square[1:] - 2 == int(to_square[1:])))):
             return True
         return False
 
@@ -1035,7 +1036,7 @@ class Chariot:
 
         if ((self._color == "red" or self._color == "black") or
                 (file.index(to_square[0]) - file.index(from_square[0]) == 0) or
-                (to_square[1:] - from_square[1:] == 0)):
+                (int(to_square[1:]) - int(from_square[1:]) == 0)):
             return True
         return False
 
@@ -1070,7 +1071,7 @@ class Cannon:
 
         if ((self._color == "red" or self._color == "black") or
                 file.index(to_square[0]) - file.index(from_square[0] == 0) or
-                to_square[1:] - from_square[1:] == 0):
+                int(to_square[1:]) - int(from_square[1:]) == 0):
             return True
         return False
 
@@ -1108,17 +1109,17 @@ class Soldier:
                 file.index(from_square[0]) < file.index(to_square[0]) and \
                 ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
                   (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
-                  to_square[1:] - from_square[1:] == 0)) or \
+                  int(to_square[1:]) - int(from_square[1:]) == 0)) or \
                 (file.index(from_square[0]) > 4 and file.index(to_square[0]) - file.index(from_square[0]) == 0 and
-                 (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
+                 (int(to_square[1:]) + 1 == int(from_square[1:]) or int(to_square[1:]) - 1 == int(from_square[1:]))):
             return True
 
         if self._color == "black" and \
                 file.index(from_square[0]) > file.index(to_square[0]) and \
                 ((file.index(to_square[0]) + 1 == file.index(from_square[0]) or
                   (file.index(to_square[0]) - 1 == file.index(from_square[0])) and
-                  to_square[1:] - from_square[1:] == 0)) or \
+                  int(to_square[1:]) - int(from_square[1:]) == 0)) or \
                 (file.index(from_square[0]) < 5 and file.index(to_square[0]) - file.index(from_square[0]) == 0 and
-                 (to_square[1:] + 1 == from_square[1:] or to_square[1:] - 1 == from_square[1:])):
+                 (int(to_square[1:]) + 1 == int(from_square[1:]) or int(to_square[1:]) - 1 == int(from_square[1:]))):
             return True
         return False
