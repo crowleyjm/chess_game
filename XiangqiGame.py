@@ -84,12 +84,16 @@ class XiangqiGame:
         Takes as a parameter either 'red' or 'black' and
         returns True if that player is in check, but returns False otherwise
         """
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+
+        # define board indices
+        red_general_row = int(self._red_general_location[1:]) - 1
+        red_general_column = file.index(self._red_general_location[0])
 
         # check if red player's General is in check by black Horse as a result of the move made
-        if ((isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
-                        [int(self._red_general_location[1:]) - 1], Horse) and
-             self._the_board[file.index(self._red_general_location[0] - 2)]
-             [int(self._red_general_location[1:]) - 1].get_color() == "black") or
+        if ((isinstance(self._the_board[red_general_row - 2][red_general_column - 1], Horse) and
+             self._the_board[red_general_row - 2][red_general_column - 1].get_color() == "black") or
+
                 (isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
                             [int(self._red_general_location[1:]) + 1], Horse) and
                  self._the_board[file.index(self._red_general_location[0] - 2)]
