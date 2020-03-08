@@ -316,20 +316,21 @@ class XiangqiGame:
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        # return False where move cannot be made if:
-        # no piece exists at from_square
+        # return False where move cannot be made if no piece exists at from_square
         if self._the_board[from_row][from_column] == "":
             return False
 
+        # return False where move cannot be made if player's piece exists at to_square
+        if self._the_board[to_row][to_column] != "":
+            if self._the_board[to_row][to_column].get_color() == self._player_turn:
+                return False
+
         # return False where move cannot be made if:
-        # no piece exists at from_square
         # not player's turn
-        # to_square is occupied by a piece of the same color as from_square
         # move is not legally available for piece based on class definition
         # game state is finished; either RED_WON or BLACK_WON
         if self._the_board[from_row][from_column].get_color() != self._player_turn or \
-                self._the_board[to_row][to_column].get_color() == self._player_turn or \
-                self._the_board[from_square][from_column].is_legal_move(from_square, to_square) or \
+                self._the_board[from_row][from_column].is_legal_move(from_square, to_square) or \
                 self._game_state != "UNFINISHED":
             return False
 
@@ -1013,12 +1014,13 @@ class Soldier:
 def main():
     game = XiangqiGame()
     move_result = game.make_move('c1', 'e3')
-    black_in_check = game.is_in_check('black')
-    game.make_move('e7', 'e6')
-    state = game.get_game_state()
-    results = (move_result, black_in_check, state)
+    # black_in_check = game.is_in_check('black')
+    # game.make_move('e7', 'e6')
+    # state = game.get_game_state()
+    # results = (move_result, black_in_check, state)
+    results = move_result
 
-    return results
+    return print(results)
 
 
 if __name__ == '__main__':
