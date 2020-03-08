@@ -92,6 +92,9 @@ class XiangqiGame:
         black_general_row = int(self._black_general_location[1:]) - 1
         black_general_column = file.index(self._black_general_location[0])
 
+        self._red_in_check = False
+        self._black_in_check = False
+
         # check if red player's General is in check by black Horse as a result of the move made
         if ((isinstance(self._the_board[red_general_row - 2][red_general_column - 1], Horse) and
              self._the_board[red_general_row - 2][red_general_column - 1].get_color() == "black") or
@@ -132,193 +135,143 @@ class XiangqiGame:
 
             # check if red player's General is in check by black Chariot as a result of the move made
             i = 1
-            while file.index(self._red_general_location[0] + i) < 10:
-                if ((isinstance(self._the_board[file.index(self._red_general_location[0] + i)]
-                                [int(self._red_general_location[1:])], Chariot) and
-                     self._the_board[file.index(self._red_general_location[0] + i)]
-                     [int(self._red_general_location[1:])].get_color() == "black")) or \
-                        (isinstance(self._the_board[file.index(self._red_general_location[0] - i)]
-                                    [int(self._red_general_location[1:])], Chariot) and
-                         self._the_board[file.index(self._red_general_location[0] - i)]
-                         [int(self._red_general_location[1:])].get_color() == "black"):
+            while red_general_row + i < 10:
+                if ((isinstance(self._the_board[red_general_row + i][red_general_column], Chariot) and
+                     self._the_board[red_general_row + i][red_general_column].get_color() == "black")) or \
+                        ((isinstance(self._the_board[red_general_row - i][red_general_column], Chariot) and
+                          self._the_board[red_general_row - i][red_general_column].get_color() == "black")):
                     self._red_in_check = True
-                elif self._the_board[file.index(self._red_general_location[0] + i)] == "" or \
-                        self._the_board[file.index(self._red_general_location[0] - i)] == "":
+                elif self._the_board[red_general_row + i][red_general_column] == "" or \
+                        self._the_board[red_general_row - i][red_general_column] == "":
                     i += 1
 
             i = 1
-            while file.index(self._red_general_location[1:] + i) < 11:
-                if ((isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                [int(self._red_general_location[1:]) + i], Chariot) and
-                     self._the_board[file.index(self._red_general_location[0])]
-                     [int(self._red_general_location[1:]) + i].get_color() == "black")) or \
-                        (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                    [int(self._red_general_location[1:]) - i], Chariot) and
-                         self._the_board[file.index(self._red_general_location[0])]
-                         [int(self._red_general_location[1:]) - i].get_color() == "black"):
+            while red_general_column + i < 10:
+                if ((isinstance(self._the_board[red_general_row][red_general_column + i], Chariot) and
+                     self._the_board[red_general_row][red_general_column + i].get_color() == "black")) or \
+                        ((isinstance(self._the_board[red_general_row][red_general_column - i], Chariot) and
+                          self._the_board[red_general_row][red_general_column - i].get_color() == "black")):
                     self._red_in_check = True
-
-                elif self._the_board[int(self._red_general_location[1:]) + i] == "" or \
-                        self._the_board[int(self._red_general_location[1:]) - i] == "":
+                elif self._the_board[red_general_row][red_general_column + i] == "" or \
+                        self._the_board[red_general_row][red_general_column - i] == "":
                     i += 1
 
             # check if black player's General is in check by red Chariot as a result of the move made
             i = 1
-            while file.index(self._black_general_location[0] + i) < 10:
-                if ((isinstance(self._the_board[file.index(self._black_general_location[0] + i)]
-                                [int(self._black_general_location[1:])], Chariot) and
-                     self._the_board[file.index(self._black_general_location[0] + i)]
-                     [int(self._black_general_location[1:])].get_color() == "red")) or \
-                        (isinstance(self._the_board[file.index(self._black_general_location[0] - i)]
-                                    [int(self._black_general_location[1:])], Chariot) and
-                         self._the_board[file.index(self._black_general_location[0] - i)]
-                         [int(self._black_general_location[1:])].get_color() == "red"):
+            while black_general_row + i < 10:
+                if ((isinstance(self._the_board[black_general_row + i][black_general_column], Chariot) and
+                     self._the_board[black_general_row + i][black_general_column].get_color() == "red")) or \
+                        ((isinstance(self._the_board[black_general_row - i][black_general_column], Chariot) and
+                          self._the_board[black_general_row - i][black_general_column].get_color() == "red")):
                     self._black_in_check = True
-                elif self._the_board[file.index(self._black_general_location[0] + i)] == "" or \
-                        self._the_board[file.index(self._black_general_location[0] - i)] == "":
+                elif self._the_board[black_general_row + i][black_general_column] == "" or \
+                        self._the_board[black_general_row - i][black_general_column] == "":
                     i += 1
 
             i = 1
-            while file.index(int(self._black_general_location[1:]) + i) < 11:
-                if ((isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                [int(self._black_general_location[1:]) + i], Chariot) and
-                     self._the_board[file.index(self._black_general_location[0])]
-                     [int(self._black_general_location[1:]) + i].get_color() == "red")) or \
-                        (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                    [int(self._black_general_location[1:]) - i], Chariot) and
-                         self._the_board[file.index(self._black_general_location[0])]
-                         [int(self._black_general_location[1:]) - i].get_color() == "red"):
+            while black_general_column + i < 9:
+                if ((isinstance(self._the_board[black_general_row][black_general_column + i], Chariot) and
+                     self._the_board[black_general_row][black_general_column + i].get_color() == "red")) or \
+                        ((isinstance(self._the_board[black_general_row][black_general_column - i], Chariot) and
+                          self._the_board[black_general_row][black_general_column - i].get_color() == "red")):
                     self._black_in_check = True
-                elif self._the_board[int(self._black_general_location[1:]) + i] == "" or \
-                        self._the_board[int(self._black_general_location[1:]) - i] == "":
+                elif self._the_board[black_general_row][black_general_column + i] == "" or \
+                        self._the_board[black_general_row][black_general_column - i] == "":
                     i += 1
 
             # check if red player's General is in check by black Cannon as a result of the move made
             i = 1
             count = 0
-            while file.index(self._red_general_location[0] + i) < 10:
-                if ((isinstance(self._the_board[file.index(self._red_general_location[0] + i)]
-                                [int(self._red_general_location[1:])], Chariot) and
-                     self._the_board[file.index(self._red_general_location[0] + i)]
-                     [int(self._red_general_location[1:])].get_color() == "black") is False and
-                        (self._the_board[file.index(self._red_general_location[0] + i)]
-                         [int(self._red_general_location[1:])] != "") or
-                        (isinstance(self._the_board[file.index(self._red_general_location[0] - i)]
-                                    [int(self._red_general_location[1:])], Chariot) and
-                         self._the_board[file.index(self._red_general_location[0] - i)]
-                         [int(self._red_general_location[1:])].get_color() == "black") is False and
-                        (self._the_board[file.index(self._red_general_location[0] - i)]
-                         [int(self._red_general_location[1:])] != "")):
+            while red_general_row + i < 10:
+                if ((isinstance(self._the_board[red_general_row + i][red_general_column], Chariot) and
+                     (self._the_board[red_general_row + i][red_general_column].get_color() == "black" is False) or
+                     ([red_general_row + i][red_general_column] != "")) or
+                        ((isinstance(self._the_board[red_general_row - i][red_general_column], Chariot) and
+                          (self._the_board[red_general_row - i][red_general_column].get_color() == "black" is False) or
+                          (self._the_board[red_general_row - i][red_general_column] != "")))):
                     count += 1
                     i += 1
 
             if count == 1:
-                while file.index(self._red_general_location[0] + i) < 10:
-                    if ((isinstance(self._the_board[file.index(self._red_general_location[0] + i)]
-                                    [int(self._red_general_location[1:])], Chariot) and
-                         self._the_board[file.index(self._red_general_location[0] + i)]
-                         [int(self._red_general_location[1:])].get_color() == "black")) or \
-                            (isinstance(self._the_board[file.index(self._red_general_location[0] - i)]
-                                        [int(self._red_general_location[1:])], Chariot) and
-                             self._the_board[file.index(self._red_general_location[0] - i)]
-                             [int(self._red_general_location[1:])].get_color() == "black"):
+                while red_general_row + i < 10:
+                    if ((isinstance(self._the_board[red_general_row + i][red_general_column], Chariot) and
+                         self._the_board[red_general_row + i][red_general_column].get_color() == "black")) or \
+                            (isinstance(self._the_board[red_general_row - i][red_general_column], Chariot) and
+                             self._the_board[red_general_row - i][red_general_column].get_color() == "black"):
                         self._red_in_check = True
-                    elif self._the_board[file.index(self._red_general_location[0] + i)] == "" or \
-                            self._the_board[file.index(self._red_general_location[0] - i)] == "":
+                    elif self._the_board[red_general_row + i][red_general_column]== "" or \
+                            self._the_board[red_general_row - i][red_general_column] == "":
                         i += 1
 
             i = 1
             count = 0
-            while file.index(self._red_general_location[0] + i) < 11:
-                if ((isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                [int(self._red_general_location[1:]) + i], Chariot) and
-                     self._the_board[file.index(self._red_general_location[0])]
-                     [int(self._red_general_location[1:]) + i].get_color() == "black") is False and
-                        (self._the_board[file.index(self._red_general_location[0])]
-                         [int(self._red_general_location[1:]) + i] != "") or
-                        (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                    [int(self._red_general_location[1:]) - i], Chariot) and
-                         self._the_board[file.index(self._red_general_location[0])]
-                         [int(self._red_general_location[1:]) - i].get_color() == "black") is False and
-                        (self._the_board[file.index(self._red_general_location[0])]
-                         [int(self._red_general_location[1:]) - i] != "")):
+            while red_general_column + i < 9:
+                if ((isinstance(self._the_board[red_general_row][red_general_column + i], Chariot) and
+                     (self._the_board[red_general_row][red_general_column + i].get_color() == "black" is False) or
+                     ([red_general_row][red_general_column + i] != "")) or
+                        ((isinstance(self._the_board[red_general_row][red_general_column - i], Chariot) and
+                          (self._the_board[red_general_row][red_general_column - i].get_color() == "black" is False) or
+                          (self._the_board[red_general_row][red_general_column - i] != "")))):
                     count += 1
                     i += 1
 
             if count == 1:
-                while file.index(self._red_general_location[0] + i) < 11:
-                    if ((isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                    [int(self._red_general_location[1:]) + i], Chariot) and
-                         self._the_board[file.index(self._red_general_location[0])]
-                         [int(self._red_general_location[1:]) + i].get_color() == "black")) or \
-                            (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                        [int(self._red_general_location[1:]) - i], Chariot) and
-                             self._the_board[file.index(self._red_general_location[0])]
-                             [int(self._red_general_location[1:]) - i].get_color() == "black"):
+                while red_general_column + i < 9:
+                    if ((isinstance(self._the_board[red_general_row][red_general_column + i], Chariot) and
+                         self._the_board[red_general_row][red_general_column + i].get_color() == "black")) or \
+                            (isinstance(self._the_board[red_general_row][red_general_column - i], Chariot) and
+                             self._the_board[red_general_row][red_general_column - i].get_color() == "black"):
                         self._red_in_check = True
+                    elif self._the_board[red_general_row][red_general_column + i] == "" or \
+                            self._the_board[red_general_row][red_general_column - i] == "":
                         i += 1
 
             # check if black player's General is in check by red Cannon as a result of the move made
             i = 1
             count = 0
-            while file.index(self._black_general_location[0] + i) < 10:
-                if ((isinstance(self._the_board[file.index(self._black_general_location[0] + i)]
-                                [int(self._black_general_location[1:])], Chariot) and
-                     self._the_board[file.index(self._black_general_location[0] + i)]
-                     [int(self._black_general_location[1:])].get_color() == "red") is False and
-                        (self._the_board[file.index(self._black_general_location[0] + i)]
-                         [int(self._black_general_location[1:])] != "") or
-                        (isinstance(self._the_board[file.index(self._black_general_location[0] - i)]
-                                    [int(self._black_general_location[1:])], Chariot) and
-                         self._the_board[file.index(self._black_general_location[0] - i)]
-                         [int(self._black_general_location[1:])].get_color() == "red") is False and
-                        (self._the_board[file.index(self._black_general_location[0] - i)]
-                         [int(self._black_general_location[1:])] != "")):
+            while black_general_row + i < 10:
+                if ((isinstance(self._the_board[black_general_row + i][black_general_column], Chariot) and
+                     (self._the_board[black_general_row + i][black_general_column].get_color() == "red" is False) or
+                     ([black_general_row + i][black_general_column] != "")) or
+                        ((isinstance(self._the_board[black_general_row - i][black_general_column], Chariot) and
+                          (self._the_board[black_general_row - i][black_general_column].get_color() == "red" is False)
+                          or (self._the_board[black_general_row - i][black_general_column] != "")))):
                     count += 1
                     i += 1
 
             if count == 1:
-                while file.index(self._black_general_location[0] + i) < 10:
-                    if ((isinstance(self._the_board[file.index(self._black_general_location[0] + i)]
-                                    [int(self._black_general_location[1:])], Chariot) and
-                         self._the_board[file.index(self._black_general_location[0] + i)]
-                         [int(self._black_general_location[1:])].get_color() == "black")) or \
-                            (isinstance(self._the_board[file.index(self._black_general_location[0] - i)]
-                                        [int(self._black_general_location[1:])], Chariot) and
-                             self._the_board[file.index(self._black_general_location[0] - i)]
-                             [int(self._black_general_location[1:])].get_color() == "black"):
+                while black_general_row + i < 10:
+                    if ((isinstance(self._the_board[black_general_row + i][black_general_column], Chariot) and
+                         self._the_board[black_general_row + i][black_general_column].get_color() == "red")) or \
+                            (isinstance(self._the_board[black_general_row - i][black_general_column], Chariot) and
+                             self._the_board[black_general_row - i][black_general_column].get_color() == "red"):
                         self._black_in_check = True
+                    elif self._the_board[black_general_row + i][black_general_column] == "" or \
+                            self._the_board[black_general_row - i][black_general_column] == "":
                         i += 1
 
             i = 1
             count = 0
-            while file.index(self._black_general_location[0] + i) < 11:
-                if ((isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                [int(self._black_general_location[1:]) + i], Chariot) and
-                     self._the_board[file.index(self._black_general_location[0])]
-                     [int(self._black_general_location[1:]) + i].get_color() == "red") is False and
-                        (self._the_board[file.index(self._black_general_location[0])]
-                         [int(self._black_general_location[1:]) + i] != "") or
-                        (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                    [int(self._black_general_location[1:]) - i], Chariot) and
-                         self._the_board[file.index(self._black_general_location[0])]
-                         [int(self._black_general_location[1:]) - i].get_color() == "red") is False and
-                        (self._the_board[file.index(self._black_general_location[0])]
-                         [int(self._black_general_location[1:]) - i] != "")):
+            while black_general_column + i < 9:
+                if ((isinstance(self._the_board[black_general_row][black_general_column + i], Chariot) and
+                     (self._the_board[black_general_row][black_general_column + i].get_color() == "red" is False) or
+                     ([black_general_row][black_general_column + i] != "")) or
+                        ((isinstance(self._the_board[black_general_row][black_general_column - i], Chariot) and
+                          (self._the_board[black_general_row][black_general_column - i].get_color() == "red" is False)
+                          or (self._the_board[black_general_row][black_general_column - i] != "")))):
                     count += 1
                     i += 1
 
             if count == 1:
-                while file.index(self._black_general_location[0] + i) < 11:
-                    if ((isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                    [int(self._black_general_location[1:]) + i], Chariot) and
-                         self._the_board[file.index(self._black_general_location[0])]
-                         [int(self._black_general_location[1:]) + i].get_color() == "red")) or \
-                            (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                        [int(self._black_general_location[1:]) - i], Chariot) and
-                             self._the_board[file.index(self._black_general_location[0])]
-                             [int(self._black_general_location[1:]) - i].get_color() == "red"):
+                while black_general_column + i < 9:
+                    if ((isinstance(self._the_board[black_general_row][black_general_column + i], Chariot) and
+                         self._the_board[black_general_row][black_general_column + i].get_color() == "red")) or \
+                            (isinstance(self._the_board[black_general_row][black_general_column - i], Chariot) and
+                             self._the_board[black_general_row][black_general_column - i].get_color() == "red"):
                         self._black_in_check = True
+                    elif self._the_board[black_general_row][black_general_column + i] == "" or \
+                            self._the_board[black_general_row][black_general_column - i] == "":
+                        i += 1
 
             # check if red player's General is in check by black Soldier as a result of the move made
             if ((isinstance(self._the_board[red_general_row - 1][red_general_column], Soldier) and
@@ -409,36 +362,57 @@ class XiangqiGame:
             self._the_board[from_row][from_column].is_valid_move_soldier()
 
         # otherwise, make move and remove any captured piece
-        self._the_board[file.index(to_square[0])][int(to_square[1:])] = \
-            self._the_board[file.index(from_square[0])][int(from_square[1:])]
-        self._the_board[file.index(from_square[0])][int(from_square[1:])] = ""
+        temp = self._the_board[to_row][to_column]
+        self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+        self._the_board[from_row][from_column] = ""
 
         # if it is red player's turn and red is in check, undo move and return False since player cannot
         # put its own General in check
         if self._player_turn == "red" and self._red_in_check:
-            self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
-                self._the_board[file.index(to_square[0])][int(to_square[1:])]
-            # need to save temp location instead
-            self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
+            self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+            self._the_board[to_row][to_column] = temp
             return False
 
         # if it is black player's turn and black is in check, undo move and return False since player cannot
         # put its own General in check
         if self._player_turn == "black" and self._black_in_check:
-            self._the_board[file.index(from_square[0])][int(from_square[1:])] = \
-                self._the_board[file.index(to_square[0])][int(to_square[1:])]
-            self._the_board[file.index(to_square[0])][int(to_square[1:])] = ""
+            self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+            self._the_board[to_row][to_column] = temp
             return False
 
-        # # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
-        # # if red player no legal moves):
-        # if self._player_turn == "red":
-        #     self._game_state = "BLACK_WON"
-        #
-        # # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
-        # # if black player has no legal moves):
-        # if self._player_turn == "black":
-        #     self._game_state = "RED_WON"
+        # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
+        count = 0
+        for i in range (0, 11):
+            for j in range (0, 10):
+                if (isinstance(self._the_board[from_row][from_column], General) and
+                    self._the_board[from_row][from_column]. get_color() == "red" and
+                    self._the_board[from_row][from_column].is_valid_move_general()):
+                    count += 1
+                if (isinstance(self._the_board[from_row][from_column], Advisor) and
+                    self._the_board[from_row][from_column]. get_color() == "red" and
+                    self._the_board[from_row][from_column].is_valid_move_advisor()):
+                    count += 1
+
+                    isinstance(self._the_board[from_row][from_column], Elephant):
+                        self._the_board[from_row][from_column].is_valid_move_elephant()
+
+                    isinstance(self._the_board[from_row][from_column], Horse):
+                        self._the_board[from_row][from_column].is_valid_move_horse()
+
+                    isinstance(self._the_board[from_row][from_column], Chariot):
+                        self._the_board[from_row][from_column].is_valid_move_chariot()
+
+                    isinstance(self._the_board[from_row][from_column], Cannon):
+                        self._the_board[from_row][from_column].is_valid_move_cannon()
+
+                    isinstance(self._the_board[from_row][from_column], Soldier):
+                        self._the_board[from_row][from_column].is_valid_move_soldier():
+        if count == 16
+        self._game_state = "BLACK_WON"
+
+        # if black General is in checkmate or black player is in stalemate, update _game_state to "RED WON"
+        if self._player_turn == "black":
+            self._game_state = "RED_WON"
 
         # update _player_turn
         if self._player_turn == "red":
