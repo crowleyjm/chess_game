@@ -550,19 +550,18 @@ class XiangqiGame:
 
         # return False if illegal move by Elephant
         # Elephants cannot jump so return False if there is a piece blocking its first diagonal move
-        if ((self._the_board[from_row + 1][from_column + 1] != "" and
-             self._the_board[from_row + 2][from_column + 2] ==
-             self._the_board[to_row][to_column]) or
-                (self._the_board[from_row - 1][from_column - 1] != "" and
-                 self._the_board[from_row - 2][from_column - 2] ==
-                 self._the_board[to_row][to_column]) or
-                (self._the_board[from_row + 1][from_column - 1] != "" and
-                 self._the_board[from_row + 2][from_column - 2] ==
-                 self._the_board[to_row][from_column]) or
-                (self._the_board[from_row - 1][from_column + 1] != "" and
-                 self._the_board[from_row - 2][from_column + 2] ==
-                 self._the_board[from_row][to_column])):
-            return False
+        if to_row == from_row + 2 and to_column == from_column + 2:
+            if self._the_board[from_row + 1][from_column + 1] != "":
+                return False
+        if to_row == from_row - 2 and to_column == from_column - 2:
+            if self._the_board[from_row - 1][from_column - 1] != "":
+                return False
+        if to_row == from_row + 2 and to_column == from_column - 2:
+            if self._the_board[from_row + 1][from_column - 1] != "":
+                return False
+        if to_row == from_row - 2 and to_column == from_column + 2:
+            if self._the_board[from_row - 1][from_column + 1] != "":
+                return False
 
     def is_valid_move_horse(self, from_square, to_square):
         """
@@ -580,23 +579,30 @@ class XiangqiGame:
 
         # return False if illegal move by Horse
         # Horses cannot jump so return False if there is a piece blocking its first orthogonal move
-        if ((from_row - 2 == to_row and from_column - 1 == to_column and
-             self._the_board[from_row - 1][from_column] != "") or
-                (from_row - 2 == to_row and from_column + 1 == to_column and
-                 self._the_board[from_row - 1][from_column] != "") or
-                (from_row - 1 == to_row and from_column + 2 == to_column and
-                 self._the_board[from_row][from_column + 1] != "") or
-                (from_row + 1 == to_row and from_column + 2 == to_column and
-                 self._the_board[from_row][from_column + 1] != "") or
-                (from_row + 2 == to_row and from_column + 1 == to_column and
-                 self._the_board[from_row + 1][from_column] != "") or
-                (from_row + 2 == to_row and from_column - 1 == to_column and
-                 self._the_board[from_row + 1][from_column] != "") or
-                (from_row + 1 == to_row and from_column - 2 == to_column and
-                 self._the_board[from_row][from_column - 1] != "") or
-                (from_row - 1 == to_row and from_column - 2 == to_column and
-                 self._the_board[from_row][from_column - 1] != "")):
-            return False
+        if to_row == from_row - 2 and to_column == from_column - 1:
+            if self._the_board[from_row - 1][from_column] != "":
+                return False
+        if to_row == from_row - 2 and to_column == from_column + 1:
+            if self._the_board[from_row - 1][from_column] != "":
+                return False
+        if to_row == from_row - 1 and to_column == from_column + 2:
+            if self._the_board[from_row][from_column + 1] != "":
+                return False
+        if to_row == from_row + 1 and to_column == from_column + 2:
+            if self._the_board[from_row][from_column + 1] != "":
+                return False
+        if to_row == from_row + 2 and to_column == from_column + 1:
+            if self._the_board[from_row + 1][from_column] != "":
+                return False
+        if to_row == from_row + 2 and to_column == from_column - 1:
+            if self._the_board[from_row + 1][from_column] != "":
+                return False
+        if to_row == from_row + 1 and to_column == from_column - 2:
+            if self._the_board[from_row][from_column - 1] != "":
+                return False
+        if to_row == from_row - 1 and to_column == from_column - 2:
+            if self._the_board[from_row][from_column - 1] != "":
+                return False
 
     def is_valid_move_chariot(self, from_square, to_square):
         """
@@ -670,13 +676,13 @@ class XiangqiGame:
             i += 1
 
         i = 1
-        while to_column < from_column and from_column + i < to_column:
+        while from_column < to_column and from_column + i < to_column:
             if from_row == to_row and self._the_board[from_row][from_column + i] != "":
                 count += 1
             i += 1
 
         i = 1
-        while to_column > from_column and from_column - i > to_column:
+        while from_column > to_column  and from_column - i > to_column:
             if from_row == to_row and self._the_board[from_row][from_column - i] != "":
                 count += 1
             i += 1
