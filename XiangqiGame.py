@@ -89,74 +89,45 @@ class XiangqiGame:
         # define board indices
         red_general_row = int(self._red_general_location[1:]) - 1
         red_general_column = file.index(self._red_general_location[0])
+        black_general_row = int(self._black_general_location[1:]) - 1
+        black_general_column = file.index(self._black_general_location[0])
 
         # check if red player's General is in check by black Horse as a result of the move made
         if ((isinstance(self._the_board[red_general_row - 2][red_general_column - 1], Horse) and
              self._the_board[red_general_row - 2][red_general_column - 1].get_color() == "black") or
-
-                (isinstance(self._the_board[file.index(self._red_general_location[0] - 2)]
-                            [int(self._red_general_location[1:]) + 1], Horse) and
-                 self._the_board[file.index(self._red_general_location[0] - 2)]
-                 [int(self._red_general_location[1:]) + 1].get_color() == "black") or
-                (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
-                            [int(self._red_general_location[1:]) + 2], Horse) and
-                 self._the_board[file.index(self._red_general_location[0] - 1)]
-                 [int(self._red_general_location[1:]) + 2].get_color() == "black") or
-                (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
-                            [int(self._red_general_location[1:]) + 2], Horse) and
-                 self._the_board[file.index(self._red_general_location[0] + 1)]
-                 [int(self._red_general_location[1:]) + 2].get_color() == "black") or
-                (isinstance(self._the_board[file.index(self._red_general_location[0] + 2)]
-                            [int(self._red_general_location[1:]) + 1], Horse) and
-                 self._the_board[file.index(self._red_general_location[0] + 2)]
-                 [int(self._red_general_location[1:]) + 1].get_color() == "black") or
-                (isinstance(self._the_board[file.index(self._red_general_location[0] + 2)]
-                            [int(self._red_general_location[1:]) - 1], Horse) and
-                 self._the_board[file.index(self._red_general_location[0] + 2)]
-                 [int(self._red_general_location[1:]) - 1].get_color() == "black") or
-                (isinstance(self._the_board[file.index(self._red_general_location[0] + 1)]
-                            [int(self._red_general_location[1:]) - 2], Horse) and
-                 self._the_board[file.index(self._red_general_location[0] + 1)]
-                 [int(self._red_general_location[1:]) - 2].get_color() == "black") or
-                (isinstance(self._the_board[file.index(self._red_general_location[0] - 1)]
-                            [int(self._red_general_location[1:]) - 2], Horse) and
-                 self._the_board[file.index(self._red_general_location[0] - 1)]
-                 [int(self._red_general_location[1:]) - 2].get_color() == "black")):
+                (isinstance(self._the_board[red_general_row - 2][red_general_column + 1], Horse) and
+                 self._the_board[red_general_row - 2][red_general_column + 1].get_color() == "black") or
+                (isinstance(self._the_board[red_general_row - 1][red_general_column + 2], Horse) and
+                 self._the_board[red_general_row - 1][red_general_column + 2].get_color() == "black") or
+                (isinstance(self._the_board[red_general_row + 1][red_general_column + 2], Horse) and
+                 self._the_board[red_general_row + 1][red_general_column + 2].get_color() == "black") or
+                (isinstance(self._the_board[red_general_row + 2][red_general_column + 1], Horse) and
+                 self._the_board[red_general_row + 2][red_general_column + 1].get_color() == "black") or
+                (isinstance(self._the_board[red_general_row + 2][red_general_column - 1], Horse) and
+                 self._the_board[red_general_row + 2][red_general_column - 1].get_color() == "black") or
+                (isinstance(self._the_board[red_general_row + 1][red_general_column - 2], Horse) and
+                 self._the_board[red_general_row + 1][red_general_column - 2].get_color() == "black") or
+                (isinstance(self._the_board[red_general_row - 1][red_general_column - 2], Horse) and
+                 self._the_board[red_general_row - 1][red_general_column - 2].get_color() == "black")):
             self._red_in_check = True
 
         # check if black player's General is in check by red Horse as a result of the move made
-        if ((isinstance(self._the_board[file.index(self._black_general_location[0] - 2)]
-                        [int(self._black_general_location[1:]) - 1], Horse) and
-             self._the_board[file.index(self._black_general_location[0] - 2)]
-             [int(self._black_general_location[1:]) - 1].get_color() == "red") or
-                (isinstance(self._the_board[file.index(self._black_general_location[0] - 2)]
-                            [int(self._black_general_location[1:]) + 1], Horse) and
-                 self._the_board[file.index(self._black_general_location[0] - 2)]
-                 [int(self._black_general_location[1:]) + 1].get_color() == "red") or
-                (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
-                            [int(self._black_general_location[1:]) + 2], Horse) and
-                 self._the_board[file.index(self._black_general_location[0] - 1)]
-                 [int(self._black_general_location[1:]) + 2].get_color() == "red") or
-                (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
-                            [int(self._black_general_location[1:]) + 2], Horse) and
-                 self._the_board[file.index(self._black_general_location[0] + 1)]
-                 [int(self._black_general_location[1:]) + 2].get_color() == "red") or
-                (isinstance(self._the_board[file.index(self._black_general_location[0] + 2)]
-                            [int(self._black_general_location[1:]) + 1], Horse) and
-                 self._the_board[file.index(self._black_general_location[0] + 2)]
-                 [int(self._black_general_location[1:]) + 1].get_color() == "red") or
-                (isinstance(self._the_board[file.index(self._black_general_location[0] + 2)]
-                            [int(self._black_general_location[1:]) - 1], Horse) and
-                 self._the_board[file.index(self._black_general_location[0] + 2)]
-                 [int(self._black_general_location[1:]) - 1].get_color() == "red") or
-                (isinstance(self._the_board[file.index(self._black_general_location[0] + 1)]
-                            [int(self._black_general_location[1:]) - 2], Horse) and
-                 self._the_board[file.index(self._black_general_location[0] + 1)]
-                 [int(self._black_general_location[1:]) - 2].get_color() == "red") or
-                (isinstance(self._the_board[file.index(self._black_general_location[0] - 1)]
-                            [int(self._black_general_location[1:]) - 2], Horse) and
-                 self._the_board[file.index(self._black_general_location[0] - 1)]
-                 [int(self._black_general_location[1:]) - 2].get_color() == "red")):
+        if ((isinstance(self._the_board[black_general_row - 2][black_general_column - 1], Horse) and
+             self._the_board[black_general_row - 2][black_general_column - 1].get_color() == "red") or
+                (isinstance(self._the_board[black_general_row - 2][black_general_column + 1], Horse) and
+                 self._the_board[black_general_row - 2][black_general_column + 1].get_color() == "red") or
+                (isinstance(self._the_board[black_general_row - 1][black_general_column + 2], Horse) and
+                 self._the_board[black_general_row - 1][black_general_column + 2].get_color() == "red") or
+                (isinstance(self._the_board[black_general_row + 1][black_general_column + 2], Horse) and
+                 self._the_board[black_general_row + 1][black_general_column + 2].get_color() == "red") or
+                (isinstance(self._the_board[black_general_row + 2][black_general_column + 1], Horse) and
+                 self._the_board[black_general_row + 2][black_general_column + 1].get_color() == "red") or
+                (isinstance(self._the_board[black_general_row + 2][black_general_column - 1], Horse) and
+                 self._the_board[black_general_row + 2][black_general_column - 1].get_color() == "red") or
+                (isinstance(self._the_board[black_general_row + 1][black_general_column - 2], Horse) and
+                 self._the_board[black_general_row + 1][black_general_column - 2].get_color() == "red") or
+                (isinstance(self._the_board[black_general_row - 1][black_general_column - 2], Horse) and
+                 self._the_board[black_general_row - 1][black_general_column - 2].get_color() == "red")):
             self._black_in_check = True
 
             # check if red player's General is in check by black Chariot as a result of the move made
@@ -350,33 +321,21 @@ class XiangqiGame:
                         self._black_in_check = True
 
             # check if red player's General is in check by black Soldier as a result of the move made
-            if ((isinstance(self._the_board[file.index(self._red_general_location[0] - 1)]
-                            [int(self._red_general_location[1:])], Soldier) and
-                 self._the_board[file.index(self._red_general_location[0] - 1)]
-                 [int(self._red_general_location[1:])].get_color() == "black") or
-                    (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                [int(self._red_general_location[1:]) - 1], Soldier) and
-                     self._the_board[file.index(self._red_general_location[0])]
-                     [int(self._red_general_location[1:]) - 1].get_color() == "black") or
-                    (isinstance(self._the_board[file.index(self._red_general_location[0])]
-                                [int(self._red_general_location[1:]) + 1], Soldier) and
-                     self._the_board[file.index(self._red_general_location[0])]
-                     [int(self._red_general_location[1:]) + 1].get_color() == "black")):
+            if ((isinstance(self._the_board[red_general_row - 1][red_general_column], Soldier) and
+                 self._the_board[red_general_row - 1][red_general_column].get_color() == "black") or
+                    (isinstance(self._the_board[red_general_row][red_general_column - 1], Soldier) and
+                     self._the_board[red_general_row][red_general_column - 1].get_color() == "black") or
+                    (isinstance(self._the_board[red_general_row][red_general_column + 1], Soldier) and
+                     self._the_board[red_general_row][red_general_column + 1].get_color() == "black")):
                 self._red_in_check = True
 
             # check if black player's General is in check by red Soldier as a result of the move made
-            if ((isinstance(self._the_board[file.index(self._black_general_location[0] - 1)]
-                            [int(self._black_general_location[1:])], Soldier) and
-                 self._the_board[file.index(self._black_general_location[0] - 1)]
-                 [int(self._black_general_location[1:])].get_color() == "red") or
-                    (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                [int(self._black_general_location[1:]) - 1], Soldier) and
-                     self._the_board[file.index(self._black_general_location[0])]
-                     [int(self._black_general_location[1:]) - 1].get_color() == "red") or
-                    (isinstance(self._the_board[file.index(self._black_general_location[0])]
-                                [int(self._black_general_location[1:]) + 1], Soldier) and
-                     self._the_board[file.index(self._black_general_location[0])]
-                     [int(self._black_general_location[1:]) + 1].get_color() == "red")):
+            if ((isinstance(self._the_board[black_general_row + 1][black_general_column], Soldier) and
+                 self._the_board[black_general_row + 1][black_general_column].get_color() == "red") or
+                    (isinstance(self._the_board[black_general_row][black_general_column - 1], Soldier) and
+                     self._the_board[black_general_row][black_general_column - 1].get_color() == "red") or
+                    (isinstance(self._the_board[black_general_row][black_general_column + 1], Soldier) and
+                     self._the_board[black_general_row][black_general_column + 1].get_color() == "red")):
                 self._black_in_check = True
 
         if player == "red":
