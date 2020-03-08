@@ -393,7 +393,7 @@ class XiangqiGame:
                     self._the_board[from_row][from_column].is_valid_move_advisor()):
                     count += 1
 
-                    isinstance(self._the_board[from_row][from_column], Elephant):
+                if (isinstance(self._the_board[from_row][from_column], Elephant):
                         self._the_board[from_row][from_column].is_valid_move_elephant()
 
                     isinstance(self._the_board[from_row][from_column], Horse):
