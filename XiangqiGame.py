@@ -425,10 +425,10 @@ class XiangqiGame:
         # if it is red player's turn and red is in check, undo move and return False
         # if it is black player's turn and black is in check, undo move and return False
         # since player cannot put its own General in check
-        # if self.is_in_check(self._player_turn):
-        #     self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-        #     self._the_board[to_row][to_column] = temp
-        #     return False
+        if self.is_in_check(self._player_turn):
+            self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+            self._the_board[to_row][to_column] = temp
+            return False
 
         # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK WON"
         # count = 0
@@ -1061,12 +1061,12 @@ class Soldier:
 
         if self._color == "red" and \
                 ((from_row + 1 == to_row and to_column == from_column) or
-                 (4 < from_row == to_row and (from_column + 1 == to_column or from_column - 1 == to_column))):
+                 (from_row > 4 and (from_column + 1 == to_column or from_column - 1 == to_column))):
             return True
 
         if self._color == "black" and \
-                ((from_row + 1 == to_row and to_column == from_column) or
-                 (5 > from_row == to_row and (from_column + 1 == to_column or from_column - 1 == to_column))):
+                ((from_row - 1 == to_row and to_column == from_column) or
+                 (from_row < 5 and (from_column + 1 == to_column or from_column - 1 == to_column))):
             return True
         return False
 
