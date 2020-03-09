@@ -45,11 +45,11 @@ class XiangqiGame:
             [[Chariot("red"), Horse("red"), Elephant("red"),
               Advisor("red"), General("red"), Advisor("red"),
               Elephant("red"), Horse("red"), Chariot("red"), "1"],
-             ["", "", "", "", Advisor("red"), "", "", "", "", "2"],
+             ["", "", "", "", "", "", "", "", "", "2"],
              ["", Cannon("red"), "", "", "", "", "", Cannon("red"), "", "3"],
-             [Soldier("red"), "", Soldier("red"), "", "",
+             [Soldier("red"), "", Soldier("red"), "", Soldier("red"),
               "", Soldier("red"), "", Soldier("red"), "4"],
-             ["", "", "", "", Cannon("black"), "", "", "", "", "5"],
+             ["", "", "", "", "", "", "", "", "", "5"],
              ["", "", "", "", "", "", "", "", "", "6"],
              [Soldier("black"), "", Soldier("black"), "", Soldier("black"),
               "", Soldier("black"), "", Soldier("black"), "7"],
@@ -260,15 +260,15 @@ class XiangqiGame:
             if ((isinstance(self._the_board[player_general_row - i][player_general_column], Cannon) and
                  self._the_board[player_general_row - i][player_general_column].get_color() == other_player)):
                 break
-            i -= 1
+            i += 1
 
         if (isinstance(self._the_board[player_general_row - i][player_general_column], Cannon) and
                 self._the_board[player_general_row - i][player_general_column].get_color() == other_player):
-            i += 1
+            i -= 1
             while player_general_row - i < player_general_row:
                 if self._the_board[player_general_row - i][player_general_column] != "":
                     count += 1
-                i += 1
+                i -= 1
 
         if count == 1:
             if player == "red":
@@ -304,15 +304,15 @@ class XiangqiGame:
             if ((isinstance(self._the_board[player_general_row][player_general_column - i], Cannon) and
                  self._the_board[player_general_row][player_general_column - i].get_color() == other_player)):
                 break
-            i -= 1
+            i += 1
 
         if (isinstance(self._the_board[player_general_row][player_general_column - i], Cannon) and
                 self._the_board[player_general_row][player_general_column - i].get_color() == other_player):
-            i += 1
+            i -= 1
             while player_general_column - i < player_general_column:
                 if self._the_board[player_general_row][player_general_column - i] != "":
                     count += 1
-                i += 1
+                i -= 1
 
         if count == 1:
             if player == "red":
