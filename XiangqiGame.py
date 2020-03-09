@@ -532,11 +532,11 @@ class XiangqiGame:
         # update _player_turn
         if self._player_turn == "red":
             self._player_turn = "black"
+            return True
 
         if self._player_turn == "black":
             self._player_turn = "red"
-
-        return True
+            return True
 
     def is_valid_move_general(self, from_square, to_square):
         """
