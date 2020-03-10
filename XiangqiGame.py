@@ -555,13 +555,13 @@ class XiangqiGame:
                                     self._the_board[from_row][from_column].is_legal_move(from_square, to_square) and \
                                     self._game_state == "UNFINISHED":
                                 if (isinstance(self._the_board[from_row][from_column], General) and
-                                        self._the_board[from_row][from_column].get_color() == "red" and
+                                        self._the_board[from_row][from_column].get_color() == "black" and
                                         self.is_valid_move_general(i, j) is True):
                                     # make move temporarily to see if it puts player in check
                                     temp = self._the_board[to_row][to_column]
                                     self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                     self._the_board[from_row][from_column] = ""
-                                    if self.is_in_check("red") is False:
+                                    if self.is_in_check("black") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
@@ -570,13 +570,13 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                 if (isinstance(self._the_board[from_row][from_column], Elephant) and
-                                        self._the_board[from_row][from_column].get_color() == "red" and
+                                        self._the_board[from_row][from_column].get_color() == "black" and
                                         self.is_valid_move_elephant(i, j) is True):
                                     # make move temporarily to see if it puts player in check
                                     temp = self._the_board[to_row][to_column]
                                     self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                     self._the_board[from_row][from_column] = ""
-                                    if self.is_in_check("red") is False:
+                                    if self.is_in_check("black") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
@@ -585,13 +585,13 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                 if (isinstance(self._the_board[from_row][from_column], Horse) and
-                                        self._the_board[from_row][from_column].get_color() == "red" and
+                                        self._the_board[from_row][from_column].get_color() == "black" and
                                         self.is_valid_move_horse(i, j) is True):
                                     # make move temporarily to see if it puts player in check
                                     temp = self._the_board[to_row][to_column]
                                     self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                     self._the_board[from_row][from_column] = ""
-                                    if self.is_in_check("red") is False:
+                                    if self.is_in_check("black") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
@@ -600,13 +600,13 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                 if (isinstance(self._the_board[from_row][from_column], Chariot) and
-                                        self._the_board[from_row][from_column].get_color() == "red" and
+                                        self._the_board[from_row][from_column].get_color() == "black" and
                                         self.is_valid_move_chariot(i, j) is True):
                                     # make move temporarily to see if it puts player in check
                                     temp = self._the_board[to_row][to_column]
                                     self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                     self._the_board[from_row][from_column] = ""
-                                    if self.is_in_check("red") is False:
+                                    if self.is_in_check("black") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
@@ -615,13 +615,13 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                 if (isinstance(self._the_board[from_row][from_column], Cannon) and
-                                        self._the_board[from_row][from_column].get_color() == "red" and
+                                        self._the_board[from_row][from_column].get_color() == "black" and
                                         self.is_valid_move_cannon(i, j) is True):
                                     # make move temporarily to see if it puts player in check
                                     temp = self._the_board[to_row][to_column]
                                     self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                     self._the_board[from_row][from_column] = ""
-                                    if self.is_in_check("red") is False:
+                                    if self.is_in_check("black") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
