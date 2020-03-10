@@ -854,7 +854,7 @@ class XiangqiGame:
                 count += 1
             i += 1
 
-        if (count > 1 or (count == 0 and self._the_board[to_row][to_column] != "")):
+        if count > 1 or (count == 0 and self._the_board[to_row][to_column] != ""):
             return False
         return True
 
@@ -1173,17 +1173,21 @@ class Soldier:
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        if self._color == "red" and \
-                ((from_row + 1 == to_row and to_column == from_column) or
-                 (from_row > 4 and from_column + 1 == to_column and to_row == from_row) or
-                 (from_row > 4 and from_column - 1 == to_column and to_row == from_row)):
-            return True
+        if self._color == "red":
+            if from_row + 1 == to_row and to_column == from_column:
+                return True
+            if from_row > 4:
+                if ((from_column + 1 == to_column and to_row == from_row) or
+                        (from_column - 1 == to_column and to_row == from_row)):
+                    return True
 
-        if self._color == "black" and \
-                ((from_row - 1 == to_row and to_column == from_column) or
-                 (from_row < 5 and from_column + 1 == to_column and to_row == from_row) or
-                 (from_row < 5 and from_column - 1 == to_column and to_row == from_row)):
-            return True
+        if self._color == "black":
+            if from_row - 1 == to_row and to_column == from_column:
+                return True
+            if from_row < 5:
+                if ((from_column + 1 == to_column and to_row == from_row) or
+                        (from_column - 1 == to_column and to_row == from_row)):
+                    return True
         return False
 
 
