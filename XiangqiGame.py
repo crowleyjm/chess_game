@@ -454,10 +454,13 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
                                 if (isinstance(self._the_board[from_row][from_column], Elephant) and
                                         self._the_board[from_row][from_column].get_color() == "red" and
                                         self.is_valid_move_elephant(i, j) is True):
@@ -468,10 +471,13 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
                                 if (isinstance(self._the_board[from_row][from_column], Horse) and
                                         self._the_board[from_row][from_column].get_color() == "red" and
                                         self.is_valid_move_horse(i, j) is True):
@@ -482,10 +488,13 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
                                 if (isinstance(self._the_board[from_row][from_column], Chariot) and
                                         self._the_board[from_row][from_column].get_color() == "red" and
                                         self.is_valid_move_chariot(i, j) is True):
@@ -496,10 +505,13 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
                                 if (isinstance(self._the_board[from_row][from_column], Cannon) and
                                         self._the_board[from_row][from_column].get_color() == "red" and
                                         self.is_valid_move_cannon(i, j) is True):
@@ -510,11 +522,14 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
-            self._game_state = "BLACK_WON"
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
+        self._game_state = "BLACK_WON"
 
         # update _player_turn
         if self._player_turn == "red":
@@ -556,10 +571,13 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
                                 if (isinstance(self._the_board[from_row][from_column], Elephant) and
                                         self._the_board[from_row][from_column].get_color() == "red" and
                                         self.is_valid_move_elephant(i, j) is True):
@@ -570,10 +588,13 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
                                 if (isinstance(self._the_board[from_row][from_column], Horse) and
                                         self._the_board[from_row][from_column].get_color() == "red" and
                                         self.is_valid_move_horse(i, j) is True):
@@ -584,10 +605,13 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
                                 if (isinstance(self._the_board[from_row][from_column], Chariot) and
                                         self._the_board[from_row][from_column].get_color() == "red" and
                                         self.is_valid_move_chariot(i, j) is True):
@@ -598,10 +622,13 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
                                 if (isinstance(self._the_board[from_row][from_column], Cannon) and
                                         self._the_board[from_row][from_column].get_color() == "red" and
                                         self.is_valid_move_cannon(i, j) is True):
@@ -612,11 +639,15 @@ class XiangqiGame:
                                     if self.is_in_check("red") is False:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
-                                        break
-                                    else:
-                                        continue
-                                    break
-            self._game_state = "RED_WON"
+                                        # update _player_turn
+                                        if self._player_turn == "red":
+                                            self._player_turn = "black"
+                                            return True
+                                        if self._player_turn == "black":
+                                            self._player_turn = "red"
+                                            return True
+
+        self._game_state = "RED_WON"
 
         # update _player_turn
         if self._player_turn == "red":
