@@ -463,7 +463,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
@@ -478,7 +477,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
@@ -493,7 +491,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
@@ -508,7 +505,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
@@ -523,7 +519,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
@@ -565,7 +560,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
@@ -580,7 +574,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
@@ -595,7 +588,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
@@ -610,7 +602,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
@@ -625,7 +616,6 @@ class XiangqiGame:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
                                         count += 1
-                                        break
                                     else:
                                         self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                         self._the_board[to_row][to_column] = temp
