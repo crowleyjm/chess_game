@@ -1174,7 +1174,7 @@ class Soldier:
         to_column = file.index(to_square[0])
 
         if self._color == "red" and \
-                ((from_row + 1 == to_row and to_column == from_column or
+                ((from_row + 1 == to_row and to_column == from_column) or
                  (from_row > 4 and from_column + 1 == to_column and to_row == from_row) or
                  (from_row > 4 and from_column - 1 == to_column and to_row == from_row)):
             return True
