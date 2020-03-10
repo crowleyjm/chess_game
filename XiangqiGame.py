@@ -1,5 +1,5 @@
 # Author: Jillian Crowley
-# Date: 03/09/2020
+# Date: 03/10/2020
 # Description: From Wikipedia:
 # The Xiangqi game (Chinese chess) represents a battle between two 16-piece armies, with
 # the object of the game being to capture the enemy's general (king).
@@ -86,20 +86,19 @@ class XiangqiGame:
         """
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
 
-        # define board indices
-        # if player is red
+        # define board indices if player is red
         player_general_row = int(self._red_general_location[1:]) - 1
         player_general_column = file.index(self._red_general_location[0])
         other_player = "black"
+        if player == "red":
+            self._red_in_check = False
 
-        # if player is black
+        # define board indices if player is black
         if player == "black":
             player_general_row = int(self._black_general_location[1:]) - 1
             player_general_column = file.index(self._black_general_location[0])
             other_player = "red"
-
-        self._red_in_check = False
-        self._black_in_check = False
+            self._black_in_check = False
 
         # see if player's General is in check by other player's Horse
         if player_general_row - 2 >= 0 and player_general_column - 1 >= 0:
@@ -403,20 +402,17 @@ class XiangqiGame:
         self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
         self._the_board[from_row][from_column] = ""
 
-        # if it is red player's turn and red is in check, undo move and return False
-        # if it is black player's turn and black is in check, undo move and return False
+        # if it is player's turn and player is in check, undo move and return False
         # since player cannot put its own General in check
         if self.is_in_check(self._player_turn):
             self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
             self._the_board[to_row][to_column] = temp
+            # if red or black General move is being undone, update location
+            if self._the_board[from_row][from_column].get_color() == "red":
+                self._red_general_location = from_square
+            if self._the_board[from_row][from_column].get_color() == "black":
+                self._black_general_location = from_square
             return False
-
-        # update _player_turn
-        if self._player_turn == "red":
-            self._player_turn = "black"
-
-        if self._player_turn == "black":
-            self._player_turn = "red"
 
         # if red General is in checkmate or red player is in stalemate, update _game_state to "BLACK_WON"
         from_spaces = ["a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "i1",
@@ -435,14 +431,12 @@ class XiangqiGame:
         for i in from_spaces:
             if count > 0:
                 break
-            # define board indices
-            file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-            from_row = int(i[1:]) - 1
-            from_column = file.index(i[0])
 
             for j in to_spaces:
                 # define board indices
                 file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+                from_row = int(i[1:]) - 1
+                from_column = file.index(i[0])
                 to_row = int(j[1:]) - 1
                 to_column = file.index(j[0])
 
@@ -452,23 +446,23 @@ class XiangqiGame:
                     if ((self._the_board[to_row][to_column] == "") or
                             (self._the_board[to_row][to_column] != "" and
                              self._the_board[to_row][to_column].get_color() != "red")):
-                        # must be player's turn, move must be legal, game state must be UNFINISHED
+                        # must be player's piece, move must be legal
                         if self._the_board[from_row][from_column].get_color() == "red" and \
                                 self._the_board[from_row][from_column].is_legal_move(i, j):
                             if (isinstance(self._the_board[from_row][from_column], General) and
                                     self._the_board[from_row][from_column].get_color() == "red" and
                                     self.is_valid_move_general(i, j) is True):
-                                # make move temporarily to see if it puts player in check
+                                # make move temporarily to see if it puts player in check; update General location
                                 temp = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
+                                self._red_general_location = j
                                 if self.is_in_check("red") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
+                                # if General move is being undone, revert location
+                                self._red_general_location = i
                             if (isinstance(self._the_board[from_row][from_column], Advisor) and
                                     self._the_board[from_row][from_column].get_color() == "red"):
                                 # make move temporarily to see if it puts player in check
@@ -476,10 +470,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("red") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Elephant) and
@@ -490,10 +481,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("red") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Horse) and
@@ -504,10 +492,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("red") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Chariot) and
@@ -518,10 +503,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("red") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Cannon) and
@@ -532,10 +514,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("red") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Soldier) and
@@ -545,10 +524,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("red") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
 
@@ -562,14 +538,11 @@ class XiangqiGame:
             if count > 0:
                 break
 
-            # define board indices
-            file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-            from_row = int(i[1:]) - 1
-            from_column = file.index(i[0])
-
             for j in to_spaces:
                 # define board indices
                 file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
+                from_row = int(i[1:]) - 1
+                from_column = file.index(i[0])
                 to_row = int(j[1:]) - 1
                 to_column = file.index(j[0])
 
@@ -579,23 +552,22 @@ class XiangqiGame:
                     if ((self._the_board[to_row][to_column] == "") or
                             (self._the_board[to_row][to_column] != "" and
                              self._the_board[to_row][to_column].get_color() != "black")):
-                        # must be player's turn, move must be legal, game state must be UNFINISHED
+                        # must be player's piece, move must be legal
                         if self._the_board[from_row][from_column].get_color() == "black" and \
                                 self._the_board[from_row][from_column].is_legal_move(i, j):
                             if (isinstance(self._the_board[from_row][from_column], General) and
                                     self._the_board[from_row][from_column].get_color() == "black" and
                                     self.is_valid_move_general(i, j) is True):
-                                # make move temporarily to see if it puts player in check
+                                # make move temporarily to see if it puts player in check; update General location
                                 temp = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
+                                self._red_general_location = j
                                 if self.is_in_check("black") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
+                                self._red_general_location = i
                             if (isinstance(self._the_board[from_row][from_column], Advisor) and
                                     self._the_board[from_row][from_column].get_color() == "black"):
                                 # make move temporarily to see if it puts player in check
@@ -603,10 +575,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("black") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Elephant) and
@@ -617,10 +586,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("black") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Horse) and
@@ -631,10 +597,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("black") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Chariot) and
@@ -645,10 +608,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("black") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Cannon) and
@@ -659,10 +619,7 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("black") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Soldier) and
@@ -672,17 +629,21 @@ class XiangqiGame:
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("black") is False:
-                                    self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                    self._the_board[to_row][to_column] = temp
                                     count += 1
-                                    break
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
 
         if count == 0:
             self._game_state = "RED_WON"
 
-        return True
+        # update _player_turn
+        if self._player_turn == "red":
+            self._player_turn = "black"
+            return True
+
+        if self._player_turn == "black":
+            self._player_turn = "red"
+            return True
 
     def is_valid_move_general(self, from_square, to_square):
         """
@@ -705,35 +666,42 @@ class XiangqiGame:
                 rank = 9
                 while to_row < rank:
                     if self._the_board[rank - 1][to_column] != "":
-                        return False
+                        return True
+                    rank -= 1
             if isinstance(self._the_board[8][to_column], General):
                 rank = 8
                 while to_row < rank:
                     if self._the_board[rank - 1][to_column] != "":
-                        return False
+                        return True
+                    rank -= 1
             if isinstance(self._the_board[7][to_column], General):
                 rank = 7
                 while to_row < rank:
                     if self._the_board[rank - 1][to_column] != "":
-                        return False
+                        return True
+                    rank -= 1
+            return False
 
         if self._the_board[from_row][from_column].get_color() == "black":
-            if isinstance(self._the_board[9][to_column], General):
-                rank = 9
-                while to_row < rank:
-                    if self._the_board[rank - 1][to_column] != "":
-                        return False
-            if isinstance(self._the_board[8][to_column], General):
-                rank = 8
-                while to_row < rank:
-                    if self._the_board[rank - 1][to_column] != "":
-                        return False
-            if isinstance(self._the_board[7][to_column], General):
-                rank = 7
-                while to_row < rank:
-                    if self._the_board[rank - 1][to_column] != "":
-                        return False
-        return True
+            if isinstance(self._the_board[0][to_column], General):
+                rank = 0
+                while to_row > rank:
+                    if self._the_board[rank + 1][to_column] != "":
+                        return True
+                    rank += 1
+            if isinstance(self._the_board[1][to_column], General):
+                rank = 1
+                while to_row > rank:
+                    if self._the_board[rank + 1][to_column] != "":
+                        return True
+                    rank += 1
+            if isinstance(self._the_board[2][to_column], General):
+                rank = 2
+                while to_row > rank:
+                    if self._the_board[rank + 1][to_column] != "":
+                        return True
+                    rank += 1
+            return False
 
     def is_valid_move_elephant(self, from_square, to_square):
         """
@@ -886,7 +854,7 @@ class XiangqiGame:
                 count += 1
             i += 1
 
-        if count != 1:
+        if (count > 1 or (count == 0 and self._the_board[to_row][to_column] != "")):
             return False
         return True
 
@@ -926,14 +894,14 @@ class General:
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        if self._color == "red" and from_row < 3 and 6 > from_column > 2 and 6 > to_column > 2 and \
-                ((((from_row + 1 == to_row) or (from_row - 1 == to_row)) and (from_column == to_column)) or
-                 (((from_column + 1 == to_column) or (from_column - 1 == to_column)) and (from_row == to_row))):
+        if (self._color == "red" and from_row < 3 and to_row < 3 and 6 > from_column > 2 and 6 > to_column > 2 and
+                ((from_row + 1 == to_row or from_row - 1 == to_row) and from_column == to_column) or
+                ((from_column + 1 == to_column or from_column - 1 == to_column) and from_row == to_row)):
             return True
 
-        if self._color == "black" and from_row > 6 and 6 > from_column > 2 and 6 > to_column > 2 and \
-                ((((from_row + 1 == to_row) or (from_row - 1 == to_row)) and (from_column == to_column)) or
-                 (((from_column + 1 == to_column) or (from_column - 1 == to_column)) and (from_row == to_row))):
+        if (self._color == "black" and from_row > 6 and to_row < 6 and 6 > from_column > 2 and 6 > to_column > 2 and
+                ((from_row + 1 == to_row or from_row - 1 == to_row) and from_column == to_column) or
+                ((from_column + 1 == to_column or from_column - 1 == to_column) and from_row == to_row)):
             return True
         return False
 
@@ -1207,12 +1175,14 @@ class Soldier:
 
         if self._color == "red" and \
                 ((from_row + 1 == to_row and to_column == from_column) or
-                 (from_row > 4 and (from_column + 1 == to_column or from_column - 1 == to_column))):
+                 (from_row > 4 and from_column + 1 == to_column and to_row == from_row) or
+                 (from_row > 4 and from_column - 1 == to_column and to_row == from_row)):
             return True
 
         if self._color == "black" and \
                 ((from_row - 1 == to_row and to_column == from_column) or
-                 (from_row < 5 and (from_column + 1 == to_column or from_column - 1 == to_column))):
+                 (from_row < 5 and from_column + 1 == to_column and to_row == from_row) or
+                 (from_row < 5 and from_column - 1 == to_column and to_row == from_row)):
             return True
         return False
 
