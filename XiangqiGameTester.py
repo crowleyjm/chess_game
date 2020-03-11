@@ -164,19 +164,22 @@ class TestXiangqiGame(unittest.TestCase, XiangqiGame, General, Advisor, Elephant
         result_12 = game.make_move('b8', 'b6')
         result_13 = game.make_move('h8', 'e8')
         result_14 = game.is_in_check("black")
-        # result_ = game.get_game_state()
         result_15 = game.make_move('f10', 'e9')
         result_16 = game.make_move('e8', 'i8')
         result_17 = game.make_move('c10', 'e8')
         result_18 = game.make_move('i8', 'i9')
         result_19 = game.make_move('b6', 'b2')
         result_20 = game.make_move('i9', 'g9')
+        result_21 = game.make_move('c7', 'c6')
+        result_22 = game.make_move('g9', 'g10')
+        result_23 = game.get_game_state()
         final_result = (result_1, result_2, result_3, result_4, result_5, result_6, result_7, result_8, result_9,
                         result_10, result_11, result_12, result_13, result_14, result_15, result_16, result_17,
-                        result_18, result_19, result_20)
+                        result_18, result_19, result_20, result_21, result_22, result_23)
         self.assertEqual(final_result,
                          (True, True, True, True, True, True, True, True, True, True,
-                          True, True, True, True, True, True, True, True, True, True))
+                          True, True, True, True, True, True, True, True, True, True,
+                          True, True, "RED_WON"))
 
 
 if __name__ == '__main__':

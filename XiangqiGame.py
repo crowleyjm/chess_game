@@ -562,12 +562,13 @@ class XiangqiGame:
                                 temp = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
-                                self._red_general_location = j
+                                self._black_general_location = j
                                 if self.is_in_check("black") is False:
                                     count += 1
+                                    print(i,j,count)
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
-                                self._red_general_location = i
+                                self._black_general_location = i
                             if (isinstance(self._the_board[from_row][from_column], Advisor) and
                                     self._the_board[from_row][from_column].get_color() == "black"):
                                 # make move temporarily to see if it puts player in check
@@ -576,6 +577,7 @@ class XiangqiGame:
                                 self._the_board[from_row][from_column] = ""
                                 if self.is_in_check("black") is False:
                                     count += 1
+                                    # print(count)
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
                             if (isinstance(self._the_board[from_row][from_column], Elephant) and
