@@ -1,5 +1,5 @@
 # Author: Jillian Crowley
-# Date: 03/07/2020
+# Date: 03/11/2020
 # Description:  Writes unit tests for XiangqiGame.py.
 
 import unittest
@@ -147,6 +147,30 @@ class TestXiangqiGame(unittest.TestCase, XiangqiGame, General, Advisor, Elephant
         result_6 = game.is_valid_move_cannon("b8", "b3")
         final_result = (result_1, result_2, result_3, result_4, result_5, result_6)
         self.assertEqual(final_result, (True, True, True, True, False, False))
+
+    def test_red_wins(self):
+        game = XiangqiGame()
+        result_1 = game.make_move('h3', 'e3')
+        result_2 = game.make_move('h8', 'g8')
+        result_3 = game.make_move('h1', 'i3')
+        result_4 = game.make_move('i10', 'i9')
+        result_5 = game.make_move('i1', 'h1')
+        result_6 = game.make_move('h10', 'i8')
+        result_7 = game.make_move('e3', 'e7')
+        result_8 = game.make_move('i8', 'g9')
+        result_9 = game.make_move('b3', 'e3')
+        result_10 = game.make_move('g8', 'h8')
+        result_11 = game.make_move('h1', 'h8')
+        result_12 = game.make_move('b8', 'b6')
+        result_13 = game.make_move('h8', 'e8')
+        result_14 = game.is_in_check("black")
+
+        # result_24 = game.is_in_check("black")
+        # result_25 = game.get_game_state()
+        final_result = (result_1, result_2, result_3, result_4, result_5, result_6, result_7, result_8, result_9,
+                        result_10, result_11, result_12, result_13, result_14)
+        self.assertEqual(final_result,
+                         (True, True, True, True, True, True, True, True, True, True, True, True, True, True))
 
 
 if __name__ == '__main__':
