@@ -668,19 +668,22 @@ class XiangqiGame:
                     if self._the_board[rank - 1][to_column] != "":
                         return True
                     rank -= 1
+                return False
             if isinstance(self._the_board[8][to_column], General):
                 rank = 8
                 while to_row < rank:
                     if self._the_board[rank - 1][to_column] != "":
                         return True
                     rank -= 1
+                return False
             if isinstance(self._the_board[7][to_column], General):
                 rank = 7
                 while to_row < rank:
                     if self._the_board[rank - 1][to_column] != "":
                         return True
                     rank -= 1
-            return False
+                return False
+            return True
 
         if self._the_board[from_row][from_column].get_color() == "black":
             if isinstance(self._the_board[0][to_column], General):
@@ -689,19 +692,22 @@ class XiangqiGame:
                     if self._the_board[rank + 1][to_column] != "":
                         return True
                     rank += 1
+                return False
             if isinstance(self._the_board[1][to_column], General):
                 rank = 1
                 while to_row > rank:
                     if self._the_board[rank + 1][to_column] != "":
                         return True
                     rank += 1
+                return False
             if isinstance(self._the_board[2][to_column], General):
                 rank = 2
                 while to_row > rank:
                     if self._the_board[rank + 1][to_column] != "":
                         return True
                     rank += 1
-            return False
+                return False
+            return True
 
     def is_valid_move_elephant(self, from_square, to_square):
         """
@@ -854,7 +860,8 @@ class XiangqiGame:
                 count += 1
             i += 1
 
-        if count > 1 or (count == 0 and self._the_board[to_row][to_column] != ""):
+        if (count > 1 or (count == 0 and self._the_board[to_row][to_column] != "") or
+                (count == 1 and self._the_board[to_row][to_column] == "")):
             return False
         return True
 
