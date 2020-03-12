@@ -226,6 +226,7 @@ class XiangqiGame:
         # see if player's General is in check by other player's Cannon
         i = 1
         count_i = 0
+        count_j = 0
 
         while player_general_row + i <= 9:
             if ((isinstance(self._the_board[player_general_row + i][player_general_column], Cannon) and
@@ -235,11 +236,9 @@ class XiangqiGame:
 
         if player_general_row + i < 9:
             j = i + 1
-            count_j = 0
-
             while player_general_row + j <= 9:
                 if ((isinstance(self._the_board[player_general_row + j][player_general_column], Cannon) and
-                    self._the_board[player_general_row + j][player_general_column].get_color() == other_player)):
+                     self._the_board[player_general_row + j][player_general_column].get_color() == other_player)):
                     break
                 j += 1
 
@@ -267,6 +266,7 @@ class XiangqiGame:
 
         i = 1
         count_i = 0
+        count_j = 0
         while player_general_row - i >= 0:
             if ((isinstance(self._the_board[player_general_row - i][player_general_column], Cannon) and
                  self._the_board[player_general_row - i][player_general_column].get_color() == other_player)):
@@ -275,7 +275,6 @@ class XiangqiGame:
 
         if player_general_row - i > 0:
             j = i + 1
-            count_j = 0
             while player_general_row - j >= 0:
                 if ((isinstance(self._the_board[player_general_row - j][player_general_column], Cannon) and
                      self._the_board[player_general_row - j][player_general_column].get_color() == other_player)):
@@ -306,15 +305,15 @@ class XiangqiGame:
 
         i = 1
         count_i = 0
+        count_j = 0
         while player_general_column + i <= 8:
             if ((isinstance(self._the_board[player_general_row][player_general_column + i], Cannon) and
                  self._the_board[player_general_row][player_general_column + i].get_color() == other_player)):
                 break
             i += 1
 
-        if player_general_column + i < 8
+        if player_general_column + i < 8:
             j = i + 1
-            count_j = 0
             while player_general_column + j <= 8:
                 if ((isinstance(self._the_board[player_general_row][player_general_column + j], Cannon) and
                      self._the_board[player_general_row][player_general_column + j].get_color() == other_player)):
@@ -345,6 +344,7 @@ class XiangqiGame:
 
         i = 1
         count_i = 0
+        count_j = 0
         while player_general_column - i >= 0:
             if ((isinstance(self._the_board[player_general_row][player_general_column - i], Cannon) and
                  self._the_board[player_general_row][player_general_column - i].get_color() == other_player)):
@@ -353,7 +353,6 @@ class XiangqiGame:
 
         if player_general_column - i > 0:
             j = i + 1
-            count_j = 0
             while player_general_column - j >= 0:
                 if ((isinstance(self._the_board[player_general_row][player_general_column - j], Cannon) and
                      self._the_board[player_general_row][player_general_column - j].get_color() == other_player)):
