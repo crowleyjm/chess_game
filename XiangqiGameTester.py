@@ -1,6 +1,6 @@
 # Author: Jillian Crowley
-# Date: 03/11/2020
-# Description:  Writes unit tests for XiangqiGame.py.
+# Date: 03/12/2020
+# Description:  Writes 14 unit tests for XiangqiGame.py.
 
 import unittest
 from XiangqiGame import XiangqiGame, General, Advisor, Elephant, Horse, Chariot, Cannon, Soldier
