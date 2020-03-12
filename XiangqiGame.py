@@ -225,88 +225,154 @@ class XiangqiGame:
 
         # see if player's General is in check by other player's Cannon
         i = 1
-        count = 0
+        count_i = 0
+
         while player_general_row + i <= 9:
             if ((isinstance(self._the_board[player_general_row + i][player_general_column], Cannon) and
                  self._the_board[player_general_row + i][player_general_column].get_color() == other_player)):
                 break
             i += 1
 
+        j = i + 1
+        count_j = 0
+
+        while player_general_row + j <= 9:
+            if ((isinstance(self._the_board[player_general_row + j][player_general_column], Cannon) and
+                 self._the_board[player_general_row + j][player_general_column].get_color() == other_player)):
+                break
+            j += 1
+
         if (isinstance(self._the_board[player_general_row + i][player_general_column], Cannon) and
                 self._the_board[player_general_row + i][player_general_column].get_color() == other_player):
             i -= 1
             while player_general_row + i > player_general_row:
                 if self._the_board[player_general_row + i][player_general_column] != "":
-                    count += 1
+                    count_i += 1
                 i -= 1
 
-        if count == 1:
+        if (isinstance(self._the_board[player_general_row + j][player_general_column], Cannon) and
+                self._the_board[player_general_row + j][player_general_column].get_color() == other_player):
+            j -= 1
+            while player_general_row + j > player_general_row:
+                if self._the_board[player_general_row + j][player_general_column] != "":
+                    count_j += 1
+                j -= 1
+
+        if count_i == 1 or count_j == 1:
             if player == "red":
                 self._red_in_check = True
             if player == "black":
                 self._black_in_check = True
 
         i = 1
-        count = 0
+        count_i = 0
         while player_general_row - i >= 0:
             if ((isinstance(self._the_board[player_general_row - i][player_general_column], Cannon) and
                  self._the_board[player_general_row - i][player_general_column].get_color() == other_player)):
                 break
             i += 1
 
+        j = i + 1
+        count_j = 0
+        while player_general_row - j >= 0:
+            if ((isinstance(self._the_board[player_general_row - j][player_general_column], Cannon) and
+                 self._the_board[player_general_row - j][player_general_column].get_color() == other_player)):
+                break
+            j += 1
+
         if (isinstance(self._the_board[player_general_row - i][player_general_column], Cannon) and
                 self._the_board[player_general_row - i][player_general_column].get_color() == other_player):
             i -= 1
             while player_general_row - i < player_general_row:
                 if self._the_board[player_general_row - i][player_general_column] != "":
-                    count += 1
+                    count_i += 1
                 i -= 1
 
-        if count == 1:
+        if (isinstance(self._the_board[player_general_row - j][player_general_column], Cannon) and
+                self._the_board[player_general_row - j][player_general_column].get_color() == other_player):
+            j -= 1
+            while player_general_row - j < player_general_row:
+                if self._the_board[player_general_row - j][player_general_column] != "":
+                    count_j += 1
+                j -= 1
+
+        if count_i == 1 or count_j == 1:
             if player == "red":
                 self._red_in_check = True
             if player == "black":
                 self._black_in_check = True
 
         i = 1
-        count = 0
+        count_i = 0
         while player_general_column + i <= 8:
             if ((isinstance(self._the_board[player_general_row][player_general_column + i], Cannon) and
                  self._the_board[player_general_row][player_general_column + i].get_color() == other_player)):
                 break
             i += 1
 
+        j = i + 1
+        count_j = 0
+        while player_general_column + j <= 8:
+            if ((isinstance(self._the_board[player_general_row][player_general_column + j], Cannon) and
+                 self._the_board[player_general_row][player_general_column + j].get_color() == other_player)):
+                break
+            j += 1
+
         if (isinstance(self._the_board[player_general_row][player_general_column + i], Cannon) and
                 self._the_board[player_general_row][player_general_column + i].get_color() == other_player):
             i -= 1
             while player_general_column + i > player_general_column:
                 if self._the_board[player_general_row][player_general_column + i] != "":
-                    count += 1
+                    count_i += 1
                 i -= 1
 
-        if count == 1:
+        if (isinstance(self._the_board[player_general_row][player_general_column + j], Cannon) and
+                self._the_board[player_general_row][player_general_column + j].get_color() == other_player):
+            j -= 1
+            while player_general_column + j > player_general_column:
+                if self._the_board[player_general_row][player_general_column + j] != "":
+                    count_j += 1
+                j -= 1
+
+        if count_i == 1 or count_j == 1:
             if player == "red":
                 self._red_in_check = True
             if player == "black":
                 self._black_in_check = True
 
         i = 1
-        count = 0
+        count_i = 0
         while player_general_column - i >= 0:
             if ((isinstance(self._the_board[player_general_row][player_general_column - i], Cannon) and
                  self._the_board[player_general_row][player_general_column - i].get_color() == other_player)):
                 break
             i += 1
 
+        j = i + 1
+        count_j = 0
+        while player_general_column - j >= 0:
+            if ((isinstance(self._the_board[player_general_row][player_general_column - j], Cannon) and
+                 self._the_board[player_general_row][player_general_column - j].get_color() == other_player)):
+                break
+            j += 1
+
         if (isinstance(self._the_board[player_general_row][player_general_column - i], Cannon) and
                 self._the_board[player_general_row][player_general_column - i].get_color() == other_player):
             i -= 1
             while player_general_column - i < player_general_column:
                 if self._the_board[player_general_row][player_general_column - i] != "":
-                    count += 1
+                    count_i += 1
                 i -= 1
 
-        if count == 1:
+        if (isinstance(self._the_board[player_general_row][player_general_column - j], Cannon) and
+                self._the_board[player_general_row][player_general_column - j].get_color() == other_player):
+            j -= 1
+            while player_general_column - j < player_general_column:
+                if self._the_board[player_general_row][player_general_column - j] != "":
+                    count_j += 1
+                j -= 1
+
+        if count_i == 1 or count_j == 1:
             if player == "red":
                 self._red_in_check = True
             if player == "black":
@@ -1285,18 +1351,18 @@ class Soldier:
                     return True
         return False
 
-
-def main():
-    # tests example from readme
-    game = XiangqiGame()
-    move_result = game.make_move('c1', 'e3')
-    black_in_check = game.is_in_check('black')
-    game.make_move('e7', 'e6')
-    state = game.get_game_state()
-    results = (move_result, black_in_check, state)
-
-    return results
-
-
-if __name__ == '__main__':
-    main()
+#
+# def main():
+#     # tests example from readme
+#     game = XiangqiGame()
+#     move_result = game.make_move('c1', 'e3')
+#     black_in_check = game.is_in_check('black')
+#     game.make_move('e7', 'e6')
+#     state = game.get_game_state()
+#     results = (move_result, black_in_check, state)
+#
+#     return results
+#
+#
+# if __name__ == '__main__':
+#     main()

@@ -233,6 +233,39 @@ class TestXiangqiGame(unittest.TestCase, XiangqiGame, General, Advisor, Elephant
                           True, True, True, True, True, True, True, True, True, True,
                           True, True, True, True, True, True, True, "BLACK_WON"))
 
+    def test_red_wins_2(self):
+        game = XiangqiGame()
+        result_1 = game.make_move('b3', 'e3')
+        result_2 = game.make_move('h8', 'h9')
+        result_3 = game.make_move('h1', 'g3')
+        result_4 = game.make_move('g9', 'i7')
+        result_5 = game.get_game_state()
+        result_6 = game.make_move('h9', 'h5')
+        result_7 = game.make_move('b1', 'c3')
+        result_8 = game.make_move('h10', 'g8')
+        result_9 = game.make_move('a1', 'b1')
+        result_10 = game.get_game_state()
+        result_11 = game.make_move('g7', 'f5')
+        result_12 = game.make_move('h5', 'f5')
+        result_13 = game.make_move('b1', 'b8')
+        result_14 = game.make_move('e7', 'e6')
+        result_15 = game.make_move('e3', 'e6')
+        result_16 = game.make_move('d9', 'e8')
+        result_17 = game.make_move('f5', 'f6')
+        result_18 = game.make_move('h3', 'h5')
+        result_19 = game.get_game_state()
+        result_20 = game.make_move('g7', 'g6')
+        result_21 = game.make_move('h5', 'e5')
+        result_22 = game.is_in_check("red")
+        result_23 = game.get_game_state()
+
+        final_result = (result_1, result_2, result_3, result_4, result_5, result_6, result_7, result_8, result_9,
+                        result_10, result_11, result_12, result_13, result_14, result_15, result_16, result_17,
+                        result_18, result_19, result_20, result_21, result_22, result_23)
+        self.assertEqual(final_result, (True, True, True, False, "UNFINISHED", True, True, True, True, "UNFINISHED",
+                                        False, True, True, True, True, False, True, True, "UNFINISHED", True, True,
+                                        True, "RED_WON"))
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestXiangqiGame)
