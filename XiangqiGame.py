@@ -1354,18 +1354,18 @@ class Soldier:
                     return True
         return False
 
-#
-# def main():
-#     # tests example from readme
-#     game = XiangqiGame()
-#     move_result = game.make_move('c1', 'e3')
-#     black_in_check = game.is_in_check('black')
-#     game.make_move('e7', 'e6')
-#     state = game.get_game_state()
-#     results = (move_result, black_in_check, state)
-#
-#     return results
-#
-#
-# if __name__ == '__main__':
-#     main()
+
+def main():
+    # tests example from readme
+    game = XiangqiGame()
+    move_result = game.make_move('c1', 'e3')
+    black_in_check = game.is_in_check('black')
+    game.make_move('e7', 'e6')
+    state = game.get_game_state()
+    results = (move_result, black_in_check, state)
+
+    return results
+
+
+if __name__ == '__main__':
+    main()
