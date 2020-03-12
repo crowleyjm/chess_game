@@ -1,5 +1,5 @@
 # Author: Jillian Crowley
-# Date: 03/10/2020
+# Date: 03/12/2020
 # Description: From Wikipedia:
 # The Xiangqi game (Chinese chess) represents a battle between two 16-piece armies, with
 # the object of the game being to capture the enemy's general (king).
@@ -7,17 +7,22 @@
 # a rule prohibiting the generals from facing each other directly;
 # areas on the board called the river and palace, which
 # restrict the movement of some pieces (but enhance that of others);
-# and placement of the pieces on the intersections of the board lines, rather than within the squares.
+# and placement of the pieces on the intersections of the board lines, rather
+# than within the squares.
+# Writes classes XiangqiGame, General, Advisor, Elephant, Horse, Chariot, Cannon, Soldier and
+# methods within these classes to play Xiangqi
 
 
 class XiangqiGame:
     """
-    Represents a XiangqiGame with _the_board data member.
+    Represents a XiangqiGame with _the_board, _game_state, _player_turn, _red_general_location,
+    _red_in_check, _black_general_location, and _black_in_check data members.
     """
 
     def __init__(self):
         """
-        Returns a XiangqiGame object with initialized board.
+        Returns a XiangqiGame object with initialized _the_board, _game_state, _player_turn, _red_general_location,
+        _red_in_check, _black_general_location, and _black_in_check
         Locations on the board are specified using "algebraic notation",
         with columns labeled a-i and rows labeled 1-10, with row 1 being the Red side and row 10 the Black side
         """
@@ -41,41 +46,41 @@ class XiangqiGame:
               Elephant("black"), Horse("black"), Chariot("black"), "10"],
              ["a", "b", "c", "d", "e", "f", "g", "h", "i"]]
 
-        # initializes game state
+        # initializes _game_state
         self._game_state = "UNFINISHED"
 
-        # initializes player's turn
+        # initializes _player_turn
         self._player_turn = "red"
 
-        # initializes red General's location and check status
+        # initializes _red_general_location and _red_in_check
         self._red_general_location = "e1"
         self._red_in_check = False
 
-        # initializes black General's location and check status
+        # initializes _black_general_location and _black_in_check
         self._black_general_location = "e10"
         self._black_in_check = False
 
     def get_the_board(self):
         """
-        Returns the board.
+        Returns _the_board.
         """
         return self._the_board
 
     def print_the_board(self):
         """
-        Returns the printed board with a newline for each rank.
+        Returns printed _the_board with a newline for each rank.
         """
         return print("\n".join(str(rank) for rank in self._the_board))
 
     def get_game_state(self):
         """
-        Returns the game state, either 'UNFINISHED', 'RED_WON' or 'BLACK_WON'.
+        Returns the _game_state; either 'UNFINISHED', 'RED_WON' or 'BLACK_WON'.
         """
         return self._game_state
 
     def get_player_turn(self):
         """
-        Returns the player's turn, either "red" or "black"
+        Returns _player_turn; either "red" or "black"
         """
         return self._player_turn
 
@@ -108,6 +113,7 @@ class XiangqiGame:
                     self._red_in_check = True
                 if player == "black":
                     self._black_in_check = True
+
         if player_general_row - 2 >= 0 and player_general_column + 1 <= 8:
             if (isinstance(self._the_board[player_general_row - 2][player_general_column + 1], Horse) and
                     self._the_board[player_general_row - 2][player_general_column + 1].get_color() == other_player):
@@ -115,6 +121,7 @@ class XiangqiGame:
                     self._red_in_check = True
                 if player == "black":
                     self._black_in_check = True
+
         if player_general_row - 1 >= 0 and player_general_column + 2 <= 8:
             if (isinstance(self._the_board[player_general_row - 1][player_general_column + 2], Horse) and
                     self._the_board[player_general_row - 1][player_general_column + 2].get_color() == other_player):
@@ -122,6 +129,7 @@ class XiangqiGame:
                     self._red_in_check = True
                 if player == "black":
                     self._black_in_check = True
+
         if player_general_row + 1 <= 9 and player_general_column + 2 <= 8:
             if (isinstance(self._the_board[player_general_row + 1][player_general_column + 2], Horse) and
                     self._the_board[player_general_row + 1][player_general_column + 2].get_color() == other_player):
@@ -129,6 +137,7 @@ class XiangqiGame:
                     self._red_in_check = True
                 if player == "black":
                     self._black_in_check = True
+
         if player_general_row + 2 <= 9 and player_general_column + 1 <= 8:
             if (isinstance(self._the_board[player_general_row + 2][player_general_column + 1], Horse) and
                     self._the_board[player_general_row + 2][player_general_column + 1].get_color() == other_player):
@@ -136,6 +145,7 @@ class XiangqiGame:
                     self._red_in_check = True
                 if player == "black":
                     self._black_in_check = True
+
         if player_general_row + 2 <= 9 and player_general_column - 1 >= 0:
             if (isinstance(self._the_board[player_general_row + 2][player_general_column - 1], Horse) and
                     self._the_board[player_general_row + 2][player_general_column - 1].get_color() == other_player):
@@ -143,6 +153,7 @@ class XiangqiGame:
                     self._red_in_check = True
                 if player == "black":
                     self._black_in_check = True
+
         if player_general_row + 1 <= 9 and player_general_column - 2 >= 0:
             if (isinstance(self._the_board[player_general_row + 1][player_general_column - 2], Horse) and
                     self._the_board[player_general_row + 1][player_general_column - 2].get_color() == other_player):
@@ -150,6 +161,7 @@ class XiangqiGame:
                     self._red_in_check = True
                 if player == "black":
                     self._black_in_check = True
+
         if player_general_row - 1 >= 0 and player_general_column - 2 >= 0:
             if (isinstance(self._the_board[player_general_row - 1][player_general_column - 2], Horse) and
                     self._the_board[player_general_row - 1][player_general_column - 2].get_color() == other_player):
@@ -337,40 +349,37 @@ class XiangqiGame:
         """
         Takes two parameters - strings that represent the square moved from and
         the square moved to. For example, make_move('b3', 'b10').
-        Otherwise it should make the indicated move, remove any captured piece,
-        update the game state if necessary, update whose turn it is, and return True
+        Checks for illegal/invalid moves, but otherwise makes the indicated move, removes any captured piece,
+        updates the game state if necessary, updates whose turn it is, and returns True
 
         If the general's player can make no move to prevent the general's capture, the situation is called "checkmate"
-        Unlike in chess, in which stalemate is a draw, in xiangqi, it is a loss for the stalemated player.
+        and the other player wins. If a player has no legal/valid moves, the other player wins by stalemate.
         """
-
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        # return False where move cannot be made if no piece exists at from_square
+        # move cannot be made if no piece exists at from_square
         if self._the_board[from_row][from_column] == "":
             return False
 
-        # return False where move cannot be made if player's piece exists at to_square
+        # move cannot be made if player's piece exists at to_square
         if self._the_board[to_row][to_column] != "":
             if self._the_board[to_row][to_column].get_color() == self._player_turn:
                 return False
 
-        # return False where move cannot be made if:
-        # not player's turn
-        # move is not legally available for piece based on class definition
-        # game state is finished; either RED_WON or BLACK_WON
+        # move cannot be made if: not player's turn, move is not legally available for piece based on class definition,
+        # or game state is finished; either "RED_WON" or "BLACK_WON"
         if self._the_board[from_row][from_column].get_color() != self._player_turn or \
                 self._the_board[from_row][from_column].is_legal_move(from_square, to_square) is False or \
                 self._game_state != "UNFINISHED":
             return False
 
-        # check for illegal moves in relation to other pieces and return False
+        # move cannot be made if it is not valid in relation to other pieces on the board:
+        # if piece trying to move is a General
         if isinstance(self._the_board[from_row][from_column], General):
             if self.is_valid_move_general(from_square, to_square) is False:
                 return False
@@ -381,18 +390,22 @@ class XiangqiGame:
             if self._the_board[from_row][from_column].get_color() == "black":
                 self._black_general_location = to_square
 
+        # if piece trying to move is an Elephant
         if isinstance(self._the_board[from_row][from_column], Elephant):
             if self.is_valid_move_elephant(from_square, to_square) is False:
                 return False
 
+        # if piece trying to move is a Horse
         if isinstance(self._the_board[from_row][from_column], Horse):
             if self.is_valid_move_horse(from_square, to_square) is False:
                 return False
 
+        # if piece trying to move is a Chariot
         if isinstance(self._the_board[from_row][from_column], Chariot):
             if self.is_valid_move_chariot(from_square, to_square) is False:
                 return False
 
+        # if piece trying to move is a Cannon
         if isinstance(self._the_board[from_row][from_column], Cannon):
             if self.is_valid_move_cannon(from_square, to_square) is False:
                 return False
@@ -407,7 +420,8 @@ class XiangqiGame:
         if self.is_in_check(self._player_turn):
             self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
             self._the_board[to_row][to_column] = temp
-            # if red or black General move is being undone, update location
+
+            # if red or black General move is being undone, revert location
             if self._the_board[from_row][from_column].get_color() == "red":
                 self._red_general_location = from_square
             if self._the_board[from_row][from_column].get_color() == "black":
@@ -440,94 +454,147 @@ class XiangqiGame:
                 to_row = int(j[1:]) - 1
                 to_column = file.index(j[0])
 
-                # piece exists at from_square
+                # piece must exist at from_square
                 if self._the_board[from_row][from_column] != "":
+
                     # player's piece cannot exist at to_square
                     if ((self._the_board[to_row][to_column] == "") or
                             (self._the_board[to_row][to_column] != "" and
                              self._the_board[to_row][to_column].get_color() != "red")):
-                        # must be player's piece, move must be legal
+
+                        # must be player's piece at from_square, move must be legal
                         if self._the_board[from_row][from_column].get_color() == "red" and \
                                 self._the_board[from_row][from_column].is_legal_move(i, j):
+
+                            # if piece considered is a General
                             if (isinstance(self._the_board[from_row][from_column], General) and
                                     self._the_board[from_row][from_column].get_color() == "red" and
                                     self.is_valid_move_general(i, j) is True):
+
                                 # make move temporarily to see if it puts player in check; update General location
                                 temp = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 self._red_general_location = j
+
+                                # if there is a legal/valid move here, add one to counter
                                 if self.is_in_check("red") is False:
                                     count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                                # if General move is being undone, revert location
-                                self._red_general_location = i
-                            if (isinstance(self._the_board[from_row][from_column], Advisor) and
-                                    self._the_board[from_row][from_column].get_color() == "red"):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("red") is False:
-                                    count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Elephant) and
-                                    self._the_board[from_row][from_column].get_color() == "red" and
-                                    self.is_valid_move_elephant(i, j) is True):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("red") is False:
-                                    count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Horse) and
-                                    self._the_board[from_row][from_column].get_color() == "red" and
-                                    self.is_valid_move_horse(i, j) is True):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("red") is False:
-                                    count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Chariot) and
-                                    self._the_board[from_row][from_column].get_color() == "red" and
-                                    self.is_valid_move_chariot(i, j) is True):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("red") is False:
-                                    count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Cannon) and
-                                    self._the_board[from_row][from_column].get_color() == "red" and
-                                    self.is_valid_move_cannon(i, j) is True):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("red") is False:
-                                    count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Soldier) and
-                                    self._the_board[from_row][from_column].get_color() == "red"):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("red") is False:
-                                    count += 1
+
+                                # Undo move
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
 
+                                # if General move is being undone, revert location
+                                self._red_general_location = i
+
+                            # if piece considered is an Advisor
+                            if (isinstance(self._the_board[from_row][from_column], Advisor) and
+                                    self._the_board[from_row][from_column].get_color() == "red"):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("red") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is an Elephant
+                            if (isinstance(self._the_board[from_row][from_column], Elephant) and
+                                    self._the_board[from_row][from_column].get_color() == "red" and
+                                    self.is_valid_move_elephant(i, j) is True):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("red") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is a Horse
+                            if (isinstance(self._the_board[from_row][from_column], Horse) and
+                                    self._the_board[from_row][from_column].get_color() == "red" and
+                                    self.is_valid_move_horse(i, j) is True):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("red") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is a Chariot
+                            if (isinstance(self._the_board[from_row][from_column], Chariot) and
+                                    self._the_board[from_row][from_column].get_color() == "red" and
+                                    self.is_valid_move_chariot(i, j) is True):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("red") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is a Cannon
+                            if (isinstance(self._the_board[from_row][from_column], Cannon) and
+                                    self._the_board[from_row][from_column].get_color() == "red" and
+                                    self.is_valid_move_cannon(i, j) is True):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("red") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is a Soldier
+                            if (isinstance(self._the_board[from_row][from_column], Soldier) and
+                                    self._the_board[from_row][from_column].get_color() == "red"):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("red") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+        # if red has no legal moves, black wins
         if count == 0:
             self._game_state = "BLACK_WON"
 
@@ -546,95 +613,147 @@ class XiangqiGame:
                 to_row = int(j[1:]) - 1
                 to_column = file.index(j[0])
 
-                # piece exists at from_square
+                # piece must exist at from_square
                 if self._the_board[from_row][from_column] != "":
+
                     # player's piece cannot exist at to_square
                     if ((self._the_board[to_row][to_column] == "") or
                             (self._the_board[to_row][to_column] != "" and
                              self._the_board[to_row][to_column].get_color() != "black")):
-                        # must be player's piece, move must be legal
+
+                        # must be player's piece at from_square, move must be legal
                         if self._the_board[from_row][from_column].get_color() == "black" and \
                                 self._the_board[from_row][from_column].is_legal_move(i, j):
+
+                            # if piece considered is a General
                             if (isinstance(self._the_board[from_row][from_column], General) and
                                     self._the_board[from_row][from_column].get_color() == "black" and
                                     self.is_valid_move_general(i, j) is True):
+
                                 # make move temporarily to see if it puts player in check; update General location
                                 temp = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
                                 self._the_board[from_row][from_column] = ""
                                 self._black_general_location = j
+
+                                # if if there is a legal/valid move here, add one to counter
                                 if self.is_in_check("black") is False:
                                     count += 1
-                                    print(i,j,count)
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                                self._black_general_location = i
-                            if (isinstance(self._the_board[from_row][from_column], Advisor) and
-                                    self._the_board[from_row][from_column].get_color() == "black"):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("black") is False:
-                                    count += 1
-                                    # print(count)
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Elephant) and
-                                    self._the_board[from_row][from_column].get_color() == "black" and
-                                    self.is_valid_move_elephant(i, j) is True):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("black") is False:
-                                    count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Horse) and
-                                    self._the_board[from_row][from_column].get_color() == "black" and
-                                    self.is_valid_move_horse(i, j) is True):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("black") is False:
-                                    count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Chariot) and
-                                    self._the_board[from_row][from_column].get_color() == "black" and
-                                    self.is_valid_move_chariot(i, j) is True):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("black") is False:
-                                    count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Cannon) and
-                                    self._the_board[from_row][from_column].get_color() == "black" and
-                                    self.is_valid_move_cannon(i, j) is True):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("black") is False:
-                                    count += 1
-                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = temp
-                            if (isinstance(self._the_board[from_row][from_column], Soldier) and
-                                    self._the_board[from_row][from_column].get_color() == "black"):
-                                # make move temporarily to see if it puts player in check
-                                temp = self._the_board[to_row][to_column]
-                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
-                                self._the_board[from_row][from_column] = ""
-                                if self.is_in_check("black") is False:
-                                    count += 1
+
+                                # Undo move
                                 self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
                                 self._the_board[to_row][to_column] = temp
 
+                                # if General move is being undone, revert location
+                                self._black_general_location = i
+
+                            # if piece considered is an Advisor
+                            if (isinstance(self._the_board[from_row][from_column], Advisor) and
+                                    self._the_board[from_row][from_column].get_color() == "black"):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("black") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is an Elephant
+                            if (isinstance(self._the_board[from_row][from_column], Elephant) and
+                                    self._the_board[from_row][from_column].get_color() == "black" and
+                                    self.is_valid_move_elephant(i, j) is True):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("black") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is a Horse
+                            if (isinstance(self._the_board[from_row][from_column], Horse) and
+                                    self._the_board[from_row][from_column].get_color() == "black" and
+                                    self.is_valid_move_horse(i, j) is True):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("black") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is a Chariot
+                            if (isinstance(self._the_board[from_row][from_column], Chariot) and
+                                    self._the_board[from_row][from_column].get_color() == "black" and
+                                    self.is_valid_move_chariot(i, j) is True):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("black") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is a Cannon
+                            if (isinstance(self._the_board[from_row][from_column], Cannon) and
+                                    self._the_board[from_row][from_column].get_color() == "black" and
+                                    self.is_valid_move_cannon(i, j) is True):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("black") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+                            # if piece considered is a Soldier
+                            if (isinstance(self._the_board[from_row][from_column], Soldier) and
+                                    self._the_board[from_row][from_column].get_color() == "black"):
+
+                                # make move temporarily to see if it puts player in check
+                                temp = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = self._the_board[from_row][from_column]
+                                self._the_board[from_row][from_column] = ""
+
+                                # if if there is a legal/valid move here, add one to counter
+                                if self.is_in_check("black") is False:
+                                    count += 1
+
+                                # Undo move
+                                self._the_board[from_row][from_column] = self._the_board[to_row][to_column]
+                                self._the_board[to_row][to_column] = temp
+
+        # if black has no legal moves, red wins
         if count == 0:
             self._game_state = "RED_WON"
 
@@ -643,6 +762,7 @@ class XiangqiGame:
             self._player_turn = "black"
             return True
 
+        # update _player_turn
         if self._player_turn == "black":
             self._player_turn = "red"
             return True
@@ -650,18 +770,15 @@ class XiangqiGame:
     def is_valid_move_general(self, from_square, to_square):
         """
         Returns True if valid move and False if invalid move
-        Only considers move within the context of current board
+        Considers move within the context of current board
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        # return False if illegal move by General
         # return False when Generals cannot face each other along the same file with no intervening pieces
         if self._the_board[from_row][from_column].get_color() == "red":
             if isinstance(self._the_board[9][to_column], General):
@@ -671,6 +788,7 @@ class XiangqiGame:
                         return True
                     rank -= 1
                 return False
+
             if isinstance(self._the_board[8][to_column], General):
                 rank = 8
                 while to_row < rank:
@@ -678,6 +796,7 @@ class XiangqiGame:
                         return True
                     rank -= 1
                 return False
+
             if isinstance(self._the_board[7][to_column], General):
                 rank = 7
                 while to_row < rank:
@@ -695,6 +814,7 @@ class XiangqiGame:
                         return True
                     rank += 1
                 return False
+
             if isinstance(self._the_board[1][to_column], General):
                 rank = 1
                 while to_row > rank:
@@ -702,6 +822,7 @@ class XiangqiGame:
                         return True
                     rank += 1
                 return False
+
             if isinstance(self._the_board[2][to_column], General):
                 rank = 2
                 while to_row > rank:
@@ -714,28 +835,28 @@ class XiangqiGame:
     def is_valid_move_elephant(self, from_square, to_square):
         """
         Returns True if valid move and False if invalid move
-        Only considers move within the context of current board
+        Considers move within the context of current board
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        # return False if illegal move by Elephant
         # Elephants cannot jump so return False if there is a piece blocking its first diagonal move
         if to_row == from_row + 2 and to_column == from_column + 2:
             if self._the_board[from_row + 1][from_column + 1] != "":
                 return False
+
         if to_row == from_row - 2 and to_column == from_column - 2:
             if self._the_board[from_row - 1][from_column - 1] != "":
                 return False
+
         if to_row == from_row + 2 and to_column == from_column - 2:
             if self._the_board[from_row + 1][from_column - 1] != "":
                 return False
+
         if to_row == from_row - 2 and to_column == from_column + 2:
             if self._the_board[from_row - 1][from_column + 1] != "":
                 return False
@@ -744,18 +865,15 @@ class XiangqiGame:
     def is_valid_move_horse(self, from_square, to_square):
         """
         Returns True if valid move and False if invalid move
-        Only considers move within the context of current board
+        Considers move within the context of current board
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        # return False if illegal move by Horse
         # Horses cannot jump so return False if there is a piece blocking its first orthogonal move
         if ((to_row == from_row - 2 and to_column == from_column - 1) or
                 (to_row == from_row - 2 and to_column == from_column + 1)):
@@ -781,12 +899,10 @@ class XiangqiGame:
     def is_valid_move_chariot(self, from_square, to_square):
         """
         Returns True if valid move and False if invalid move
-        Only considers move within the context of current board
+        Considers move within the context of current board
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -823,19 +939,16 @@ class XiangqiGame:
         Returns True if valid move and False if invalid move
         Only considers move within the context of current board
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
         to_column = file.index(to_square[0])
 
-        # return False if illegal move by Cannon
-        # Cannons move any distance orthogonally without jumping
-        # if there is ONLY ONE piece in the path between square_from and square_to, then
-        # the Cannon can capture and return True, otherwise return False
+        # Cannons can move any distance orthogonally without jumping
+        # if there is only ONE piece in the path between square_from and square_to, then
+        # Cannons can capture and return True
 
         i = 1
         count = 0
@@ -870,14 +983,9 @@ class XiangqiGame:
 
 class General:
     """
-    Represents a General with data members: color, rank, and file.
+    Represents a General with data member _color
     The general starts the game at the midpoint of the back edge, within the palace.
-    The general may move and capture one point orthogonally and may not leave the palace, with the following exception.
-    The two generals may not face each other along the same file with no intervening pieces.
-    If that happens, the "flying general" move may be executed, in which the general to
-    move may cross the board to capture the enemy general.
-    In practice, this rule means that creating this situation in the first place means
-    moving into check, and is therefore not allowed
+    The general may move and capture one point orthogonally and may not leave the palace.
     """
 
     def __init__(self, color):
@@ -892,12 +1000,10 @@ class General:
     def is_legal_move(self, from_square, to_square):
         """
         Returns True if legal move and False if illegal move
-        Only considers space itself and move style (one space orthogonally)
+        Considers spaces themselves and move style (one space orthogonally and cannot leave palace)
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -917,7 +1023,7 @@ class General:
 
 class Advisor:
     """
-    Represents an Advisor with data members: color, rank, and file.
+    Represents an Advisor with data member _color
     The advisors start on either side of the general. They move and capture one point diagonally and
     may not leave the palace, which confines them to five points on the board.
     The advisor is like the queen in Western chess.
@@ -935,12 +1041,10 @@ class Advisor:
     def is_legal_move(self, from_square, to_square):
         """
         Returns True if legal move and False if illegal move
-        Only considers space itself and move style (one space diagonally)
+        Considers spaces themselves and move style (one space diagonally and cannot leave palace)
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -964,13 +1068,11 @@ class Advisor:
 
 class Elephant:
     """
-    Represents an Elephant with data members: color, rank, and file.
+    Represents an Elephant with data member _color
     These pieces move and capture exactly two points diagonally and may not jump over intervening pieces;
-    If an elephant cannot move due to a diagonally adjacent piece, it is known as
-    "blocking the elephant's eye"
-    Elephants may not cross the river, and serve as defensive pieces. Because an elephant's movement is
-    restricted to just seven board positions, it can be easily trapped or threatened.
-    The two elephants are often used to defend each other.
+    If an elephant cannot move due to a diagonally adjacent piece, it is known as "blocking the elephant's eye"
+    Elephants may not cross the river, and serve as defensive pieces. An elephant's movement is
+    restricted to just seven board positions.
     """
 
     def __init__(self, color):
@@ -985,7 +1087,7 @@ class Elephant:
     def is_legal_move(self, from_square, to_square):
         """
         Returns True if legal move and False if illegal move
-        Only considers space itself and move style (two spaces diagonally and cannot cross river)
+        Considers space themselves and move style (two spaces diagonally and cannot cross river)
         """
         # list of files to associate index values
         file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
@@ -1023,14 +1125,11 @@ class Elephant:
 
 class Horse:
     """
-    Represents a Horse with data members: color, rank, and file.
+    Represents a Horse with data member _color
     Horses begin the game next to the elephants, on their outside flanks.
     A horse moves and captures one point orthogonally and then one point diagonally away from
-    its former position. The horse does not jump as the knight does in Western chess, and
-    can be blocked by a piece located one point horizontally or vertically adjacent to it.
-    Blocking a horse is called "hobbling the horse's leg".
-    Since horses can be blocked, it is sometimes possible to trap the opponent's horse.
-    It is possible for one player's horse to have an asymmetric attack advantage if an opponent's horse is blocked.
+    its former position. The horse does not jump and can be blocked by a piece located one point
+    horizontally or vertically adjacent to it. Blocking a horse is called "hobbling the horse's leg".
     """
 
     def __init__(self, color):
@@ -1045,12 +1144,10 @@ class Horse:
     def is_legal_move(self, from_square, to_square):
         """
         Returns True if legal move and False if illegal move
-        Only considers space itself and move style (one space orthogonal and one space diagonal)
+        Considers spaces themselves and move style (one space orthogonal and one space diagonal)
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -1071,11 +1168,9 @@ class Horse:
 
 class Chariot:
     """
-    Represents a Chariot with data members: color, rank, and file.
+    Represents a Chariot with data member _color
     The chariot moves and captures any distance orthogonally, but may not jump over intervening pieces.
-    The chariots begin the game on the points at the corners of the board. The chariot is often
-    considered to be the strongest piece in the game due to its freedom of movement and lack of restrictions.
-    The chariot is sometimes known as the rook by English-speaking players, since it is like the rook in Western chess.
+    The chariots begin the game on the points at the corners of the board.
     """
 
     def __init__(self, color):
@@ -1090,12 +1185,10 @@ class Chariot:
     def is_legal_move(self, from_square, to_square):
         """
         Returns True if legal move and False if illegal move
-        Only considers space itself and move style (any distance orthogonal)
+        Considers space itself and move style (any distance orthogonal)
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -1109,13 +1202,13 @@ class Chariot:
 
 class Cannon:
     """
-    Represents a Cannon with data members: color, rank, and file.
+    Represents a Cannon with data member _color.
     Each player has two cannons, which start on the row behind the soldiers, two points in front of the horses.
     Cannons move like chariots, any distance orthogonally without jumping,
     but can only capture by jumping a single piece, friend or foe, along the path of attack.
     The piece over which the cannon jumps is called the "cannon platform" or "screen".
     Any number of unoccupied spaces, including none, may exist between the cannon, screen, and
-    the piece to be captured. Cannons can be exchanged for horses immediately from their starting positions.
+    the piece to be captured.
     """
 
     def __init__(self, color):
@@ -1130,12 +1223,10 @@ class Cannon:
     def is_legal_move(self, from_square, to_square):
         """
         Returns True if legal move and False if illegal move
-        Only considers space itself and move style (any distance orthogonal)
+        Considers space itself and move style (any distance orthogonal)
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -1149,13 +1240,10 @@ class Cannon:
 
 class Soldier:
     """
-    Represents a Soldier with data members: color, rank, and file.
+    Represents a Soldier with data member _color
     Each side starts with five soldiers. Soldiers begin the game located on every other point one row back
     from the edge of the river. They move and capture by advancing one point. Once they have crossed the river,
-    they may also move and capture one point horizontally. Soldiers cannot move backward, and
-    therefore cannot retreat; after advancing to the last rank of the board, however,
-    a soldier may still move sideways at the enemy's edge.
-    The soldier is sometimes called the "pawn" by English-speaking players, due to the pieces' similarities.
+    they may also move and capture one point horizontally. Soldiers cannot move backward.
     """
 
     def __init__(self, color):
@@ -1170,13 +1258,11 @@ class Soldier:
     def is_legal_move(self, from_square, to_square):
         """
         Returns True if legal move and False if illegal move
-        Only considers space itself and move style
+        Considers space itself and move style
         (one space forward until the river is crossed, then one space forward or horizontal)
         """
-        # list of files to associate index values
-        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
-
         # define board indices
+        file = ["a", "b", "c", "d", "e", "f", "g", "h", "i"]
         from_row = int(from_square[1:]) - 1
         from_column = file.index(from_square[0])
         to_row = int(to_square[1:]) - 1
@@ -1199,17 +1285,18 @@ class Soldier:
                     return True
         return False
 
-#
-# def main():
-#     game = XiangqiGame()
-#     move_result = game.make_move('c1', 'e3')
-#     black_in_check = game.is_in_check('black')
-#     game.make_move('e7', 'e6')
-#     state = game.get_game_state()
-#     results = (move_result, black_in_check, state)
-#
-#     return print(results)
-#
-#
-# if __name__ == '__main__':
-#     main()
+
+def main():
+    # tests example from readme
+    game = XiangqiGame()
+    move_result = game.make_move('c1', 'e3')
+    black_in_check = game.is_in_check('black')
+    game.make_move('e7', 'e6')
+    state = game.get_game_state()
+    results = (move_result, black_in_check, state)
+
+    return results
+
+
+if __name__ == '__main__':
+    main()
