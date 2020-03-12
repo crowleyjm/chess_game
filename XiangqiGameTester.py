@@ -267,6 +267,47 @@ class TestXiangqiGame(unittest.TestCase, XiangqiGame, General, Advisor, Elephant
                                         False, True, True, True, True, False, True, True, "UNFINISHED", True, True,
                                         False, True, "RED_WON"))
 
+    def test_black_wins_2(self):
+        game = XiangqiGame()
+        result_1 = game.make_move('b3', 'b10')
+        result_2 = game.make_move('a10', 'b10')
+        result_3 = game.make_move('h3', 'h10')
+        result_4 = game.make_move('i10', 'h10')
+        result_5 = game.make_move('a1', 'a3')
+        result_6 = game.make_move('b8', 'b6')
+        result_7 = game.make_move('a3', 'f3')
+        result_8 = game.make_move('b6', 'i6')
+        result_9 = game.get_game_state()
+        result_10 = game.is_in_check("red")
+        result_11 = game.is_in_check("black")
+        result_12 = game.make_move('f3', 'i3')
+        result_13 = game.make_move('i6', 'i3')
+        result_14 = game.make_move('h1', 'i3')
+        result_15 = game.make_move('b10', 'b1')
+        result_16 = game.make_move('d1', 'e2')
+        result_17 = game.make_move('b1', 'c1')
+        result_18 = game.make_move('e2', 'd1')
+        result_19 = game.make_move('c1', 'c4')
+        result_20 = game.make_move('a9', 'b8')
+        result_21 = game.make_move('g1', 'e3')
+        result_22 = game.make_move('c4', 'e4')
+        result_23 = game.get_game_state()
+        result_24 = game.make_move('i1', 'i2')
+        result_25 = game.make_move('e4', 'e3')
+        result_26 = game.is_in_check("red")
+        result_27 = game.is_in_check("black")
+        result_28 = game.make_move('d1', 'e2')
+        result_29 = game.make_move('h8', 'h1')
+        result_30 = game.get_game_state()
+
+        final_result = (result_1, result_2, result_3, result_4, result_5, result_6, result_7, result_8, result_9,
+                        result_10, result_11, result_12, result_13, result_14, result_15, result_16, result_17,
+                        result_18, result_19, result_20, result_21, result_22, result_23, result_24, result_25,
+                        result_26, result_27, result_28, result_29, result_30)
+        self.assertEqual(final_result, (True, True, True, True, True, True, True, True, "UNFINISHED", False,
+                                        False, True, True, True, True, True, True, True, True, False, True, True,
+                                        "UNFINISHED", True, True, True, False, True, True, "BLACK_WON"))
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestXiangqiGame)
